@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Candidatura per la prima videochiamata — Mariastella Pollini</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#faf6ee;
+    --beige:#ead9c5;
+    --beige-soft:#f1e6d6;
+    --brown:#4a3527;
+    --brown-deep:#55402e;
+    --rule:#d9c6ac;
+    --max:720px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--cream);}
+  body{
+    font-family:'Poppins',-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    color:var(--brown);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    max-width:var(--max);margin:0 auto;padding:28px 24px 20px;
+  }
+  .eyebrow{
+    font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--brown);
+  }
+  .mark{width:34px;height:34px;flex:none;}
+  .mark path{fill:none;stroke:var(--brown);stroke-width:5;}
+
+  .hero{background:var(--beige);padding:40px 24px 36px;}
+  .hero-inner{max-width:var(--max);margin:0 auto;}
+  .hero h1{font-size:clamp(24px,4vw,32px);font-weight:600;margin:0 0 14px;line-height:1.3;}
+  .hero p{font-size:16px;margin:0 0 10px;max-width:60ch;}
+
+  main{max-width:var(--max);margin:0 auto;padding:36px 24px 8px;}
+
+  .section{margin-bottom:34px;}
+  .section-title{
+    font-weight:700;font-size:15px;letter-spacing:0.04em;text-transform:uppercase;
+    color:var(--brown);margin:0 0 18px;padding-bottom:8px;border-bottom:2px solid var(--rule);
+  }
+
+  .field{background:var(--beige-soft);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
+  .field label{display:block;font-weight:500;font-size:15px;margin-bottom:10px;}
+  .field .hint{font-weight:400;font-size:12.5px;color:#7a6754;margin-top:-6px;margin-bottom:10px;display:block;}
+  .field input[type="text"], .field input[type="email"], .field input[type="tel"], .field textarea{
+    width:100%;border:1px solid var(--rule);border-radius:8px;padding:11px 13px;
+    font-family:inherit;font-size:15px;color:var(--brown);background:#fff;
+  }
+  .field textarea{min-height:80px;resize:vertical;}
+  .field input:focus, .field textarea:focus{outline:2px solid var(--brown-deep);outline-offset:1px;}
+
+  .two-col{display:flex;gap:14px;flex-wrap:wrap;}
+  .two-col .field{flex:1 1 240px;}
+
+  .radio-group, .check-group{display:flex;flex-direction:column;gap:10px;}
+  .radio-group label, .check-group label{
+    display:flex;align-items:flex-start;gap:10px;font-size:15px;font-weight:400;
+    background:#fff;border:1px solid var(--rule);border-radius:10px;padding:12px 14px;cursor:pointer;margin:0;
+  }
+  .radio-group input, .check-group input{margin:2px 0 0;flex:none;}
+  .check-group .other-row{display:flex;align-items:center;gap:10px;}
+  .check-group .other-row input[type="text"]{
+    flex:1;border:1px solid var(--rule);border-radius:8px;padding:9px 12px;
+    font-family:inherit;font-size:14px;color:var(--brown);background:var(--cream);
+  }
+
+  .submit-row{text-align:center;margin:30px 0 10px;}
+  button.submit{
+    background:var(--brown-deep);color:#fbf5ea;border:none;border-radius:30px;
+    font-family:inherit;font-weight:600;font-size:16px;padding:15px 42px;cursor:pointer;
+  }
+  button.submit:hover{background:var(--brown);}
+
+  .thankyou{max-width:var(--max);margin:60px auto;padding:0 24px 60px;text-align:center;}
+  .thankyou h2{font-size:24px;margin-bottom:12px;}
+
+  .foot{display:flex;flex-wrap:wrap;margin-top:40px;}
+  .foot-left, .foot-right{flex:1 1 260px;padding:22px 24px;font-size:13px;}
+  .foot-left{background:var(--cream);color:var(--brown);}
+  .foot-right{background:var(--brown-deep);color:#f3e9db;display:flex;align-items:center;justify-content:center;text-align:center;}
+  .foot-left p{margin:2px 0;}
+
+  [hidden]{display:none !important;}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <span class="eyebrow">PERCORSO NUTRIZIONALE PERSONALIZZATO</span>
+    <svg class="mark" viewBox="0 0 34 34"><path d="M4 4 H26 V26"/></svg>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Candidati per la tua prima videochiamata conoscitiva</h1>
+      <p>Prima di sentirci mi piacerebbe conoscerti un po' meglio, così la nostra call sarà già utile e concreta fin dal primo minuto. Rispondi con sincerità: non ci sono risposte giuste o sbagliate.</p>
+      <p>Ti porta via qualche minuto, e le tue risposte arrivano dritte a me.</p>
+    </div>
+  </section>
+
+  <main>
+    <form id="candidatura-form">
+      <input type="hidden" name="access_key" value="10147c02-ec42-43e5-b652-ce39638aa2dc" />
+      <input type="hidden" name="subject" value="Nuova candidatura per la call" />
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+
+      <div class="section">
+        <h2 class="section-title">I tuoi dati</h2>
+        <div class="two-col">
+          <div class="field">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required />
+          </div>
+          <div class="field">
+            <label for="cognome">Cognome</label>
+            <input type="text" id="cognome" name="cognome" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" required />
+        </div>
+        <div class="field">
+          <label for="telefono">Numero di telefono</label>
+          <input type="tel" id="telefono" name="telefono" placeholder="+41 79 123 45 67" required />
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Perché adesso</h2>
+        <div class="field">
+          <label>Perché senti il bisogno di iniziare un percorso proprio adesso?</label>
+          <div class="check-group">
+            <label><input type="checkbox" name="motivo_percorso" value="Non mi riconosco più allo specchio"> Non mi riconosco più allo specchio</label>
+            <label><input type="checkbox" name="motivo_percorso" value="Mi sento sempre senza energie"> Mi sento sempre senza energie</label>
+            <label><input type="checkbox" name="motivo_percorso" value="Non so mai cosa mangiare"> Non so mai cosa mangiare</label>
+            <label><input type="checkbox" name="motivo_percorso" value="Ho un rapporto conflittuale con il cibo"> Ho un rapporto conflittuale con il cibo</label>
+            <label><input type="checkbox" name="motivo_percorso" value="Voglio migliorare la mia alimentazione una volta per tutte"> Voglio migliorare la mia alimentazione una volta per tutte</label>
+            <div class="other-row">
+              <input type="checkbox" name="motivo_percorso" value="Altro" style="flex:none;">
+              <input type="text" name="motivo_percorso_altro" placeholder="Altro" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Il percorso giusto per te</h2>
+
+        <div class="field">
+          <label>Stai cercando una dieta o un percorso di affiancamento personalizzato che ti porti a essere indipendente dalle diete una volta per tutte per risultati duraturi?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="tipo_percorso" value="Una dieta standard" required> Una dieta standard</label>
+            <label><input type="radio" name="tipo_percorso" value="Un percorso di affiancamento personalizzato per risultati duraturi"> Un percorso di affiancamento personalizzato per risultati duraturi</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Sei consapevole che un percorso di affiancamento come questo richiede un investimento mensile superiore a 50-100€, ben diverso dai programmi standard?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="consapevole_investimento" value="Si" required> Si</label>
+            <label><input type="radio" name="consapevole_investimento" value="No"> No</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="note_prima_call">C'è qualcosa che vuoi condividere prima della call e che pensi sia importante che io sappia?</label>
+          <textarea id="note_prima_call" name="note_prima_call" required></textarea>
+        </div>
+
+        <div class="field">
+          <label>Se verrai accettato/a in uno dei miei percorsi quando vorresti iniziare?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="quando_iniziare" value="Subito" required> Subito</label>
+            <label><input type="radio" name="quando_iniziare" value="Tra 15 giorni"> Tra 15 giorni</label>
+            <label><input type="radio" name="quando_iniziare" value="Tra un mese"> Tra un mese</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2 class="section-title">Il tuo obiettivo</h2>
+
+        <div class="field">
+          <label>Come ti piacerebbe sentirti alla fine di un percorso nutrizionale?</label>
+          <div class="check-group">
+            <label><input type="checkbox" name="obiettivo_finale" value="Sentirmi leggera e meno gonfia"> Sentirmi leggera e meno gonfia</label>
+            <label><input type="checkbox" name="obiettivo_finale" value="Capire cosa mangiare senza ansia e stress"> Capire cosa mangiare senza ansia e stress</label>
+            <label><input type="checkbox" name="obiettivo_finale" value="Avere più energia"> Avere più energia</label>
+            <label><input type="checkbox" name="obiettivo_finale" value="Sentirmi più sicuro/a nel mio corpo"> Sentirmi più sicuro/a nel mio corpo</label>
+            <label><input type="checkbox" name="obiettivo_finale" value="Sapere cosa mangiare in ogni occasione"> Sapere cosa mangiare in ogni occasione</label>
+            <div class="other-row">
+              <input type="checkbox" name="obiettivo_finale" value="Altro" style="flex:none;">
+              <input type="text" name="obiettivo_finale_altro" placeholder="Altro" />
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Hai già provato a fare diete in passato?</label>
+          <div class="radio-group">
+            <label><input type="radio" name="diete_passato" value="Si" required> Si</label>
+            <label><input type="radio" name="diete_passato" value="No"> No</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="diete_non_funzionato">Se si, cosa non ha funzionato per te?</label>
+          <textarea id="diete_non_funzionato" name="diete_non_funzionato"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="impatto_vita">Come pensi che il raggiungimento del tuo obiettivo influenzerà altri aspetti della tua vita?</label>
+          <textarea id="impatto_vita" name="impatto_vita" required></textarea>
+        </div>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="submit">Invia la tua candidatura</button>
+      </div>
+    </form>
+
+    <div class="thankyou" id="thankyou" hidden>
+      <h2 id="thankyou-title">Grazie! 🌿</h2>
+      <p>La tua candidatura è arrivata. Ti ricontatterò a breve per fissare la call.</p>
+    </div>
+  </main>
+
+  <div class="foot">
+    <div class="foot-left">
+      <p>Mariastella Pollini - Biologa nutrizionista</p>
+      <p>pollini-m@hotmail.com</p>
+    </div>
+    <div class="foot-right">Materiale riservato a chi si candida per il percorso</div>
+  </div>
+
+<script>
+  var form = document.getElementById('candidatura-form');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var data = new FormData(form);
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {'Accept':'application/json'},
+      body: data
+    }).then(function(res){ return res.json(); }).then(function(json){
+      if(!json.success){ throw new Error(json.message || 'errore'); }
+      var nome = document.getElementById('nome').value.trim();
+      if(nome){ document.getElementById('thankyou-title').textContent = 'Grazie ' + nome + '! 🌿'; }
+      form.hidden = true;
+      document.getElementById('thankyou').hidden = false;
+      window.scrollTo(0,0);
+    }).catch(function(){
+      alert('Qualcosa è andato storto nell\'invio. Riprova tra poco o scrivimi su WhatsApp.');
+    });
+  });
+</script>
+
+</body>
+</html>
