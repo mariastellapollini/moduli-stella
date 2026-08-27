@@ -252,15 +252,22 @@
       method: 'POST',
       headers: {'Accept':'application/json'},
       body: data
-    }).then(function(res){ return res.json(); }).then(function(json){
-      if(!json.success){ throw new Error(json.message || 'errore'); }
+    }).then(function(res){
+      return res.text().then(function(text){
+        var json;
+        try { json = JSON.parse(text); }
+        catch(e){ throw new Error('DIAGNOSTICA - risposta non JSON (status ' + res.status + '): ' + text.slice(0,300)); }
+        if(!json.success){ throw new Error('DIAGNOSTICA - ' + (json.message || ('HTTP ' + res.status))); }
+        return json;
+      });
+    }).then(function(json){
       var nome = document.getElementById('nome').value.trim();
       if(nome){ document.getElementById('thankyou-title').textContent = 'Grazie ' + nome + '! 🌿'; }
       form.hidden = true;
       document.getElementById('thankyou').hidden = false;
       window.scrollTo(0,0);
-    }).catch(function(){
-      alert('Qualcosa è andato storto nell\'invio. Riprova tra poco o scrivimi su WhatsApp.');
+    }).catch(function(err){
+      alert((err && err.message) ? err.message : 'Qualcosa è andato storto nell\'invio. Riprova tra poco o scrivimi su WhatsApp.');
     });
   });
 </script>
