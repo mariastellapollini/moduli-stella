@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Recap call di controllo · Mariastella Pollini</title>
+<style>
+  :root{
+    --cream:#f2ead9;
+    --cream-card:#e9ded0;
+    --cream-card-2:#efe6d6;
+    --sage:#7f9574;
+    --sage-deep:#5c7052;
+    --mocha:#6b5039;
+    --mocha-deep:#4f3a29;
+    --terracotta:#b76a45;
+    --ink:#2b241a;
+    --ink-soft:#5a4d3d;
+    --rule:#d8c9ac;
+    --max:760px;
+  }
+  :root[data-theme="dark"]{
+    --cream:#1d1912;
+    --cream-card:#2a231a;
+    --cream-card-2:#251f17;
+    --sage:#93a687;
+    --sage-deep:#a9baa0;
+    --terracotta:#d99269;
+    --ink:#ecdfc9;
+    --ink-soft:#c9b89e;
+    --rule:#3c3324;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cream:#1d1912;
+      --cream-card:#2a231a;
+      --cream-card-2:#251f17;
+      --sage:#93a687;
+      --sage-deep:#a9baa0;
+      --terracotta:#d99269;
+      --ink:#ecdfc9;
+      --ink-soft:#c9b89e;
+      --rule:#3c3324;
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    margin:0;
+  }
+  .page{max-width:var(--max);margin:0 auto;padding:0 24px 96px;}
+  .cover{padding:64px 24px 40px;text-align:center;}
+  .eyebrow{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:13px;letter-spacing:0.32em;text-transform:uppercase;color:var(--sage-deep);margin:0 0 18px;}
+  h1.title{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:700;font-size:clamp(32px,6vw,50px);letter-spacing:0.02em;margin:0 0 8px;text-wrap:balance;color:var(--ink);}
+  .subtitle{font-size:18px;color:var(--ink-soft);max-width:520px;margin:0 auto;text-wrap:balance;}
+  .cover-rule{width:64px;height:2px;background:var(--terracotta);margin:28px auto;border:none;}
+  .by-line{font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--sage-deep);}
+  .section-bar{background:var(--sage);color:#fbf7ee;padding:14px 22px;border-radius:2px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:56px 0 24px;break-after:avoid;page-break-after:avoid;break-inside:avoid;page-break-inside:avoid;}
+  :root[data-theme="dark"] .section-bar{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .section-bar{color:#20291c;} }
+  .section-bar h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:15px;letter-spacing:0.28em;text-transform:uppercase;margin:0;color:inherit;}
+  .section-bar .tag{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.85;color:inherit;white-space:nowrap;}
+  p{margin:0 0 16px;max-width:65ch;}
+  .lede{font-size:17px;color:var(--ink-soft);text-align:center;}
+
+  /* checklist a punti, corta e visiva */
+  .checklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .checklist li{display:flex;align-items:flex-start;gap:14px;background:var(--cream-card);border:1px solid var(--rule);border-radius:8px;padding:16px 18px;break-inside:avoid;page-break-inside:avoid;}
+  .checklist .mark{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--sage);color:#fbf7ee;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+  :root[data-theme="dark"] .checklist .mark{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .checklist .mark{color:#20291c;} }
+  .checklist .txt{margin:0;}
+  .checklist .txt b{display:block;color:var(--ink);font-size:15.5px;margin-bottom:2px;}
+  .checklist .txt span{display:block;color:var(--ink-soft);font-size:13.5px;}
+
+  /* griglia lista della spesa */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media (max-width:620px){ .grid-3{grid-template-columns:1fr;} }
+  .food-card{background:var(--cream-card-2);border:1px solid var(--rule);border-radius:8px;padding:18px 18px 16px;break-inside:avoid;page-break-inside:avoid;}
+  .food-card h3{font-family:Georgia,serif;font-size:15px;letter-spacing:0.04em;text-transform:uppercase;color:var(--sage-deep);margin:0 0 12px;}
+  .chip-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;}
+  .chip-list li{font-size:14.5px;color:var(--ink);padding-left:14px;position:relative;}
+  .chip-list li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:50%;background:var(--terracotta);}
+
+  .tip{background:var(--mocha);color:#f6ecdd;border-radius:4px;padding:16px 20px;margin:24px 0 0;font-size:14.5px;break-inside:avoid;page-break-inside:avoid;text-align:center;}
+  .tip p{margin:0;max-width:none;color:#f6ecdd;}
+  .closing{text-align:center;padding:56px 24px 8px;}
+  .closing p{margin:0 auto 14px;max-width:52ch;}
+  .signature{font-family:Georgia,serif;font-style:italic;font-size:20px;color:var(--sage-deep);margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <p class="eyebrow">Mariastella Pollini · Biologa Nutrizionista</p>
+    <h1 class="title">Recap<br>call di controllo</h1>
+    <p class="subtitle">Federica</p>
+    <hr class="cover-rule">
+    <p class="by-line">Recap della nostra chiacchierata</p>
+  </div>
+
+  <p class="lede">Due cose per questo mese: dove mettere la testa e cosa avere sempre pronto in casa.</p>
+
+  <div class="section-bar">
+    <h2>Su cosa lavoriamo</h2>
+    <span class="tag">I punti chiave</span>
+  </div>
+
+  <ul class="checklist">
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Il bilancio è mensile, non giornaliero</b><span>Le giornate "no" di questo mese hanno pesato zero: peso, girovita, fianchi e coscia sono scesi comunque.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Attenta al "tanto ormai"</b><span>Non è il pasto a rovinare la giornata, è il pensiero dopo. Si chiama what the hell effect.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Ora mangi di più, non di meno</b><span>Stai costruendo massa magra, bruci più di giugno: più fame = bisogno reale, non sgarro.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Aggiungi, non inventare</b><span>Più quinoa, una scatoletta in più, pane in più nel pasto che già fai. Zero spuntini nuovi da pensare.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Obiettivo del mese: zero effort in cucina</b><span>Meglio pronto e semplice che perfetto e faticoso.</span></p>
+    </li>
+  </ul>
+
+  <div class="section-bar">
+    <h2>Lista della spesa smart</h2>
+    <span class="tag">Zero effort in cucina</span>
+  </div>
+
+  <div class="grid-3">
+    <div class="food-card">
+      <h3>Carboidrati veloci</h3>
+      <ul class="chip-list">
+        <li>Gnocchi</li>
+        <li>Ravioli ricotta e spinaci</li>
+        <li>Pasta fresca</li>
+        <li>Farro o orzo in scatola</li>
+        <li>Cous cous</li>
+        <li>Polenta pronta</li>
+        <li>Pane a fette surgelato</li>
+      </ul>
+    </div>
+    <div class="food-card">
+      <h3>Proteine pronte</h3>
+      <ul class="chip-list">
+        <li>Legumi in scatola</li>
+        <li>Sgombro e tonno al naturale</li>
+        <li>Pollo già cotto</li>
+        <li>Gamberi surgelati puliti</li>
+        <li>Salmone affumicato</li>
+        <li>Uova</li>
+      </ul>
+    </div>
+    <div class="food-card">
+      <h3>Verdure smart</h3>
+      <ul class="chip-list">
+        <li>Verdure surgelate (pronte in pochi minuti)</li>
+        <li>Insalata già lavata</li>
+        <li>Verdure grigliate già pronte</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tip">
+    <p>Il bilancio si guarda a fine mese, non a fine pasto.</p>
+  </div>
+
+  <div class="closing">
+    <p>Domande? Scrivimi pure su WhatsApp.</p>
+    <p class="signature">A presto,<br>Mariastella</p>
+  </div>
+
+</div>
+</body>
+</html>
