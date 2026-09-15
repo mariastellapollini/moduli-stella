@@ -108,6 +108,11 @@
   }
   .custom-field input[type="number"]:focus{outline:2px solid var(--brown-deep);outline-offset:1px;}
   .custom-field .unit-label{font-size:14px;color:#5c4735;}
+  .custom-field select{
+    width:100%;border:1px solid var(--rule);border-radius:8px;padding:9px 10px;
+    font-family:inherit;font-size:15px;color:var(--brown);background:#fff;
+  }
+  .custom-field select:focus{outline:2px solid var(--brown-deep);outline-offset:1px;}
   .reset-link{display:inline-block;margin-top:6px;font-size:13px;color:var(--brown-deep);cursor:pointer;text-decoration:underline;background:none;border:none;padding:0;font-family:inherit;}
   .dyn{display:block;margin-top:6px;padding:8px 10px;background:var(--beige-soft);border-radius:7px;font-size:14px;color:#4a3527;}
   .dyn.match{background:#e8f0e2;}
@@ -156,7 +161,25 @@
           </div>
         </div>
       </div>
-      <button class="reset-link" id="resetBtn" type="button">Ripristina i valori standard (60 g e 10 g)</button>
+      <div class="custom-row">
+        <div class="custom-field">
+          <label for="protType">La tua porzione proteica</label>
+          <select id="protType">
+            <option value="carne">Carne</option>
+            <option value="pesce">Pesce</option>
+            <option value="formaggio">Formaggio</option>
+            <option value="legumi">Legumi cotti</option>
+          </select>
+        </div>
+        <div class="custom-field">
+          <label for="protInput">Quanti grammi</label>
+          <div class="unit-row">
+            <input type="number" id="protInput" min="20" max="300" step="5" value="100">
+            <span class="unit-label">g</span>
+          </div>
+        </div>
+      </div>
+      <button class="reset-link" id="resetBtn" type="button">Ripristina i valori standard</button>
     </div>
 
     <div class="section">
@@ -171,7 +194,7 @@
         <div class="ref-card">
           <span class="emoji">🍗</span>
           <h3>Proteine</h3>
-          <p>Un palmo di mano di carne, pesce o legumi — <span class="g">circa 150 g</span></p>
+          <p><span id="refProtDesc">Un palmo di mano</span> di <span id="refProtFood">carne</span> — <span class="g" id="refProt">100 g</span></p>
         </div>
         <div class="ref-card">
           <span class="emoji">🫒</span>
@@ -359,6 +382,48 @@
       return "Due pugni chiusi";
     }
 
+    var PROTEIN_DEFAULTS = { carne: 100, pesce: 150, formaggio: 50, legumi: 150 };
+    var PROTEIN_LABELS = { carne: "carne", pesce: "pesce", formaggio: "formaggio", legumi: "legumi cotti" };
+    var PROTEIN_BANDS = {
+      carne: [
+        { max: 70, label: "Meno di un palmo di mano" },
+        { max: 95, label: "Quasi un palmo di mano" },
+        { max: 130, label: "Un palmo di mano" },
+        { max: 165, label: "Un palmo abbondante" },
+        { max: 200, label: "Un palmo e mezzo" },
+        { max: Infinity, label: "Due palmi di mano" }
+      ],
+      pesce: [
+        { max: 80, label: "Meno di un palmo di mano" },
+        { max: 110, label: "Un palmo di mano (tipico per il pesce azzurro)" },
+        { max: 165, label: "Una mano aperta (tipico per il pesce bianco)" },
+        { max: 200, label: "Una mano aperta abbondante" },
+        { max: Infinity, label: "Una mano e mezza aperta" }
+      ],
+      formaggio: [
+        { max: 25, label: "Un dito" },
+        { max: 40, label: "Un dito e mezzo" },
+        { max: 65, label: "Due dita" },
+        { max: 90, label: "Tre dita" },
+        { max: Infinity, label: "Un palmo di formaggio" }
+      ],
+      legumi: [
+        { max: 100, label: "Una tazza" },
+        { max: 130, label: "Una tazza abbondante" },
+        { max: 175, label: "Una tazza colma" },
+        { max: 220, label: "Una tazza e mezza" },
+        { max: Infinity, label: "Due tazze" }
+      ]
+    };
+
+    function proteinDescriptor(category, g){
+      var bands = PROTEIN_BANDS[category] || PROTEIN_BANDS.carne;
+      for (var i = 0; i < bands.length; i++){
+        if (g <= bands[i].max) return bands[i].label;
+      }
+      return bands[bands.length - 1].label;
+    }
+
     function spoonDescriptor(g){
       var spoons = g / 10;
       if (spoons <= 0.75) return "Meno di un cucchiaio";
@@ -393,6 +458,12 @@
       document.getElementById('refCarbDesc').textContent = handDescriptor(carbInput);
       document.getElementById('refFatDesc').textContent = spoonDescriptor(fatInput);
 
+      var protType = document.getElementById('protType').value;
+      var protInput = parseFloat(document.getElementById('protInput').value) || PROTEIN_DEFAULTS[protType];
+      document.getElementById('refProt').textContent = protInput + ' g';
+      document.getElementById('refProtFood').textContent = PROTEIN_LABELS[protType];
+      document.getElementById('refProtDesc').textContent = proteinDescriptor(protType, protInput);
+
       discreteFoods.forEach(function(food){
         var r = classify(carbTarget, food);
         var el = document.getElementById('dyn-' + food.id);
@@ -420,9 +491,16 @@
 
     document.getElementById('carbInput').addEventListener('input', recompute);
     document.getElementById('fatInput').addEventListener('input', recompute);
+    document.getElementById('protInput').addEventListener('input', recompute);
+    document.getElementById('protType').addEventListener('change', function(){
+      document.getElementById('protInput').value = PROTEIN_DEFAULTS[this.value];
+      recompute();
+    });
     document.getElementById('resetBtn').addEventListener('click', function(){
       document.getElementById('carbInput').value = CARB_DEFAULT;
       document.getElementById('fatInput').value = FAT_DEFAULT;
+      document.getElementById('protType').value = 'carne';
+      document.getElementById('protInput').value = PROTEIN_DEFAULTS.carne;
       recompute();
     });
     recompute();
