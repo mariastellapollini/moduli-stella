@@ -95,6 +95,23 @@
   .rule-box p:last-child{margin-bottom:0;}
   .rule-box a{color:var(--brown-deep);}
 
+  .custom-card{background:#fff;border:2px solid var(--brown-deep);border-radius:12px;padding:20px 22px;margin-bottom:34px;}
+  .custom-card h3{margin:0 0 6px;font-size:16px;}
+  .custom-card .custom-sub{font-size:14px;color:#7a6754;margin:0 0 16px;}
+  .custom-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:10px;}
+  @media (max-width:520px){.custom-row{grid-template-columns:1fr;}}
+  .custom-field label{display:block;font-size:13.5px;font-weight:600;margin-bottom:6px;}
+  .custom-field .unit-row{display:flex;align-items:center;gap:8px;}
+  .custom-field input[type="number"]{
+    width:90px;border:1px solid var(--rule);border-radius:8px;padding:9px 10px;
+    font-family:inherit;font-size:15px;color:var(--brown);background:#fff;
+  }
+  .custom-field input[type="number"]:focus{outline:2px solid var(--brown-deep);outline-offset:1px;}
+  .custom-field .unit-label{font-size:14px;color:#5c4735;}
+  .reset-link{display:inline-block;margin-top:6px;font-size:13px;color:var(--brown-deep);cursor:pointer;text-decoration:underline;background:none;border:none;padding:0;font-family:inherit;}
+  .dyn{display:block;margin-top:6px;padding:8px 10px;background:var(--beige-soft);border-radius:7px;font-size:14px;color:#4a3527;}
+  .dyn.match{background:#e8f0e2;}
+
   .closing{background:var(--beige);padding:34px 24px 40px;margin-top:10px;}
   .closing-inner{max-width:var(--max);margin:0 auto;text-align:center;}
   .closing p{font-size:15.5px;max-width:58ch;margin:0 auto 10px;}
@@ -120,6 +137,28 @@
 
   <main>
 
+    <div class="custom-card">
+      <h3>Personalizza le tue quantità 🎯</h3>
+      <p class="custom-sub">Il tuo piano ha porzioni diverse da quelle standard? Inseriscile qui: tutte le equivalenze qui sotto si aggiornano da sole, secondo lo stesso metodo.</p>
+      <div class="custom-row">
+        <div class="custom-field">
+          <label for="carbInput">La tua porzione di pasta o cereali</label>
+          <div class="unit-row">
+            <input type="number" id="carbInput" min="30" max="150" step="5" value="60">
+            <span class="unit-label">g</span>
+          </div>
+        </div>
+        <div class="custom-field">
+          <label for="fatInput">Il tuo condimento (olio)</label>
+          <div class="unit-row">
+            <input type="number" id="fatInput" min="5" max="30" step="1" value="10">
+            <span class="unit-label">g</span>
+          </div>
+        </div>
+      </div>
+      <button class="reset-link" id="resetBtn" type="button">Ripristina i valori standard (60 g e 10 g)</button>
+    </div>
+
     <div class="section">
       <div class="section-title">Il tuo pasto di riferimento</div>
       <p class="section-sub">Un pasto principale tipo è composto così — tienilo a mente come immagine, non come conto da fare.</p>
@@ -127,7 +166,7 @@
         <div class="ref-card">
           <span class="emoji">🍚</span>
           <h3>Carboidrati</h3>
-          <p>Un pugno chiuso di pasta o cereali crudi — <span class="g">50-70 g</span></p>
+          <p>Un pugno chiuso di pasta o cereali crudi — <span class="g" id="refCarb">50-70 g</span></p>
         </div>
         <div class="ref-card">
           <span class="emoji">🍗</span>
@@ -137,7 +176,7 @@
         <div class="ref-card">
           <span class="emoji">🫒</span>
           <h3>Grassi</h3>
-          <p>Un cucchiaio di olio — <span class="g">10 g</span></p>
+          <p>Un cucchiaio di olio — <span class="g" id="refFat">10 g</span></p>
         </div>
         <div class="ref-card">
           <span class="emoji">🥦</span>
@@ -183,6 +222,7 @@
         <div class="food-body">
           <span class="tag eq">Equivale a</span>
           <p>La tua porzione di pasta o cereali, con solo un po' più di grassi.</p>
+          <span class="dyn" id="dyn-piadina-banco"></span>
           <span class="tag done">Come completo il pasto</span>
           <p>Aggiungi una proteina, una fonte di grassi (se non già usata in cottura) e verdura. Esempio: piadina con pollo sfilacciato, maionese e insalata.</p>
         </div>
@@ -193,16 +233,17 @@
         <div class="food-body">
           <span class="tag eq">Equivale a</span>
           <p>Un po' più carboidrati del solito pasto — va benissimo lo stesso.</p>
+          <span class="dyn" id="dyn-piadina-bar"></span>
           <span class="tag done">Come completo il pasto</span>
           <p>Prendila completa (proteina + grasso + verdura). A cena scegli un piatto voluminoso di proteine e verdure senza altro carboidrato: zuppe o passati di verdura con legumi aiutano molto.</p>
         </div>
       </details>
 
       <details class="food">
-        <summary>🍜 Noodles secchi (130 g)</summary>
+        <summary>🍜 Noodles secchi</summary>
         <div class="food-body">
-          <span class="tag eq">Equivale a</span>
-          <p>La tua porzione di pasta o cereali.</p>
+          <span class="tag eq">Per la tua quota, prendine circa</span>
+          <p><span id="dyn-noodles">130 g</span></p>
           <span class="tag done">Come completo il pasto</span>
           <p>Aggiungi una proteina, un cucchiaio di olio (o tahina) e verdura. Esempio: noodles con gamberetti, un cucchiaio di olio, verdure e salsa di soia.</p>
         </div>
@@ -213,6 +254,7 @@
         <div class="food-body">
           <span class="tag eq">Equivale a</span>
           <p>Un pasto già completo: carboidrati, proteine e grassi ci sono già tutti dentro (i grassi un po' più abbondanti del solito).</p>
+          <span class="dyn" id="dyn-lasagne-pronte"></span>
           <span class="tag done">Come completo il pasto</span>
           <p>Aggiungi solo la verdura. A cena, per riequilibrare, scegli proteine e verdure senza condimento aggiunto.</p>
         </div>
@@ -223,16 +265,17 @@
         <div class="food-body">
           <span class="tag eq">Equivale a</span>
           <p>Una porzione grande come il palmo della tua mano e spessa 3 dita.</p>
+          <span class="dyn" id="dyn-lasagna-casa"></span>
           <span class="tag done">Come completo il pasto</span>
           <p>Aggiungi verdura abbondante. A cena riequilibra come sopra, con un secondo piatto di proteine e verdure leggero.</p>
         </div>
       </details>
 
       <details class="food">
-        <summary>🍞 Focaccia (50 g, mezza porzione da forno)</summary>
+        <summary>🍞 Focaccia</summary>
         <div class="food-body">
-          <span class="tag eq">Equivale a</span>
-          <p>I carboidrati e i grassi del pasto insieme (100 g sarebbero già troppi su entrambi).</p>
+          <span class="tag eq">Per la tua quota, prendine circa</span>
+          <p><span id="dyn-focaccia">50 g</span> (i carboidrati e i grassi del pasto insieme).</p>
           <span class="tag done">Come completo il pasto</span>
           <p>Aggiungi solo proteina e verdura, niente altro condimento. Esempio: focaccia con Philadelphia light, salmone affumicato e verdure.</p>
         </div>
@@ -243,8 +286,9 @@
         <div class="food-body">
           <span class="tag eq">Equivale a</span>
           <p>Coprono già i grassi e buona parte dei carboidrati del pasto, con una piccola base di proteine.</p>
+          <span class="dyn" id="dyn-sofficini"></span>
           <span class="tag done">Come completo il pasto</span>
-          <p>Aggiungi 1-2 fette di pane, verdura abbondante e integra un po' di proteine (mezza porzione di carne, pesce, tonno, oppure uno yogurt anche nel pomeriggio). Niente olio aggiunto, i grassi ci sono già.</p>
+          <p>Aggiungi verdura abbondante e integra un po' di proteine (mezza porzione di carne, pesce, tonno, oppure uno yogurt anche nel pomeriggio). Niente olio aggiunto, i grassi ci sono già.</p>
         </div>
       </details>
 
@@ -252,7 +296,7 @@
         <summary>🎂 Torta fatta in casa (1 fetta su 8)</summary>
         <div class="food-body">
           <span class="tag eq">Equivale a</span>
-          <p>La tua colazione, se la ricetta segue proporzioni standard di farina e zucchero.</p>
+          <p>La tua colazione, se la ricetta segue proporzioni standard di farina e zucchero. (Questa scheda segue la tua colazione standard, non la porzione di pasta impostata qui sopra — se la tua colazione ha quantità diverse, dimmelo e la adatto.)</p>
           <span class="tag done">Come completo il pasto</span>
           <p>Aggiungi sempre una proteina, come uno yogurt o un bicchiere di latte — la torta da sola ne ha poca. Come spuntino basta mezza fetta, accompagnata da tè o tisana.</p>
         </div>
@@ -261,16 +305,16 @@
     </div>
 
     <div class="section">
-      <div class="section-title">Sostituire l'olio (10 g, un cucchiaio)</div>
-      <p class="section-sub">Vale se il primo ingrediente in etichetta è un grasso (olio, burro, panna...).</p>
+      <div class="section-title">Sostituire l'olio (<span id="oilRefLabel">10 g, un cucchiaio</span>)</div>
+      <p class="section-sub">Vale se il primo ingrediente in etichetta è un grasso (olio, burro, panna...). Le quantità qui sotto seguono il tuo condimento personalizzato.</p>
       <div class="oil-grid">
-        <div class="oil-item"><b>Burro</b>10 g</div>
-        <div class="oil-item"><b>Panna da cucina</b>50 g (3 cucchiai)</div>
-        <div class="oil-item"><b>Besciamella</b>60 g (3-4 cucchiai)</div>
-        <div class="oil-item"><b>Avocado</b>un terzo, circa 50-60 g</div>
-        <div class="oil-item"><b>Maionese</b>1 cucchiaio colmo (15 g)</div>
-        <div class="oil-item"><b>Pesto</b>1 cucchiaio colmo (15 g)</div>
-        <div class="oil-item"><b>Sugo pronto a base di grasso</b>(es. alle noci) 20 g, 2 cucchiai</div>
+        <div class="oil-item"><b>Burro</b><span id="oil-burro">10 g</span></div>
+        <div class="oil-item"><b>Panna da cucina</b><span id="oil-panna">50 g</span></div>
+        <div class="oil-item"><b>Besciamella</b><span id="oil-besciamella">60 g</span></div>
+        <div class="oil-item"><b>Avocado</b><span id="oil-avocado">circa 55 g</span></div>
+        <div class="oil-item"><b>Maionese</b><span id="oil-maionese">15 g</span></div>
+        <div class="oil-item"><b>Pesto</b><span id="oil-pesto">15 g</span></div>
+        <div class="oil-item"><b>Sugo pronto a base di grasso</b>(es. alle noci) <span id="oil-sugo">20 g</span></div>
       </div>
       <div class="oil-note">I sughi che <b>non</b> hanno un grasso come primo ingrediente (es. amatriciana, dove il primo è pomodoro) puoi aggiungerli liberamente: la quantità di grassi è trascurabile, non serve sostituire l'olio.</div>
     </div>
@@ -291,6 +335,77 @@
       <p class="firma">Dott.ssa Mariastella Pollini 🌿</p>
     </div>
   </section>
+
+  <script>
+    var CARB_DEFAULT = 60, CARB_PER_DEFAULT = 37.5;
+    var FAT_DEFAULT = 10;
+    var BREAD_SLICE_CARB = 15;
+
+    var discreteFoods = [
+      { id: 'piadina-banco', carbFixed: 38, less: "Ti dà un po' meno carboidrati della tua quota", more: "Ti dà un po' più carboidrati della tua quota", match: "Corrisponde quasi esattamente alla tua quota: prendila così com'è." },
+      { id: 'piadina-bar', carbFixed: 58, less: "Ti dà un po' meno carboidrati della tua quota", more: "Ti dà un po' più carboidrati della tua quota — va bene lo stesso", match: "Corrisponde quasi esattamente alla tua quota." },
+      { id: 'lasagne-pronte', carbFixed: 42, less: "Ti dà un po' meno carboidrati della tua quota", more: "Ti dà un po' più carboidrati della tua quota — non è un problema", match: "Corrisponde quasi esattamente alla tua quota." },
+      { id: 'sofficini', carbFixed: 28, less: "Ti dà un po' meno carboidrati della tua quota", more: "Ti dà un po' più carboidrati della tua quota", match: "Corrisponde quasi esattamente alla tua quota." }
+    ];
+
+    function roundTo(n, step){ return Math.round(n/step)*step; }
+
+    function classify(target, food){
+      var ratio = target / food.carbFixed;
+      if (ratio > 1.15){
+        var gap = target - food.carbFixed;
+        var slices = Math.max(1, Math.round(gap / BREAD_SLICE_CARB));
+        return { cls:'', text: food.less + ': aggiungi circa ' + slices + (slices > 1 ? ' fette' : ' fetta') + ' di pane in più.' };
+      }
+      if (ratio < 0.87){
+        return { cls:'', text: food.more + ': se vuoi, alleggerisci leggermente il pasto successivo, ma va benissimo anche così.' };
+      }
+      return { cls:'match', text: food.match };
+    }
+
+    function recompute(){
+      var carbInput = parseFloat(document.getElementById('carbInput').value) || CARB_DEFAULT;
+      var fatInput = parseFloat(document.getElementById('fatInput').value) || FAT_DEFAULT;
+      var carbTarget = CARB_PER_DEFAULT * (carbInput / CARB_DEFAULT);
+      var fatRatio = fatInput / FAT_DEFAULT;
+
+      document.getElementById('refCarb').textContent = carbInput + ' g';
+      document.getElementById('refFat').textContent = fatInput + ' g';
+
+      discreteFoods.forEach(function(food){
+        var r = classify(carbTarget, food);
+        var el = document.getElementById('dyn-' + food.id);
+        if (el){ el.textContent = r.text; el.className = 'dyn ' + r.cls; }
+      });
+
+      document.getElementById('dyn-noodles').textContent = roundTo(130 * (carbTarget / CARB_PER_DEFAULT), 5) + ' g';
+      document.getElementById('dyn-focaccia').textContent = roundTo(50 * (carbTarget / CARB_PER_DEFAULT), 5) + ' g';
+
+      var lasagnaCasaEl = document.getElementById('dyn-lasagna-casa');
+      var ratio = carbTarget / CARB_PER_DEFAULT;
+      if (ratio > 1.15){ lasagnaCasaEl.textContent = "Per la tua quota, fai una porzione leggermente più abbondante di quella indicata."; lasagnaCasaEl.className = 'dyn'; }
+      else if (ratio < 0.87){ lasagnaCasaEl.textContent = "Per la tua quota, va bene anche una porzione un po' più contenuta di quella indicata."; lasagnaCasaEl.className = 'dyn'; }
+      else { lasagnaCasaEl.textContent = "Per la tua quota, la porzione indicata sopra va già bene così."; lasagnaCasaEl.className = 'dyn match'; }
+
+      document.getElementById('oilRefLabel').textContent = fatInput + ' g';
+      document.getElementById('oil-burro').textContent = roundTo(10 * fatRatio, 1) + ' g';
+      document.getElementById('oil-panna').textContent = roundTo(50 * fatRatio, 5) + ' g';
+      document.getElementById('oil-besciamella').textContent = roundTo(60 * fatRatio, 5) + ' g';
+      document.getElementById('oil-avocado').textContent = 'circa ' + roundTo(55 * fatRatio, 5) + ' g';
+      document.getElementById('oil-maionese').textContent = roundTo(15 * fatRatio, 1) + ' g';
+      document.getElementById('oil-pesto').textContent = roundTo(15 * fatRatio, 1) + ' g';
+      document.getElementById('oil-sugo').textContent = roundTo(20 * fatRatio, 5) + ' g';
+    }
+
+    document.getElementById('carbInput').addEventListener('input', recompute);
+    document.getElementById('fatInput').addEventListener('input', recompute);
+    document.getElementById('resetBtn').addEventListener('click', function(){
+      document.getElementById('carbInput').value = CARB_DEFAULT;
+      document.getElementById('fatInput').value = FAT_DEFAULT;
+      recompute();
+    });
+    recompute();
+  </script>
 
 </body>
 </html>
