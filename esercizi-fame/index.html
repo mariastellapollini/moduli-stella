@@ -106,6 +106,11 @@
   .scale-row .scale-val{flex:none;width:28px;text-align:center;font-weight:700;font-size:16px;}
   .scale-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px;}
 
+  .steps-list{margin:0;padding-left:22px;}
+  .steps-list li{font-size:15px;margin-bottom:12px;color:var(--brown);}
+  .steps-list li::marker{font-weight:700;color:var(--brown-deep);}
+  .steps-list li:last-child{margin-bottom:0;}
+
   .callout{background:var(--beige);border-radius:10px;padding:16px 20px;margin-bottom:20px;font-size:14.5px;}
   .callout strong{display:block;margin-bottom:4px;}
 
@@ -188,7 +193,7 @@ var SCHEDE = {
     title: `Consapevolezza`,
     intro: `Fai questo esercizio dopo aver praticato per qualche giorno gli esercizi 1 e 2: a quel punto avrai già più familiarità con le tue sensazioni di fame. È particolarmente importante esercitarsi nel mangiare con consapevolezza: il lavoro non dev'essere su cosa mangiare ma sul come lo si mangia. Cerca di goderti il momento, vivendolo attivamente e non distrattamente.`,
     fields: [
-      { t:'chips', id:'praticato', label:`Cosa hai messo in pratica questa volta?`, opts:[
+      { t:'list', label:`Segui questi passaggi, uno dietro l'altro:`, items:[
         'Consuma quell’alimento seduto/a a tavola: scegli l’alimento di cui hai voglia, non l’alimento che pensi sia “meglio” dal punto di vista nutrizionale.',
         'Scegli una porzione definita: ad esempio 3 biscotti o 3 palline di gelato oppure un pezzo di cioccolato.',
         'Parti da piccole porzioni e metti tutto in un piattino/ciotolina. Non pescare dal sacchetto/dalla confezione/dal barattolo/dalla vaschetta.',
@@ -263,6 +268,10 @@ function renderField(f){
       </div>
       <div class="scale-ends"><span>0</span><span>10</span></div>
     </div>`;
+  }
+  if(f.t==='list'){
+    var steps = f.items.map(function(o){ return `<li>${esc(o)}</li>`; }).join('');
+    return `<div class="field"><label>${esc(f.label)}</label><ol class="steps-list">${steps}</ol></div>`;
   }
   if(f.t==='txt'){
     return `<div class="field"><label>${esc(f.label)}</label><input type="text" oninput="draft['${f.id}']=this.value" placeholder="Scrivi qui..."></div>`;
