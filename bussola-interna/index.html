@@ -489,7 +489,7 @@ function renderHome(){
         </div>
       </div>
       <div class="card">
-        <p class="diario-count">Se vuoi, puoi mandare a Mariastella un riepilogo di quello che hai scritto qui, prima della vostra prossima visita. Scegli tu se tenerlo privato o condividerlo così da poterne parlare.</p>
+        <p class="diario-count">Se vuoi, puoi mandare a Mariastella un riepilogo di quello che hai scritto qui, prima della vostra prossima call. Scegli tu se tenerlo privato o condividerlo così da poterne parlare.</p>
         <div class="btn-row">
           <button class="btn-ghost btn" onclick="navigate('invia')">Invia un riepilogo alla tua nutrizionista</button>
         </div>
@@ -718,7 +718,7 @@ function renderInvia(){
     <main>
       <a class="back-link" href="#" onclick="navigate('home');return false;">&lsaquo; Torna alla bussola</a>
       <h2>Invia un riepilogo</h2>
-      <p class="scheda-intro">Scegli tu se tenerlo privato o condividerlo con Mariastella prima della vostra prossima visita. Se lo condividi, potrete parlarne insieme in call e capire insieme cosa provare a migliorare. Puoi farlo tutte le volte che vuoi.</p>
+      <p class="scheda-intro">Scegli tu se tenerlo privato o condividerlo con Mariastella prima della vostra prossima call. Se lo condividi, potrete parlarne insieme e capire insieme cosa provare a migliorare. Puoi farlo tutte le volte che vuoi.</p>
       <div class="field">
         <label>Nome e cognome</label>
         <input type="text" id="invia_nome" placeholder="Come ti chiami">
@@ -810,7 +810,7 @@ function sendRiepilogo(){
     document.getElementById('app').innerHTML = `
       <main>
         <h2>Riepilogo inviato</h2>
-        <p class="scheda-intro">Mariastella lo riceverà prima della vostra prossima visita. A presto.</p>
+        <p class="scheda-intro">Mariastella lo riceverà prima della vostra prossima call. A presto.</p>
         <div class="btn-row"><button class="btn" onclick="navigate('home')">Torna alla bussola</button></div>
       </main>
     `;
