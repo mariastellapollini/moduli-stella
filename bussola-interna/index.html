@@ -188,8 +188,8 @@
 var PHASES = [
   { id:'sentire', num:1, title:'Sentire il corpo', accent:'var(--brown-deep)', cadenza:'Ad ogni pasto, nelle prime settimane', schede:['s1','s2','s3'] },
   { id:'schemi', num:2, title:'Riconoscere schemi e regole', accent:'var(--rose)', cadenza:'Quando emerge un episodio significativo', schede:['s4','s5'] },
-  { id:'bisogno', num:3, title:'Distinguere fame e bisogno', accent:'var(--sage)', cadenza:'Nei momenti di difficolta, quando serve', schede:['s6','s7','s8','s9'] },
-  { id:'flessibilita', num:4, title:'Consolidare la flessibilita', accent:'var(--ochre)', cadenza:'Con cadenza settimanale', schede:['s10','s11','s12'] }
+  { id:'bisogno', num:3, title:'Distinguere fame e bisogno', accent:'var(--sage)', cadenza:'Nei momenti di difficoltà, quando serve', schede:['s6','s7','s8','s9'] },
+  { id:'flessibilità', num:4, title:'Consolidare la flessibilità', accent:'var(--ochre)', cadenza:'Con cadenza settimanale', schede:['s10','s11','s12'] }
 ];
 
 var SCHEDE = {
@@ -198,7 +198,7 @@ var SCHEDE = {
     intro: `Prima di iniziare a mangiare, fermati per qualche istante.`,
     fields: [
       { t:'chips', id:'corpo', label:`Cosa noto nel mio corpo?`, opts:['Fame','Stanchezza','Tensione','Vuoto allo stomaco','Voglia di mangiare','Irrequietezza'], other:true },
-      { t:'scale', id:'intensita', label:`Quanto e intensa la fame in questo momento?` },
+      { t:'scale', id:'intensita', label:`Quanto è intensa la fame in questo momento?` },
       { t:'ta', id:'vogliaDi', label:`Cosa mi va di mangiare?` },
       { t:'ta', id:'pensieri', label:`Ci sono pensieri o giudizi sul fatto che io "dovrei" o "non dovrei" mangiare?` },
       { t:'ta', id:'bisogno', label:`Di cosa avrei bisogno in questo momento?` }
@@ -222,14 +222,14 @@ var SCHEDE = {
     fields: [
       { t:'chips', id:'fisico', label:`Come mi sento fisicamente?`, opts:['Ancora affamato/a','Soddisfatto/a','Pieno/a','Molto pieno/a','A disagio'], other:true },
       { t:'ta', id:'emotivo', label:`Come mi sento emotivamente?` },
-      { t:'ta', id:'primoPensiero', label:`Qual e il primo pensiero che mi viene dopo aver mangiato?` },
-      { t:'chips1', id:'tipoPensiero', label:`E un pensiero descrittivo o un giudizio?`, opts:['Descrittivo','Giudizio'] },
-      { t:'ta', id:'senzaGiudizio', label:`Se non dovessi giudicare cio che ho mangiato, cosa noterei semplicemente?` }
+      { t:'ta', id:'primoPensiero', label:`Qual è il primo pensiero che mi viene dopo aver mangiato?` },
+      { t:'chips1', id:'tipoPensiero', label:`È un pensiero descrittivo o un giudizio?`, opts:['Descrittivo','Giudizio'] },
+      { t:'ta', id:'senzaGiudizio', label:`Se non dovessi giudicare ciò che ho mangiato, cosa noterei semplicemente?` }
     ]
   },
   s4: {
     title: `Le mie regole alimentari`,
-    intro: `A volte il rapporto con il cibo e influenzato da regole che abbiamo interiorizzato. Completa le frasi cosi come ti vengono, senza correggerle.`,
+    intro: `A volte il rapporto con il cibo è influenzato da regole che abbiamo interiorizzato. Completa le frasi così come ti vengono, senza correggerle.`,
     fields: [
       { t:'fillin', id:'regola1', before:`Non dovrei mangiare`, after:`.` },
       { t:'fillin', id:'regola2', before:`Posso mangiare`, mid:`solo se`, after:`.` },
@@ -237,7 +237,7 @@ var SCHEDE = {
       { t:'fillin', id:'regola4', before:`Se mangio`, mid:`allora significa che`, after:`.` },
       { t:'fillin', id:'regola5', before:`Un pasto perfetto per me dovrebbe essere`, after:`.` },
       { t:'ta', id:'daDoveDeriva', label:`Da dove penso possa derivare questa regola?` },
-      { t:'scale', id:'rigidita', label:`Quanto e rigida?` },
+      { t:'scale', id:'rigidita', label:`Quanto è rigida?` },
       { t:'ta', id:'cosaSuccede', label:`Cosa succede quando non riesco a rispettarla?` }
     ]
   },
@@ -245,10 +245,10 @@ var SCHEDE = {
     title: `Pensiero, emozione, comportamento`,
     intro: `Ripercorri una situazione recente che ha coinvolto il cibo.`,
     fields: [
-      { t:'ta', id:'situazione', label:`Situazione: che cosa e successo?` },
+      { t:'ta', id:'situazione', label:`Situazione: che cosa è successo?` },
       { t:'ta', id:'pensiero', label:`Pensiero: che cosa mi sono detto/a?` },
       { t:'chips', id:'emozione', label:`Emozione: che cosa ho provato?`, opts:['Ansia','Colpa','Vergogna','Tristezza','Rabbia','Paura','Piacere','Sollievo'], other:true },
-      { t:'scale', id:'intensitaEmozione', label:`Intensita dell'emozione` },
+      { t:'scale', id:'intensitaEmozione', label:`Intensità dell'emozione` },
       { t:'ta', id:'comportamento', label:`Comportamento: che cosa ho fatto?` },
       { t:'ta', id:'conseguenzaSubito', label:`Conseguenza: come mi sono sentito/a subito dopo?` },
       { t:'ta', id:'conseguenzaDopo', label:`E qualche ora dopo?` }
@@ -256,32 +256,32 @@ var SCHEDE = {
   },
   s6: {
     title: `Fame o bisogno?`,
-    intro: `Non sempre cio che ci porta verso il cibo e esclusivamente la fame fisica. Prima di interpretare l'esperienza, osserva semplicemente.`,
+    intro: `Non sempre ciò che ci porta verso il cibo è esclusivamente la fame fisica. Prima di interpretare l'esperienza, osserva semplicemente.`,
     fields: [
       { t:'ta', id:'cosaSento', label:`Cosa sento in questo momento?` },
-      { t:'ta', id:'quandoIniziato', label:`Quando e iniziato?` },
+      { t:'ta', id:'quandoIniziato', label:`Quando è iniziato?` },
       { t:'ta', id:'doveCorpo', label:`Dove lo percepisco nel corpo?` },
       { t:'ta', id:'sceglierei', label:`Se potessi scegliere liberamente, cosa desidererei?` },
       { t:'chips', id:'altroBisogno', label:`Di che cosa potrei avere bisogno, oltre al cibo?`, opts:['Riposo','Conforto','Distrazione','Contatto con qualcuno','Piacere','Sicurezza','Una pausa'], other:true },
-      { t:'note', text:`Avere un'emozione o un bisogno diverso dalla fame non significa che mangiare sia sbagliato. L'obiettivo e aumentare la consapevolezza, non controllare il comportamento.` }
+      { t:'note', text:`Avere un'emozione o un bisogno diverso dalla fame non significa che mangiare sia sbagliato. L'obiettivo è aumentare la consapevolezza, non controllare il comportamento.` }
     ]
   },
   s7: {
     title: `Il linguaggio che uso con me stesso/a`,
-    intro: `Completa le frasi, poi prova a riscriverle in modo piu descrittivo e meno giudicante.`,
+    intro: `Completa le frasi, poi prova a riscriverle in modo più descrittivo e meno giudicante.`,
     fields: [
-      { t:'fillin', id:'frase1', before:`Ho mangiato troppo perche`, after:`.` },
+      { t:'fillin', id:'frase1', before:`Ho mangiato troppo perché`, after:`.` },
       { t:'fillin', id:'frase2', before:`Avrei dovuto`, after:`.` },
-      { t:'fillin', id:'frase3', before:`Non ho abbastanza forza di volonta perche`, after:`.` },
-      { t:'ta', id:'da', label:`Da: riscrivi qui la frase cosi come ti e venuta.` },
-      { t:'ta', id:'a', label:`A: riscrivila in modo piu descrittivo. Esempio: invece di "ho fallito perche ho mangiato troppo", "ho mangiato piu di quanto desiderassi e voglio capire cosa e successo".` }
+      { t:'fillin', id:'frase3', before:`Non ho abbastanza forza di volontà perché`, after:`.` },
+      { t:'ta', id:'da', label:`Da: riscrivi qui la frase così come ti è venuta.` },
+      { t:'ta', id:'a', label:`A: riscrivila in modo più descrittivo. Esempio: invece di "ho fallito perché ho mangiato troppo", "ho mangiato più di quanto desiderassi e voglio capire cosa è successo".` }
     ]
   },
   s8: {
     title: `Dopo una giornata difficile`,
-    intro: `Pensa a una giornata nella quale il rapporto con il cibo e stato particolarmente difficile.`,
+    intro: `Pensa a una giornata nella quale il rapporto con il cibo è stato particolarmente difficile.`,
     fields: [
-      { t:'ta', id:'primaSuccesso', label:`Che cosa e successo prima?` },
+      { t:'ta', id:'primaSuccesso', label:`Che cosa è successo prima?` },
       { t:'ta', id:'stavoFisicamente', label:`Come stavo fisicamente?` },
       { t:'ta', id:'stavoEmotivamente', label:`Come stavo emotivamente?` },
       { t:'ta', id:'pensieriPresenti', label:`Quali pensieri erano presenti?` },
@@ -294,7 +294,7 @@ var SCHEDE = {
     title: `Osservare senza compensare`,
     intro: `Dopo aver mangiato qualcosa che considero troppo o sbagliato, quali impulsi compaiono?`,
     fields: [
-      { t:'chips', id:'impulsi', label:`Seleziona quello che riconosci:`, opts:['Saltare il pasto successivo','Ridurre il cibo','Fare attivita fisica per compensare','Pesarmi','Controllare il corpo','Evitare determinati alimenti','Rimproverarmi'], other:true },
+      { t:'chips', id:'impulsi', label:`Seleziona quello che riconosci:`, opts:['Saltare il pasto successivo','Ridurre il cibo','Fare attività fisica per compensare','Pesarmi','Controllare il corpo','Evitare determinati alimenti','Rimproverarmi'], other:true },
       { t:'ta', id:'temoSe', label:`Che cosa temo possa succedere se non compenso?` },
       { t:'ta', id:'penseroInvece', label:`Che cosa penso potrebbe accadere invece se interrompessi questo meccanismo?` }
     ]
@@ -302,30 +302,30 @@ var SCHEDE = {
   s10: {
     title: `Una settimana di osservazione`,
     intro: `Una scheda per ogni giorno della settimana.`,
-    note: `Questa scheda non serve per contare calorie, quantita o errori. Serve solo per osservare gli schemi che si ripetono.`,
+    note: `Questa scheda non serve per contare calorie, quantità o errori. Serve solo per osservare gli schemi che si ripetono.`,
     special: 'settimana',
     fields: [
-      { t:'ta', id:'schemaRicorrente', label:`Alla fine della settimana: quale schema ricorre piu spesso?` },
-      { t:'ta', id:'situazioneFacile', label:`Quale situazione mi e risultata piu facile?` },
-      { t:'ta', id:'situazioneDifficile', label:`Quale piu difficile?` },
+      { t:'ta', id:'schemaRicorrente', label:`Alla fine della settimana: quale schema ricorre più spesso?` },
+      { t:'ta', id:'situazioneFacile', label:`Quale situazione mi è risultata più facile?` },
+      { t:'ta', id:'situazioneDifficile', label:`Quale più difficile?` },
       { t:'ta', id:'cosaImparatoSuDiMe', label:`Cosa ho imparato su di me?` }
     ]
   },
   s11: {
-    title: `Esperimento di flessibilita`,
+    title: `Esperimento di flessibilità`,
     intro: `Scegli una piccola regola alimentare che senti particolarmente rigida.`,
     fields: [
-      { t:'ta', id:'laMiaRegola', label:`La mia regola e:` },
+      { t:'ta', id:'laMiaRegola', label:`La mia regola è:` },
       { t:'ta', id:'cosaTemo', label:`Cosa temo possa succedere se la modifico?` },
-      { t:'scale', id:'forzaPaura', label:`Quanto e forte questa paura?` },
+      { t:'scale', id:'forzaPaura', label:`Quanto è forte questa paura?` },
       { t:'ta', id:'cosaScelgo', label:`Il mio esperimento: che cosa scelgo di fare diversamente?` },
-      { t:'ta', id:'cosaESuccesso', label:`Cosa e successo realmente?` },
+      { t:'ta', id:'cosaESuccesso', label:`Cosa è successo realmente?` },
       { t:'ta', id:'cosaHoProvato', label:`Cosa ho provato?` },
       { t:'ta', id:'cosaPossoImparare', label:`Cosa posso imparare da questa esperienza?` }
     ]
   },
   s12: {
-    title: `Verso un rapporto piu flessibile`,
+    title: `Verso un rapporto più flessibile`,
     intro: `Completa le frasi, poi guarda al prossimo piccolo passo. Non serve cambiare tutto insieme.`,
     fields: [
       { t:'fillin', id:'vorrei1', before:`Vorrei riuscire a mangiare senza`, after:`.` },
@@ -333,15 +333,15 @@ var SCHEDE = {
       { t:'fillin', id:'vorrei3', before:`Vorrei smettere di giudicarmi quando`, after:`.` },
       { t:'fillin', id:'vorrei4', before:`Vorrei ascoltare maggiormente`, after:`.` },
       { t:'fillin', id:'vorrei5', before:`Vorrei concedermi`, after:`.` },
-      { t:'ta', id:'relazioneSerena', label:`Una relazione piu serena con il cibo, per me, significherebbe:` },
-      { t:'ta', id:'prossimoPasso', label:`Una cosa piccola che posso provare questa settimana e:` },
+      { t:'ta', id:'relazioneSerena', label:`Una relazione più serena con il cibo, per me, significherebbe:` },
+      { t:'ta', id:'prossimoPasso', label:`Una cosa piccola che posso provare questa settimana è:` },
       { t:'scale', id:'realistica', label:`Quanto mi sembra realistica?` }
     ]
   }
 };
 
 var SCHEDA_ORDER = ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12'];
-var GIORNI = ['Lunedi','Martedi','Mercoledi','Giovedi','Venerdi','Sabato','Domenica'];
+var GIORNI = ['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica'];
 
 var state = { view:'home' };
 var draft = {};
@@ -447,7 +447,7 @@ function renderHome(){
   var dayCount = Object.keys(recentDays).length;
   var countText = dayCount>0
     ? `Negli ultimi 7 giorni hai raccolto osservazioni in ${dayCount} giorni diversi.`
-    : `Non c'e ancora nessuna osservazione salvata. Puoi iniziare quando vuoi, con la scheda che ti sembra piu adatta a questo momento.`;
+    : `Non c'è ancora nessuna osservazione salvata. Puoi iniziare quando vuoi, con la scheda che ti sembra più adatta a questo momento.`;
 
   var phasesHtml = PHASES.map(function(p){
     var rows = p.schede.map(function(sid){
@@ -475,7 +475,7 @@ function renderHome(){
     <div class="hero">
       <div class="hero-inner">
         <h1>Bussola Interna</h1>
-        <p>Qui puoi fermarti un momento prima, durante e dopo i pasti e osservare cosa succede nel tuo corpo. Puoi farlo con calma, senza cercare la perfezione: basta iniziare a notare, con curiosita invece che con giudizio.</p>
+        <p>Qui puoi fermarti un momento prima, durante e dopo i pasti e osservare cosa succede nel tuo corpo. Puoi farlo con calma, senza cercare la perfezione: basta iniziare a notare, con curiosità invece che con giudizio.</p>
       </div>
     </div>
     <main>
@@ -489,12 +489,12 @@ function renderHome(){
         </div>
       </div>
       <div class="card">
-        <p class="diario-count">Se vuoi, puoi mandare a Mariastella un riepilogo di quello che hai scritto qui, prima della vostra prossima visita. Scegli tu se tenerlo privato o condividerlo cosi da poterne parlare.</p>
+        <p class="diario-count">Se vuoi, puoi mandare a Mariastella un riepilogo di quello che hai scritto qui, prima della vostra prossima visita. Scegli tu se tenerlo privato o condividerlo così da poterne parlare.</p>
         <div class="btn-row">
           <button class="btn-ghost btn" onclick="navigate('invia')">Invia un riepilogo alla tua nutrizionista</button>
         </div>
       </div>
-      <a class="footer-link" href="#" onclick="navigate('studio');return false;">Modalita Studio</a>
+      <a class="footer-link" href="#" onclick="navigate('studio');return false;">Modalità Studio</a>
       <p class="signoff">Ci vediamo in call, Mariastella &#127807;</p>
     </main>
   `;
@@ -516,7 +516,7 @@ function renderScheda(schedaId, opts){
     }).join('');
   }
   var backTarget = opts.studio ? 'studio' : 'home';
-  var backLabel = opts.studio ? 'Torna alla modalita studio' : 'Torna alla bussola';
+  var backLabel = opts.studio ? 'Torna alla modalità studio' : 'Torna alla bussola';
   var saveFn = opts.studio ? `saveStudioEntry('${schedaId}')` : `savePatientEntry('${schedaId}')`;
 
   var body = `
@@ -647,7 +647,7 @@ function renderStudio(){
 
   document.getElementById('app').innerHTML = `
     <div class="studio-top">
-      <span class="studio-badge">Modalita Studio</span>
+      <span class="studio-badge">Modalità Studio</span>
       <a class="footer-link" href="#" onclick="navigate('home');return false;">Esci</a>
     </div>
     <div class="studio-main">
@@ -718,7 +718,7 @@ function renderInvia(){
     <main>
       <a class="back-link" href="#" onclick="navigate('home');return false;">&lsaquo; Torna alla bussola</a>
       <h2>Invia un riepilogo</h2>
-      <p class="scheda-intro">Se vuoi, puoi mandare a Mariastella un riepilogo di quello che hai scritto qui, prima della vostra prossima visita. Nessuno vede queste pagine se non scegli tu di condividerle, e puoi farlo tutte le volte che vuoi.</p>
+      <p class="scheda-intro">Scegli tu se tenerlo privato o condividerlo con Mariastella prima della vostra prossima visita. Se lo condividi, potrete parlarne insieme in call e capire insieme cosa provare a migliorare. Puoi farlo tutte le volte che vuoi.</p>
       <div class="field">
         <label>Nome e cognome</label>
         <input type="text" id="invia_nome" placeholder="Come ti chiami">
@@ -810,7 +810,7 @@ function sendRiepilogo(){
     document.getElementById('app').innerHTML = `
       <main>
         <h2>Riepilogo inviato</h2>
-        <p class="scheda-intro">Mariastella lo ricevera prima della vostra prossima visita. A presto.</p>
+        <p class="scheda-intro">Mariastella lo riceverà prima della vostra prossima visita. A presto.</p>
         <div class="btn-row"><button class="btn" onclick="navigate('home')">Torna alla bussola</button></div>
       </main>
     `;
