@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bilanciamo senza calcoli — Mariastella Pollini</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#faf6ee;
+    --beige:#ead9c5;
+    --beige-soft:#f1e6d6;
+    --brown:#4a3527;
+    --brown-deep:#55402e;
+    --rule:#d9c6ac;
+    --max:760px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--cream);}
+  body{
+    font-family:'Poppins',-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    color:var(--brown);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    max-width:var(--max);margin:0 auto;padding:28px 24px 20px;
+  }
+  .eyebrow{font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--brown);}
+  .mark{width:34px;height:34px;flex:none;}
+  .mark path{fill:none;stroke:var(--brown);stroke-width:5;}
+
+  .hero{background:var(--beige);padding:40px 24px 36px;}
+  .hero-inner{max-width:var(--max);margin:0 auto;}
+  .hero h1{font-size:clamp(24px,4vw,32px);font-weight:600;margin:0 0 14px;line-height:1.3;}
+  .hero p{font-size:16px;margin:0 0 10px;max-width:64ch;}
+
+  main{max-width:var(--max);margin:0 auto;padding:36px 24px 8px;}
+
+  .section{margin-bottom:38px;}
+  .section-title{
+    font-weight:700;font-size:15px;letter-spacing:0.04em;text-transform:uppercase;
+    color:var(--brown);margin:0 0 18px;padding-bottom:8px;border-bottom:2px solid var(--rule);
+  }
+  .section-sub{font-size:14.5px;color:#7a6754;margin:-10px 0 18px;}
+
+  .ref-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;}
+  @media (max-width:520px){.ref-grid{grid-template-columns:1fr;}}
+  .ref-card{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:18px 20px;}
+  .ref-card .emoji{font-size:26px;line-height:1;margin-bottom:8px;display:block;}
+  .ref-card h3{margin:0 0 6px;font-size:16px;}
+  .ref-card p{margin:0;font-size:14.5px;color:#5c4735;}
+  .ref-card .g{font-weight:600;color:var(--brown);}
+
+  .steps{counter-reset:step;}
+  .step{display:flex;gap:16px;background:#fff;border:1px solid var(--rule);border-radius:12px;padding:18px 20px;margin-bottom:12px;}
+  .step .num{
+    counter-increment:step;flex:none;width:34px;height:34px;border-radius:50%;
+    background:var(--brown-deep);color:#fbf5ea;display:flex;align-items:center;justify-content:center;
+    font-weight:700;font-size:15px;
+  }
+  .step .num::before{content:counter(step);}
+  .step h3{margin:0 0 6px;font-size:16px;}
+  .step p{margin:0;font-size:14.5px;color:#5c4735;}
+
+  .food{border:1px solid var(--rule);border-radius:10px;margin-bottom:12px;overflow:hidden;background:#fff;}
+  .food summary{
+    cursor:pointer;font-weight:600;font-size:15.5px;
+    padding:16px 20px;color:var(--brown);background:var(--beige);
+    display:flex;align-items:center;justify-content:space-between;list-style:none;gap:10px;
+  }
+  .food summary::-webkit-details-marker{display:none;}
+  .food summary::after{content:'+';font-size:20px;font-weight:400;flex:none;}
+  .food[open] summary::after{content:'–';}
+  .food-body{padding:16px 20px 18px;}
+  .food-body .tag{
+    display:block;font-weight:700;font-size:12px;letter-spacing:.04em;text-transform:uppercase;
+    color:#8a6f52;margin:0 0 4px;
+  }
+  .food-body .tag.eq{margin-top:0;}
+  .food-body .tag.done{margin-top:14px;}
+  .food-body p{margin:0 0 4px;font-size:15px;}
+
+  .oil-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+  @media (max-width:520px){.oil-grid{grid-template-columns:1fr;}}
+  .oil-item{background:var(--beige-soft);border-radius:10px;padding:12px 16px;font-size:14.5px;}
+  .oil-item b{display:block;font-size:15px;margin-bottom:2px;}
+  .oil-note{background:#fff;border:1px dashed var(--rule);border-radius:10px;padding:14px 16px;margin-top:12px;font-size:14px;color:#5c4735;}
+
+  .rule-box{background:var(--beige-soft);border-radius:10px;padding:16px 20px;margin-bottom:10px;}
+  .rule-box p{margin:0 0 6px;font-size:14.5px;}
+  .rule-box p:last-child{margin-bottom:0;}
+  .rule-box a{color:var(--brown-deep);}
+
+  .closing{background:var(--beige);padding:34px 24px 40px;margin-top:10px;}
+  .closing-inner{max-width:var(--max);margin:0 auto;text-align:center;}
+  .closing p{font-size:15.5px;max-width:58ch;margin:0 auto 10px;}
+  .closing .firma{font-weight:600;font-size:16px;margin-top:16px;}
+
+  [hidden]{display:none !important;}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <span class="eyebrow">BILANCIAMO</span>
+    <svg class="mark" viewBox="0 0 34 34"><path d="M4 4 H26 V26"/></svg>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <h1>Bilanciamo i pasti senza fare calcoli 🍽️</h1>
+      <p>Qui trovi lo stesso metodo della tua guida, ma pronto all'uso: niente tabelle da moltiplicare o dividere. Scegli l'alimento che ti interessa, guarda subito la sua equivalenza e come completare il pasto.</p>
+      <p>Con un po' di pratica riconoscerai da sola come inserire quello che ti piace, senza rinunce.</p>
+    </div>
+  </section>
+
+  <main>
+
+    <div class="section">
+      <div class="section-title">Il tuo pasto di riferimento</div>
+      <p class="section-sub">Un pasto principale tipo è composto così — tienilo a mente come immagine, non come conto da fare.</p>
+      <div class="ref-grid">
+        <div class="ref-card">
+          <span class="emoji">🍚</span>
+          <h3>Carboidrati</h3>
+          <p>Un pugno chiuso di pasta o cereali crudi — <span class="g">50-70 g</span></p>
+        </div>
+        <div class="ref-card">
+          <span class="emoji">🍗</span>
+          <h3>Proteine</h3>
+          <p>Un palmo di mano di carne, pesce o legumi — <span class="g">circa 150 g</span></p>
+        </div>
+        <div class="ref-card">
+          <span class="emoji">🫒</span>
+          <h3>Grassi</h3>
+          <p>Un cucchiaio di olio — <span class="g">10 g</span></p>
+        </div>
+        <div class="ref-card">
+          <span class="emoji">🥦</span>
+          <h3>Verdure</h3>
+          <p>Almeno due mani a coppa, abbondanti — <span class="g">circa 200 g</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Il metodo in 3 passi</div>
+      <div class="steps">
+        <div class="step">
+          <span class="num"></span>
+          <div>
+            <h3>Guarda il primo ingrediente</h3>
+            <p>È scritto per primo quello più presente. Farina → è un carboidrato, come pane, pasta o piadina. Farina + olio o formaggio → carboidrato e grasso insieme, come la focaccia. Olio, burro o panna come primo ingrediente → è un grasso da condimento.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="num"></span>
+          <div>
+            <h3>Leggi, non calcolare</h3>
+            <p>Se l'etichetta ha la colonna "a porzione", guarda direttamente lì i grammi di proteine e confrontali con la tua quota (circa 20-30 g a pasto). Se sono pochi, li integri — vedi il passo 3. Per gli alimenti già trattati qui sotto, l'equivalenza è già pronta: non serve nemmeno leggere l'etichetta.</p>
+          </div>
+        </div>
+        <div class="step">
+          <span class="num"></span>
+          <div>
+            <h3>Completa con le mosse standard</h3>
+            <p>Manca il carboidrato → 1-2 fette di pane. Manca la proteina → mezza porzione di carne, pesce, uovo o uno yogurt (anche spostato a merenda). C'è già il grasso nel prodotto → niente olio aggiunto. La verdura non manca mai, sempre abbondante.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Alimenti pronti: trova subito il tuo equivalente</div>
+      <p class="section-sub">Tocca un alimento per aprirlo.</p>
+
+      <details class="food">
+        <summary>🫓 Piadina da banco (75 g)</summary>
+        <div class="food-body">
+          <span class="tag eq">Equivale a</span>
+          <p>La tua porzione di pasta o cereali, con solo un po' più di grassi.</p>
+          <span class="tag done">Come completo il pasto</span>
+          <p>Aggiungi una proteina, una fonte di grassi (se non già usata in cottura) e verdura. Esempio: piadina con pollo sfilacciato, maionese e insalata.</p>
+        </div>
+      </details>
+
+      <details class="food">
+        <summary>🫓 Piadina al bar (100-130 g)</summary>
+        <div class="food-body">
+          <span class="tag eq">Equivale a</span>
+          <p>Un po' più carboidrati del solito pasto — va benissimo lo stesso.</p>
+          <span class="tag done">Come completo il pasto</span>
+          <p>Prendila completa (proteina + grasso + verdura). A cena scegli un piatto voluminoso di proteine e verdure senza altro carboidrato: zuppe o passati di verdura con legumi aiutano molto.</p>
+        </div>
+      </details>
+
+      <details class="food">
+        <summary>🍜 Noodles secchi (130 g)</summary>
+        <div class="food-body">
+          <span class="tag eq">Equivale a</span>
+          <p>La tua porzione di pasta o cereali.</p>
+          <span class="tag done">Come completo il pasto</span>
+          <p>Aggiungi una proteina, un cucchiaio di olio (o tahina) e verdura. Esempio: noodles con gamberetti, un cucchiaio di olio, verdure e salsa di soia.</p>
+        </div>
+      </details>
+
+      <details class="food">
+        <summary>🍝 Lasagne pronte (1 vaschetta, 350 g)</summary>
+        <div class="food-body">
+          <span class="tag eq">Equivale a</span>
+          <p>Un pasto già completo: carboidrati, proteine e grassi ci sono già tutti dentro (i grassi un po' più abbondanti del solito).</p>
+          <span class="tag done">Come completo il pasto</span>
+          <p>Aggiungi solo la verdura. A cena, per riequilibrare, scegli proteine e verdure senza condimento aggiunto.</p>
+        </div>
+      </details>
+
+      <details class="food">
+        <summary>🍝 Lasagna fatta in casa</summary>
+        <div class="food-body">
+          <span class="tag eq">Equivale a</span>
+          <p>Una porzione grande come il palmo della tua mano e spessa 3 dita.</p>
+          <span class="tag done">Come completo il pasto</span>
+          <p>Aggiungi verdura abbondante. A cena riequilibra come sopra, con un secondo piatto di proteine e verdure leggero.</p>
+        </div>
+      </details>
+
+      <details class="food">
+        <summary>🍞 Focaccia (50 g, mezza porzione da forno)</summary>
+        <div class="food-body">
+          <span class="tag eq">Equivale a</span>
+          <p>I carboidrati e i grassi del pasto insieme (100 g sarebbero già troppi su entrambi).</p>
+          <span class="tag done">Come completo il pasto</span>
+          <p>Aggiungi solo proteina e verdura, niente altro condimento. Esempio: focaccia con Philadelphia light, salmone affumicato e verdure.</p>
+        </div>
+      </details>
+
+      <details class="food">
+        <summary>🍔 Sofficini (2 pezzi, cotti in air fryer)</summary>
+        <div class="food-body">
+          <span class="tag eq">Equivale a</span>
+          <p>Coprono già i grassi e buona parte dei carboidrati del pasto, con una piccola base di proteine.</p>
+          <span class="tag done">Come completo il pasto</span>
+          <p>Aggiungi 1-2 fette di pane, verdura abbondante e integra un po' di proteine (mezza porzione di carne, pesce, tonno, oppure uno yogurt anche nel pomeriggio). Niente olio aggiunto, i grassi ci sono già.</p>
+        </div>
+      </details>
+
+      <details class="food">
+        <summary>🎂 Torta fatta in casa (1 fetta su 8)</summary>
+        <div class="food-body">
+          <span class="tag eq">Equivale a</span>
+          <p>La tua colazione, se la ricetta segue proporzioni standard di farina e zucchero.</p>
+          <span class="tag done">Come completo il pasto</span>
+          <p>Aggiungi sempre una proteina, come uno yogurt o un bicchiere di latte — la torta da sola ne ha poca. Come spuntino basta mezza fetta, accompagnata da tè o tisana.</p>
+        </div>
+      </details>
+
+    </div>
+
+    <div class="section">
+      <div class="section-title">Sostituire l'olio (10 g, un cucchiaio)</div>
+      <p class="section-sub">Vale se il primo ingrediente in etichetta è un grasso (olio, burro, panna...).</p>
+      <div class="oil-grid">
+        <div class="oil-item"><b>Burro</b>10 g</div>
+        <div class="oil-item"><b>Panna da cucina</b>50 g (3 cucchiai)</div>
+        <div class="oil-item"><b>Besciamella</b>60 g (3-4 cucchiai)</div>
+        <div class="oil-item"><b>Avocado</b>un terzo, circa 50-60 g</div>
+        <div class="oil-item"><b>Maionese</b>1 cucchiaio colmo (15 g)</div>
+        <div class="oil-item"><b>Pesto</b>1 cucchiaio colmo (15 g)</div>
+        <div class="oil-item"><b>Sugo pronto a base di grasso</b>(es. alle noci) 20 g, 2 cucchiai</div>
+      </div>
+      <div class="oil-note">I sughi che <b>non</b> hanno un grasso come primo ingrediente (es. amatriciana, dove il primo è pomodoro) puoi aggiungerli liberamente: la quantità di grassi è trascurabile, non serve sostituire l'olio.</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Un alimento che non trovi qui?</div>
+      <div class="rule-box">
+        <p>Applica i 3 passi: guarda il primo ingrediente, leggi i grammi "a porzione" in etichetta, confrontali a occhio con le porzioni della prima sezione — se sono vicini va bene così, se sono molto diversi aggiusta la quantità di conseguenza.</p>
+        <p>Per cercare i valori di un alimento sfuso puoi usare le tabelle del CREA: <a href="https://www.alimentinutrizione.it/tabelle-nutrizionali/ricerca-per-alimento" target="_blank" rel="noopener">alimentinutrizione.it</a>. Per un prodotto confezionato, basta cercare su Google "nome prodotto valori nutrizionali".</p>
+      </div>
+    </div>
+
+  </main>
+
+  <section class="closing">
+    <div class="closing-inner">
+      <p>Non ogni pasto deve essere bilanciato alla perfezione. Bilanciare serve soprattutto a farti stare bene e a non ritrovarti affamata due ore dopo — ma se ogni tanto sgarri non succede nulla: è l'insieme della tua alimentazione a contare, non il singolo pasto.</p>
+      <p class="firma">Dott.ssa Mariastella Pollini 🌿</p>
+    </div>
+  </section>
+
+</body>
+</html>
