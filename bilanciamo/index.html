@@ -166,7 +166,7 @@
         <div class="ref-card">
           <span class="emoji">🍚</span>
           <h3>Carboidrati</h3>
-          <p>Un pugno chiuso di pasta o cereali crudi — <span class="g" id="refCarb">50-70 g</span></p>
+          <p><span id="refCarbDesc">Un pugno chiuso</span> di pasta o cereali crudi — <span class="g" id="refCarb">60 g</span></p>
         </div>
         <div class="ref-card">
           <span class="emoji">🍗</span>
@@ -176,7 +176,7 @@
         <div class="ref-card">
           <span class="emoji">🫒</span>
           <h3>Grassi</h3>
-          <p>Un cucchiaio di olio — <span class="g" id="refFat">10 g</span></p>
+          <p><span id="refFatDesc">Un cucchiaio</span> di olio — <span class="g" id="refFat">10 g</span></p>
         </div>
         <div class="ref-card">
           <span class="emoji">🥦</span>
@@ -350,6 +350,25 @@
 
     function roundTo(n, step){ return Math.round(n/step)*step; }
 
+    function handDescriptor(g){
+      if (g <= 50) return "Una manciata";
+      if (g <= 65) return "Una manciata abbondante, quasi un pugno chiuso";
+      if (g <= 90) return "Un pugno chiuso";
+      if (g <= 115) return "Un pugno chiuso abbondante";
+      if (g <= 140) return "Un pugno e mezzo";
+      return "Due pugni chiusi";
+    }
+
+    function spoonDescriptor(g){
+      var spoons = g / 10;
+      if (spoons <= 0.75) return "Meno di un cucchiaio";
+      if (spoons <= 1.25) return "Un cucchiaio";
+      if (spoons <= 1.75) return "Un cucchiaio e mezzo";
+      if (spoons <= 2.25) return "Due cucchiai";
+      if (spoons <= 2.75) return "Due cucchiai e mezzo";
+      return roundTo(spoons, 0.5) + " cucchiai";
+    }
+
     function classify(target, food){
       var ratio = target / food.carbFixed;
       if (ratio > 1.15){
@@ -371,6 +390,8 @@
 
       document.getElementById('refCarb').textContent = carbInput + ' g';
       document.getElementById('refFat').textContent = fatInput + ' g';
+      document.getElementById('refCarbDesc').textContent = handDescriptor(carbInput);
+      document.getElementById('refFatDesc').textContent = spoonDescriptor(fatInput);
 
       discreteFoods.forEach(function(food){
         var r = classify(carbTarget, food);
