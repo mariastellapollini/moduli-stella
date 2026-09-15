@@ -186,14 +186,22 @@ var SCHEDE = {
   es4: {
     num: 4,
     title: `Consapevolezza`,
-    intro: `Fai questo esercizio dopo aver praticato per qualche giorno gli esercizi 1 e 2: a quel punto avrai già più familiarità con le tue sensazioni di fame. È particolarmente importante esercitarsi nel mangiare con consapevolezza: il lavoro non deve essere su cosa mangiare, ma sul come lo si mangia.`,
+    intro: `Fai questo esercizio dopo aver praticato per qualche giorno gli esercizi 1 e 2: a quel punto avrai già più familiarità con le tue sensazioni di fame. È particolarmente importante esercitarsi nel mangiare con consapevolezza: il lavoro non dev'essere su cosa mangiare ma sul come lo si mangia. Cerca di goderti il momento, vivendolo attivamente e non distrattamente.`,
     fields: [
-      { t:'chips', id:'praticato', label:`Cosa hai messo in pratica questa volta?`, opts:["Ho mangiato seduto/a a tavola, scegliendo l'alimento di cui avevo voglia",'Ho scelto una porzione definita','Ho messo tutto in un piattino o ciotolina','Ho spento i dispositivi elettronici','Mi sono concentrato/a su sapore, consistenza, masticazione','Ho bevuto un bicchiere d\u2019acqua'] },
-      { t:'chips1', id:'quantita', label:`Dopo 20 minuti: come valuti la quantità?`, opts:['Poco','Giusto','Troppo'] },
-      { t:'chips1', id:'appagato', label:`Sei appagato/a dal sapore?`, opts:['Sì','Non del tutto','No'] },
+      { t:'chips', id:'praticato', label:`Cosa hai messo in pratica questa volta?`, opts:[
+        'Consuma quell’alimento seduto/a a tavola: scegli l’alimento di cui hai voglia, non l’alimento che pensi sia “meglio” dal punto di vista nutrizionale.',
+        'Scegli una porzione definita: ad esempio 3 biscotti o 3 palline di gelato oppure un pezzo di cioccolato.',
+        'Parti da piccole porzioni e metti tutto in un piattino/ciotolina. Non pescare dal sacchetto/dalla confezione/dal barattolo/dalla vaschetta.',
+        'Spegni i dispositivi elettronici (no tv, non mangiare mentre scrolli la home di Instagram o mentre leggi un libro).',
+        'Concentrati sul sapore, sulla consistenza, sul numero di masticazioni.',
+        'Bevi un bicchiere d’acqua.'
+      ] },
+      { t:'ta', id:'soddisfazione', label:`Dopo 20 minuti dall'inizio dello spuntino, valuta se e quando sei sazio/a: il cibo ti ha soddisfatto/a?` },
+      { t:'chips1', id:'quantita', label:`Era poco? Era troppo? Era giusto?`, opts:['Poco','Giusto','Troppo'] },
+      { t:'chips1', id:'appagato', label:`Sei o non sei appagato/a dal sapore?`, opts:['Sì','Non del tutto','No'] },
       { t:'ta', id:'pensieri', label:`Che pensieri insorgono?` }
     ],
-    note: `Non serve farlo perfettamente o nell'ordine esatto: l'obiettivo è iniziare a notare, non giudicarti su quello che senti.`
+    note: `Se non sei sazio/a o appagato/a, ricomincia dal primo punto. Non serve farli perfettamente o nell'ordine esatto: l'obiettivo è iniziare a notare, non giudicarti su quello che senti.`
   }
 };
 
