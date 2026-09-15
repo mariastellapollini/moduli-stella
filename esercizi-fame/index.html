@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Esercizi Pratici</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#faf6ee;
+    --beige:#ead9c5;
+    --beige-soft:#f1e6d6;
+    --brown:#4a3527;
+    --brown-deep:#55402e;
+    --rule:#d9c6ac;
+    --rose:#a9647a;
+    --muted:#7a6754;
+    --max:720px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--cream);}
+  body{
+    font-family:'Poppins',-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    color:var(--brown);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-weight:600;}
+  a{color:var(--brown-deep);}
+
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    max-width:var(--max);margin:0 auto;padding:24px 24px 16px;
+  }
+  .eyebrow{
+    font-weight:700;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--brown);
+  }
+  .leaf{font-size:20px;}
+
+  .hero{background:var(--beige);padding:36px 24px 32px;}
+  .hero-inner{max-width:var(--max);margin:0 auto;}
+  .hero h1{font-size:clamp(26px,5vw,34px);margin:0 0 14px;line-height:1.25;text-wrap:balance;}
+  .hero p{font-size:16px;margin:0 0 10px;max-width:60ch;}
+
+  main{max-width:var(--max);margin:0 auto;padding:32px 24px 20px;}
+
+  .section-title{
+    font-weight:700;font-size:14px;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--brown);margin:0 0 16px;padding-bottom:8px;border-bottom:2px solid var(--rule);
+  }
+
+  .scheda-card{border:1px solid var(--rule);border-radius:10px;background:#fff;margin-bottom:14px;overflow:hidden;cursor:pointer;}
+  .scheda-card:hover{background:var(--beige-soft);}
+  .scheda-card-inner{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .scheda-card-title{font-weight:600;font-size:16px;}
+  .scheda-card-sub{font-size:13px;color:var(--muted);margin-top:4px;}
+  .scheda-card-arrow{color:var(--brown-deep);font-size:20px;flex:none;}
+
+  .card{border:1px solid var(--rule);border-radius:10px;background:#fff;padding:20px;margin-bottom:20px;}
+  .diario-count{font-size:15px;margin:0 0 14px;}
+  .btn{
+    display:inline-block;background:var(--brown-deep);color:#fbf5ea;border:none;border-radius:30px;
+    font-family:inherit;font-weight:600;font-size:15px;padding:13px 30px;cursor:pointer;text-decoration:none;text-align:center;
+  }
+  .btn:hover{background:var(--brown);}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;}
+
+  .back-link{display:inline-block;margin-bottom:18px;font-size:14px;font-weight:600;color:var(--brown-deep);text-decoration:none;}
+  .back-link:hover{text-decoration:underline;}
+
+  .scheda-intro{font-size:15px;color:var(--muted);margin:0 0 22px;}
+
+  .field{background:var(--beige-soft);border-radius:10px;padding:18px 20px;margin-bottom:14px;}
+  .field label{display:block;font-weight:500;font-size:15px;margin-bottom:10px;}
+  .field .hint{display:block;font-weight:400;font-size:13px;color:var(--muted);margin-top:-6px;margin-bottom:10px;}
+  .field textarea, .field input[type="text"]{
+    width:100%;border:1px solid var(--rule);border-radius:8px;padding:11px 13px;
+    font-family:inherit;font-size:15px;color:var(--brown);background:#fff;
+  }
+  .field textarea{min-height:64px;resize:vertical;}
+  .field textarea:focus, .field input:focus{outline:2px solid var(--brown-deep);outline-offset:1px;}
+
+  .chip-group{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{
+    font-family:inherit;font-size:14px;padding:9px 16px;border-radius:20px;border:1.5px solid var(--rule);
+    background:#fff;color:var(--brown);cursor:pointer;
+  }
+  .chip.selected{background:var(--brown-deep);border-color:var(--brown-deep);color:#fbf5ea;}
+  .chip-other-input{
+    display:none;margin-top:10px;width:100%;border:1px solid var(--rule);border-radius:8px;padding:10px 12px;
+    font-family:inherit;font-size:14px;background:#fff;color:var(--brown);
+  }
+
+  .scale-row{display:flex;align-items:center;gap:14px;}
+  .scale-row input[type="range"]{flex:1;accent-color:var(--brown-deep);}
+  .scale-row .scale-val{flex:none;width:28px;text-align:center;font-weight:700;font-size:16px;}
+  .scale-ends{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px;}
+
+  .callout{background:var(--beige);border-radius:10px;padding:16px 20px;margin-bottom:20px;font-size:14.5px;}
+  .callout strong{display:block;margin-bottom:4px;}
+
+  .day{border:1px solid var(--rule);border-radius:10px;margin-bottom:14px;overflow:hidden;background:#fff;}
+  .day summary{
+    cursor:pointer;font-weight:700;font-size:14.5px;letter-spacing:.03em;text-transform:uppercase;
+    padding:16px 20px;color:var(--brown);background:var(--beige);
+    display:flex;align-items:center;justify-content:space-between;list-style:none;
+  }
+  .day summary::-webkit-details-marker{display:none;}
+  .day summary::after{content:'+';font-size:20px;font-weight:400;}
+  .day[open] summary::after{content:'\2013';}
+  .day-body{padding:18px 20px 6px;}
+
+  .entry-block{border-top:1px solid var(--rule);padding:14px 0;}
+  .entry-block:first-child{border-top:none;padding-top:0;}
+  .entry-meta{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+  .entry-title{font-weight:600;font-size:15px;}
+  .entry-time{font-size:12px;color:var(--muted);}
+  .entry-row{font-size:14px;margin:4px 0;}
+  .entry-row b{font-weight:600;}
+  .entry-delete{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;padding:0;}
+
+  .footer-link{display:block;text-align:center;font-size:13px;color:var(--muted);margin-top:8px;text-decoration:none;}
+  .signoff{text-align:center;font-size:15px;margin:36px 0 20px;color:var(--muted);}
+
+  .toast{
+    position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);
+    background:var(--brown-deep);color:#fbf5ea;padding:12px 22px;border-radius:24px;font-size:14px;
+    opacity:0;transition:opacity .25s ease, transform .25s ease;pointer-events:none;z-index:20;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  [hidden]{display:none !important;}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+var SCHEDE = {
+  es2: {
+    num: 2,
+    title: `Descrivi la tua fame`,
+    intro: `Prova a fermarti la prossima volta che senti fame, e rispondi a queste domande.`,
+    fields: [
+      { t:'ta', id:'sensazioniFisiche', label:`a) Da dove derivano le sensazioni fisiche che provi quando hai fame?`, hint:`Esempio: stomaco, testa...` },
+      { t:'ta', id:'manoCorpo', label:`b) Posa una mano (quella per te dominante) sulla parte del corpo che ha bisogno della tua attenzione: dove l'hai messa, e perché?`, hint:`Esempio: sulla fronte perché sei stanco/a e vuoi fare una pausa, oppure sullo stomaco perché brontola.` },
+      { t:'chips', id:'statoAnimo', label:`c) Che stato d'animo/fisico provi quando hai fame?`, opts:['Attivo/a','Confuso/a','Stanco/a','Stressato/a','Innervosito/a','Irrequieto/a'], other:true },
+      { t:'scale', id:'intensitaFame', label:`d) Dai un numero alla fame che hai descritto`, hint:`1-2: fame urgente. 3-4: fame presente ma gestibile.` }
+    ]
+  },
+  es3: {
+    num: 3,
+    title: `Individua le distrazioni, pasto per pasto`,
+    intro: `Compila questo modulo subito dopo un pasto. Puoi usarlo tutte le volte che vuoi, un pasto alla volta.`,
+    fields: [
+      { t:'chips1', id:'pasto', label:`Pasto`, opts:['Colazione','Spuntino mattina','Pranzo','Merenda','Cena','Dopo cena'], other:true },
+      { t:'txt', id:'orario', label:`Orario` },
+      { t:'chips1', id:'contesto', label:`Contesto`, opts:['Ufficio','Casa','Davanti al pc','In cucina'], other:true },
+      { t:'chips1', id:'ambiente', label:`Ambiente`, opts:['Da sola','Compagnia piacevole','Compagnia spiacevole','Formale','Informale'], other:true },
+      { t:'chips1', id:'posizione', label:`Posizione`, opts:['A tavola','Sul divano','In piedi','A letto'], other:true },
+      { t:'chips1', id:'umore', label:`Umore`, opts:['Sereno','Angosciato','Preoccupato','Arrabbiato','Felice','Triste','Pensieroso'], other:true },
+      { t:'chips1', id:'velocita', label:`Velocità`, opts:['Con calma','Di fretta','Altalenante'], other:true },
+      { t:'chips', id:'distrazioni', label:`Distrazioni`, opts:['Social media','Lavoro','Studio','Lettura di libri/giornali','Passeggiata','Conversazione telefonica','Tv','Computer','Chat'], other:true }
+    ]
+  },
+  es4: {
+    num: 4,
+    title: `Consapevolezza`,
+    intro: `Fai questo esercizio dopo aver praticato per qualche giorno gli esercizi 1 e 2: a quel punto avrai già più familiarità con le tue sensazioni di fame. Il lavoro non deve essere su cosa mangiare, ma su come lo si mangia.`,
+    fields: [
+      { t:'chips', id:'praticato', label:`Cosa hai messo in pratica questa volta?`, opts:["Ho mangiato seduto/a a tavola, scegliendo l'alimento di cui avevo voglia",'Ho scelto una porzione definita','Ho messo tutto in un piattino o ciotolina','Ho spento i dispositivi elettronici','Mi sono concentrato/a su sapore, consistenza, masticazione','Ho bevuto un bicchiere d\u2019acqua'] },
+      { t:'chips1', id:'quantita', label:`Dopo 20 minuti: come valuti la quantità?`, opts:['Poco','Giusto','Troppo'] },
+      { t:'chips1', id:'appagato', label:`Sei appagato/a dal sapore?`, opts:['Sì','Non del tutto','No'] },
+      { t:'ta', id:'pensieri', label:`Che pensieri insorgono?` }
+    ],
+    note: `Non serve farlo perfettamente o nell'ordine esatto: l'obiettivo è iniziare a notare, non giudicarti su quello che senti.`
+  }
+};
+
+var SCHEDA_ORDER = ['es2','es3','es4'];
+
+var state = { view:'home' };
+var draft = {};
+
+function esc(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  });
+}
+
+function loadEntries(){
+  try{ return JSON.parse(localStorage.getItem('eserciziFame.entries')||'[]'); }
+  catch(e){ return []; }
+}
+function saveEntries(list){
+  try{ localStorage.setItem('eserciziFame.entries', JSON.stringify(list)); }catch(e){}
+}
+
+function showToast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer=setTimeout(function(){ t.classList.remove('show'); }, 2400);
+}
+
+function navigate(view, extra){
+  state = Object.assign({ view:view }, extra||{});
+  draft = {};
+  window.scrollTo(0,0);
+  render();
+}
+
+function renderField(f){
+  if(f.t==='chips' || f.t==='chips1'){
+    var multi = f.t==='chips';
+    var chips = f.opts.map(function(o){
+      var val = esc(o);
+      return `<button type="button" class="chip" onclick="toggleChip(this,'${f.id}','${val.replace(/'/g,"\\'")}',${multi})">${val}</button>`;
+    }).join('');
+    var other='';
+    if(f.other){
+      chips += `<button type="button" class="chip" onclick="toggleOther(this,'${f.id}',${multi})">Altro</button>`;
+      other = `<input type="text" class="chip-other-input" id="${f.id}_altro_input" oninput="draft['${f.id}_altro']=this.value" placeholder="Specifica...">`;
+    }
+    var hint = f.hint ? `<span class="hint">${esc(f.hint)}</span>` : '';
+    return `<div class="field"><label>${esc(f.label)}</label>${hint}<div class="chip-group">${chips}</div>${other}</div>`;
+  }
+  if(f.t==='scale'){
+    var hint2 = f.hint ? `<span class="hint">${esc(f.hint)}</span>` : '';
+    return `<div class="field"><label>${esc(f.label)}</label>${hint2}
+      <div class="scale-row">
+        <input type="range" min="0" max="10" value="0" oninput="draft['${f.id}']=this.value; document.getElementById('${f.id}_val').textContent=this.value">
+        <span class="scale-val" id="${f.id}_val">0</span>
+      </div>
+      <div class="scale-ends"><span>0</span><span>10</span></div>
+    </div>`;
+  }
+  if(f.t==='txt'){
+    return `<div class="field"><label>${esc(f.label)}</label><input type="text" oninput="draft['${f.id}']=this.value" placeholder="Scrivi qui..."></div>`;
+  }
+  if(f.t==='ta'){
+    var hint3 = f.hint ? `<span class="hint">${esc(f.hint)}</span>` : '';
+    return `<div class="field"><label>${esc(f.label)}</label>${hint3}<textarea oninput="draft['${f.id}']=this.value" placeholder="Scrivi qui..."></textarea></div>`;
+  }
+  return '';
+}
+
+function toggleChip(el, fieldId, value, multi){
+  if(multi){
+    if(!draft[fieldId]) draft[fieldId]=[];
+    var idx=draft[fieldId].indexOf(value);
+    if(idx>-1){ draft[fieldId].splice(idx,1); el.classList.remove('selected'); }
+    else { draft[fieldId].push(value); el.classList.add('selected'); }
+  } else {
+    draft[fieldId]=value;
+    var group=el.closest('.chip-group');
+    Array.prototype.forEach.call(group.querySelectorAll('.chip'), function(c){ c.classList.remove('selected'); });
+    el.classList.add('selected');
+  }
+}
+function toggleOther(el, fieldId, multi){
+  var input=document.getElementById(fieldId+'_altro_input');
+  var showing = input.style.display==='block';
+  input.style.display = showing?'none':'block';
+  el.classList.toggle('selected', !showing);
+  if(showing){
+    delete draft[fieldId+'_altro'];
+    input.value='';
+  } else if(!multi){
+    var group=el.closest('.chip-group');
+    Array.prototype.forEach.call(group.querySelectorAll('.chip'), function(c){ if(c!==el) c.classList.remove('selected'); });
+    delete draft[fieldId];
+  }
+}
+
+function renderHome(){
+  var entries = loadEntries();
+  var weekAgo = Date.now() - 7*24*60*60*1000;
+  var recentDays = {};
+  entries.forEach(function(e){ if(e.ts>weekAgo) recentDays[new Date(e.ts).toDateString()]=1; });
+  var dayCount = Object.keys(recentDays).length;
+  var countText = dayCount>0
+    ? `Negli ultimi 7 giorni hai raccolto osservazioni in ${dayCount} giorni diversi.`
+    : `Non c'è ancora nessuna osservazione salvata. Puoi iniziare quando vuoi.`;
+
+  var cards = SCHEDA_ORDER.map(function(sid){
+    var s = SCHEDE[sid];
+    return `<div class="scheda-card" onclick="navigate('scheda',{schedaId:'${sid}'})">
+      <div class="scheda-card-inner">
+        <div>
+          <div class="scheda-card-title">Esercizio ${s.num}: ${esc(s.title)}</div>
+          <div class="scheda-card-sub">${esc(s.intro)}</div>
+        </div>
+        <span class="scheda-card-arrow">&rsaquo;</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('app').innerHTML = `
+    <div class="topbar">
+      <span class="eyebrow">Percorso nutrizionale personalizzato</span>
+      <span class="leaf">&#127807;</span>
+    </div>
+    <div class="hero">
+      <div class="hero-inner">
+        <h1>Esercizi Pratici</h1>
+        <p>La fame biologica è legata a un bisogno del corpo, la fame emotiva a uno stato emotivo. Riconoscere la fame è qualcosa che si può reimparare: questi esercizi ti aiutano ad allenare l'attenzione, senza lo stress di una dieta restrittiva.</p>
+      </div>
+    </div>
+    <main>
+      <div class="section-title">I tuoi esercizi</div>
+      ${cards}
+      <div class="section-title">Il tuo diario</div>
+      <div class="card">
+        <p class="diario-count">${countText}</p>
+        <div class="btn-row">
+          <button class="btn" onclick="navigate('diario')">Vedi il tuo diario</button>
+        </div>
+      </div>
+      <p class="signoff">Ci vediamo in call, Mariastella &#127807;</p>
+    </main>
+  `;
+}
+
+function renderScheda(schedaId){
+  var s = SCHEDE[schedaId];
+  var fieldsHtml = s.fields.map(renderField).join('');
+  var noteHtml = s.note ? `<div class="callout"><strong>Un promemoria</strong>${esc(s.note)}</div>` : '';
+
+  document.getElementById('app').innerHTML = `<main>
+    <a class="back-link" href="#" onclick="navigate('home');return false;">&lsaquo; Torna agli esercizi</a>
+    <h2>Esercizio ${s.num}: ${esc(s.title)}</h2>
+    <p class="scheda-intro">${esc(s.intro)}</p>
+    ${fieldsHtml}
+    ${noteHtml}
+    <div class="btn-row"><button class="btn" onclick="saveEntry('${schedaId}')">Salva osservazione</button></div>
+  </main>`;
+}
+
+function saveEntry(schedaId){
+  var entries = loadEntries();
+  entries.push({ id: Date.now()+'-'+Math.random().toString(36).slice(2), schedaId:schedaId, ts:Date.now(), answers: Object.assign({}, draft) });
+  saveEntries(entries);
+  showToast('Osservazione salvata.');
+  navigate('home');
+}
+
+function formatAnswers(schedaId, answers){
+  var s = SCHEDE[schedaId];
+  var rows = [];
+  s.fields.forEach(function(f){
+    if(f.t==='chips'){
+      var vals=(answers[f.id]||[]).slice();
+      if(answers[f.id+'_altro']) vals.push(answers[f.id+'_altro']);
+      if(vals.length) rows.push(`<div class="entry-row"><b>${esc(f.label)}</b> ${esc(vals.join(', '))}</div>`);
+    } else if(f.t==='chips1'){
+      if(answers[f.id] || answers[f.id+'_altro']){
+        var sep = answers[f.id] && answers[f.id+'_altro'] ? ' - ' : '';
+        rows.push(`<div class="entry-row"><b>${esc(f.label)}</b> ${esc(answers[f.id]||'')}${sep}${esc(answers[f.id+'_altro']||'')}</div>`);
+      }
+    } else if(f.t==='scale'){
+      if(answers[f.id]!=null) rows.push(`<div class="entry-row"><b>${esc(f.label)}</b> ${esc(answers[f.id])}/10</div>`);
+    } else if(f.t==='txt' || f.t==='ta'){
+      if(answers[f.id]) rows.push(`<div class="entry-row"><b>${esc(f.label)}</b> ${esc(answers[f.id])}</div>`);
+    }
+  });
+  return rows.join('') || `<div class="entry-row">Nessuna risposta scritta.</div>`;
+}
+
+function renderDiario(){
+  var entries = loadEntries().sort(function(a,b){ return b.ts-a.ts; });
+  var byDay = {};
+  var order = [];
+  entries.forEach(function(e){
+    var key = new Date(e.ts).toDateString();
+    if(!byDay[key]){ byDay[key]=[]; order.push(key); }
+    byDay[key].push(e);
+  });
+  var html;
+  if(!order.length){
+    html = `<div class="card"><p>Non hai ancora salvato nessuna osservazione. Quando compili un esercizio, la trovi qui.</p></div>`;
+  } else {
+    html = order.map(function(key, idx){
+      var dateLabel = new Date(byDay[key][0].ts).toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' });
+      var blocks = byDay[key].map(function(e){
+        var s = SCHEDE[e.schedaId];
+        var time = new Date(e.ts).toLocaleTimeString('it-IT', { hour:'2-digit', minute:'2-digit' });
+        return `<div class="entry-block">
+          <div class="entry-meta">
+            <span class="entry-title">Esercizio ${s.num}: ${esc(s.title)}</span>
+            <span class="entry-time">${time}</span>
+          </div>
+          ${formatAnswers(e.schedaId, e.answers)}
+          <div style="margin-top:8px"><button class="entry-delete" onclick="deleteEntry('${e.id}')">Elimina questa osservazione</button></div>
+        </div>`;
+      }).join('');
+      return `<details class="day" ${idx===0?'open':''}><summary>${dateLabel}</summary><div class="day-body">${blocks}</div></details>`;
+    }).join('');
+  }
+  document.getElementById('app').innerHTML = `
+    <main>
+      <a class="back-link" href="#" onclick="navigate('home');return false;">&lsaquo; Torna agli esercizi</a>
+      <h2>Il tuo diario</h2>
+      ${html}
+    </main>
+  `;
+}
+
+function deleteEntry(id){
+  if(!confirm('Eliminare questa osservazione?')) return;
+  var entries = loadEntries().filter(function(e){ return e.id!==id; });
+  saveEntries(entries);
+  renderDiario();
+}
+
+function render(){
+  if(state.view==='home') renderHome();
+  else if(state.view==='scheda') renderScheda(state.schedaId);
+  else if(state.view==='diario') renderDiario();
+}
+
+render();
+</script>
+</body>
+</html>
