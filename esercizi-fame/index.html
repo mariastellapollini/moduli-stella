@@ -148,8 +148,17 @@
 
 <script>
 var SCHEDE = {
-  es2: {
+  es1: {
     num: 1,
+    title: `Descrivi le sensazioni fisiche`,
+    intro: `Un piccolo allenamento per iniziare: da qui in poi userai questa stessa attenzione per riconoscere la fame.`,
+    fields: [
+      { t:'ta', id:'sensazioniFisichePipi', label:`a) Prova a capire da dove derivano le sensazioni fisiche che provi quando devi fare pipì`, hint:`Esempio: basso ventre, testa, vescica...` },
+      { t:'chips', id:'statoAnimoPipi', label:`b) Prova a descrivere lo stato d'animo/fisico che provi quando devi fare pipì`, opts:['Attivo/a','Confuso/a','Stanco/a','Stressato/a','Innervosito/a','Irrequieto/a'], other:true }
+    ]
+  },
+  es2: {
+    num: 2,
     title: `Descrivi la tua fame`,
     intro: `Prova a fermarti la prossima volta che senti fame, e rispondi a queste domande.`,
     fields: [
@@ -160,7 +169,7 @@ var SCHEDE = {
     ]
   },
   es3: {
-    num: 2,
+    num: 3,
     title: `Individua le distrazioni, pasto per pasto`,
     intro: `Compila questo modulo subito dopo un pasto. Puoi usarlo tutte le volte che vuoi, un pasto alla volta.`,
     fields: [
@@ -175,9 +184,9 @@ var SCHEDE = {
     ]
   },
   es4: {
-    num: 3,
+    num: 4,
     title: `Consapevolezza`,
-    intro: `Fai questo esercizio dopo aver praticato per qualche giorno l'esercizio 1: a quel punto avrai già più familiarità con le tue sensazioni di fame. Il lavoro non deve essere su cosa mangiare, ma su come lo si mangia.`,
+    intro: `Fai questo esercizio dopo aver praticato per qualche giorno gli esercizi 1 e 2: a quel punto avrai già più familiarità con le tue sensazioni di fame. È particolarmente importante esercitarsi nel mangiare con consapevolezza: il lavoro non deve essere su cosa mangiare, ma sul come lo si mangia.`,
     fields: [
       { t:'chips', id:'praticato', label:`Cosa hai messo in pratica questa volta?`, opts:["Ho mangiato seduto/a a tavola, scegliendo l'alimento di cui avevo voglia",'Ho scelto una porzione definita','Ho messo tutto in un piattino o ciotolina','Ho spento i dispositivi elettronici','Mi sono concentrato/a su sapore, consistenza, masticazione','Ho bevuto un bicchiere d\u2019acqua'] },
       { t:'chips1', id:'quantita', label:`Dopo 20 minuti: come valuti la quantità?`, opts:['Poco','Giusto','Troppo'] },
@@ -188,7 +197,7 @@ var SCHEDE = {
   }
 };
 
-var SCHEDA_ORDER = ['es2','es3','es4'];
+var SCHEDA_ORDER = ['es1','es2','es3','es4'];
 
 var state = { view:'home' };
 var draft = {};
