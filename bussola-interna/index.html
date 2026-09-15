@@ -72,7 +72,18 @@
   .btn:hover{background:var(--brown);}
   .btn-ghost{background:none;color:var(--brown-deep);border:1.5px solid var(--brown-deep);padding:11px 28px;}
   .btn-ghost:hover{background:var(--beige-soft);}
+  .btn:disabled{opacity:.5;cursor:default;}
   .btn-row{display:flex;gap:12px;flex-wrap:wrap;}
+
+  .field select{
+    width:100%;border:1px solid var(--rule);border-radius:8px;padding:10px 12px;
+    font-family:inherit;font-size:15px;color:var(--brown);background:#fff;
+  }
+  .field input[type="text"]{
+    width:100%;border:1px solid var(--rule);border-radius:8px;padding:11px 13px;
+    font-family:inherit;font-size:15px;color:var(--brown);background:#fff;
+  }
+  .invia-note{font-size:13px;color:var(--muted);margin:-6px 0 18px;}
 
   .back-link{display:inline-block;margin-bottom:18px;font-size:14px;font-weight:600;color:var(--brown-deep);text-decoration:none;}
   .back-link:hover{text-decoration:underline;}
@@ -477,6 +488,12 @@ function renderHome(){
           <button class="btn" onclick="navigate('diario')">Vedi il tuo diario</button>
         </div>
       </div>
+      <div class="card">
+        <p class="diario-count">Se vuoi, puoi mandare a Mariastella un riepilogo di quello che hai scritto qui, prima della vostra prossima visita. Succede solo se lo fai tu.</p>
+        <div class="btn-row">
+          <button class="btn-ghost btn" onclick="navigate('invia')">Invia un riepilogo alla tua nutrizionista</button>
+        </div>
+      </div>
       <a class="footer-link" href="#" onclick="navigate('studio');return false;">Modalita Studio</a>
       <p class="signoff">Ci vediamo in call, Mariastella &#127807;</p>
     </main>
@@ -683,11 +700,133 @@ function nuovaVisita(){
   navigate('studio', { studioIdx:0 });
 }
 
+function getEntriesInRange(giorni){
+  var since = Date.now() - giorni*24*60*60*1000;
+  return loadEntries().filter(function(e){ return e.ts>=since; }).sort(function(a,b){ return a.ts-b.ts; });
+}
+
+function updateInviaPreview(){
+  var giorni = parseInt(document.getElementById('invia_giorni').value,10);
+  var n = getEntriesInRange(giorni).length;
+  document.getElementById('invia_preview').textContent = n>0
+    ? `Include ${n} osservazion${n===1?'e':'i'}.`
+    : `Non hai ancora nessuna osservazione in questo periodo.`;
+}
+
+function renderInvia(){
+  document.getElementById('app').innerHTML = `
+    <main>
+      <a class="back-link" href="#" onclick="navigate('home');return false;">&lsaquo; Torna alla bussola</a>
+      <h2>Invia un riepilogo</h2>
+      <p class="scheda-intro">Se vuoi, puoi mandare a Mariastella un riepilogo di quello che hai scritto qui, prima della vostra prossima visita. Nessuno vede queste pagine se non scegli tu di condividerle, e puoi farlo tutte le volte che vuoi.</p>
+      <div class="field">
+        <label>Nome e cognome</label>
+        <input type="text" id="invia_nome" placeholder="Come ti chiami">
+      </div>
+      <div class="field">
+        <label>Quale periodo vuoi includere?</label>
+        <select id="invia_giorni" onchange="updateInviaPreview()">
+          <option value="7">Ultimi 7 giorni</option>
+          <option value="14" selected>Ultimi 14 giorni</option>
+          <option value="30">Ultimi 30 giorni</option>
+          <option value="9999">Tutto quello che ho scritto</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Vuoi aggiungere una nota per lei?</label>
+        <textarea id="invia_nota" placeholder="Facoltativo"></textarea>
+      </div>
+      <p class="invia-note" id="invia_preview"></p>
+      <div class="btn-row"><button class="btn" id="invia_btn" onclick="sendRiepilogo()">Invia il riepilogo</button></div>
+    </main>
+  `;
+  updateInviaPreview();
+}
+
+function plainFormatAnswers(schedaId, answers){
+  var s = SCHEDE[schedaId];
+  var rows = [];
+  if(s.special==='settimana'){
+    GIORNI.forEach(function(g,i){
+      ['prima','durante','dopo'].forEach(function(mom){
+        var v = answers['giorno'+i+'_'+mom];
+        if(v) rows.push(`${g}, ${mom}: ${v}`);
+      });
+    });
+  }
+  s.fields.forEach(function(f){
+    if(f.t==='note') return;
+    if(f.t==='chips'){
+      var vals=(answers[f.id]||[]).slice();
+      if(answers[f.id+'_altro']) vals.push(answers[f.id+'_altro']);
+      if(vals.length) rows.push(`${f.label} ${vals.join(', ')}`);
+    } else if(f.t==='chips1'){
+      if(answers[f.id]) rows.push(`${f.label} ${answers[f.id]}`);
+    } else if(f.t==='scale'){
+      if(answers[f.id]!=null) rows.push(`${f.label} ${answers[f.id]}/10`);
+    } else if(f.t==='ta'){
+      if(answers[f.id]) rows.push(`${f.label} ${answers[f.id]}`);
+    } else if(f.t==='fillin'){
+      var txt = f.before + ' ' + (answers[f.id]||'...') + (f.mid ? ' '+f.mid+' '+(answers[f.id+'_mid']||'...') : '') + ' ' + f.after;
+      if(answers[f.id] || answers[f.id+'_mid']) rows.push(txt);
+    }
+  });
+  return rows.join('\n');
+}
+
+function sendRiepilogo(){
+  var nome = document.getElementById('invia_nome').value.trim();
+  if(!nome){ showToast('Scrivi il tuo nome prima di inviare.'); return; }
+  var giorni = parseInt(document.getElementById('invia_giorni').value,10);
+  var nota = document.getElementById('invia_nota').value.trim();
+  var entries = getEntriesInRange(giorni);
+  if(!entries.length){ showToast('Non hai osservazioni da inviare in questo periodo.'); return; }
+
+  var testo = entries.map(function(e){
+    var data = new Date(e.ts).toLocaleDateString('it-IT', { weekday:'long', day:'numeric', month:'long' });
+    var ora = new Date(e.ts).toLocaleTimeString('it-IT', { hour:'2-digit', minute:'2-digit' });
+    return `${data} ${ora} - ${SCHEDE[e.schedaId].title}\n${plainFormatAnswers(e.schedaId, e.answers)}`;
+  }).join('\n\n');
+
+  var btn = document.getElementById('invia_btn');
+  btn.disabled = true;
+  btn.textContent = 'Invio in corso...';
+
+  fetch('https://formsubmit.co/ajax/pollini-m@hotmail.com', {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json', 'Accept':'application/json' },
+    body: JSON.stringify({
+      _subject: `Riepilogo Bussola Interna - ${nome}`,
+      _captcha: 'false',
+      Nome: nome,
+      Periodo: giorni>=9999 ? 'Tutto quello che ha scritto' : `Ultimi ${giorni} giorni`,
+      Nota: nota || '(nessuna)',
+      Riepilogo: testo
+    })
+  }).then(function(res){
+    if(!res.ok) throw new Error('send failed');
+    return res.json();
+  }).then(function(){
+    document.getElementById('app').innerHTML = `
+      <main>
+        <h2>Riepilogo inviato</h2>
+        <p class="scheda-intro">Mariastella lo ricevera prima della vostra prossima visita. A presto.</p>
+        <div class="btn-row"><button class="btn" onclick="navigate('home')">Torna alla bussola</button></div>
+      </main>
+    `;
+  }).catch(function(){
+    btn.disabled = false;
+    btn.textContent = 'Invia il riepilogo';
+    showToast('Non sono riuscita a inviarlo. Controlla la connessione e riprova.');
+  });
+}
+
 function render(){
   if(state.view==='home') renderHome();
   else if(state.view==='scheda') renderScheda(state.schedaId, {});
   else if(state.view==='diario') renderDiario();
   else if(state.view==='studio') renderStudio();
+  else if(state.view==='invia') renderInvia();
 }
 
 render();
