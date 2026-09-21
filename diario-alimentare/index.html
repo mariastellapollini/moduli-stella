@@ -15,6 +15,8 @@
     --brown:#4a3527;
     --brown-deep:#55402e;
     --rule:#d9c6ac;
+    --green:#5c7a52;
+    --green-soft:#eaf0e6;
     --max:720px;
   }
   *{box-sizing:border-box;}
@@ -68,14 +70,23 @@
   .day summary{
     cursor:pointer;font-weight:700;font-size:14.5px;letter-spacing:.04em;text-transform:uppercase;
     padding:16px 20px;color:var(--brown);background:var(--beige);
-    display:flex;align-items:center;justify-content:space-between;list-style:none;
+    display:flex;align-items:center;justify-content:space-between;list-style:none;gap:10px;
   }
   .day summary::-webkit-details-marker{display:none;}
-  .day summary::after{content:'+';font-size:20px;font-weight:400;}
+  .day summary::after{content:'+';font-size:20px;font-weight:400;margin-left:auto;}
   .day[open] summary::after{content:'–';}
-  .day-body{padding:18px 20px 6px;}
+  .day-body{padding:18px 20px 20px;}
 
-  .submit-row{text-align:center;margin:30px 0 10px;}
+  .day-badge{
+    font-size:11px;font-weight:700;letter-spacing:.03em;text-transform:none;
+    background:var(--green-soft);color:var(--green);border-radius:20px;padding:3px 10px;
+  }
+  .day-badge:empty{display:none;}
+
+  .day-actions{display:flex;align-items:center;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+  .day-sent-hint{font-size:13px;color:var(--green);font-weight:500;}
+  .day-sent-hint:empty{display:none;}
+
   .signoff{text-align:center;font-size:16px;margin:30px 0 0;}
   .signoff p{margin:2px 0;}
   .signoff .firma{font-weight:600;}
@@ -84,9 +95,7 @@
     font-family:inherit;font-weight:600;font-size:16px;padding:15px 42px;cursor:pointer;
   }
   button.submit:hover{background:var(--brown);}
-
-  .thankyou{max-width:var(--max);margin:60px auto;padding:0 24px 60px;text-align:center;}
-  .thankyou h2{font-size:24px;margin-bottom:12px;}
+  button.submit:disabled{opacity:.6;cursor:default;}
 
   .foot{display:flex;flex-wrap:wrap;margin-top:40px;}
   .foot-left, .foot-right{flex:1 1 260px;padding:22px 24px;font-size:13px;}
@@ -107,451 +116,547 @@
   <section class="hero">
     <div class="hero-inner">
       <h1>Il tuo diario della settimana 🌿</h1>
-      <p>Qui puoi raccontarmi cosa mangi durante i prossimi <strong>7 giorni</strong>. Ti chiedo di essere il più precisa possibile e di segnare tutto, anche le piccole cose: quantità, orari, quello che ti sembra irrilevante. Mi serve per vedere con chiarezza le tue abitudini reali, senza nessun giudizio — solo per capire insieme dove intervenire e come migliorare.</p>
-      <p>Tocca la barra "Giorno 1", "Giorno 2" ecc. per aprire il giorno che vuoi compilare. Quello che scrivi resta salvato automaticamente su questo telefono o computer, quindi puoi tornare qui ogni giorno senza perdere nulla.</p>
-      <p>Quando hai finito la settimana premi il pulsante in fondo per mandarmi tutto insieme.</p>
+      <p>Qui puoi raccontarmi cosa mangi durante i prossimi <strong>7 giorni</strong>: non serve pesare nulla o essere precisissima, basta scrivere con parole tue quello che ti viene naturale, come lo racconteresti a me a voce.</p>
+      <p>Tocca la barra "Giorno 1", "Giorno 2" ecc. per aprire il giorno che vuoi compilare. Alla fine di ogni giorno premi <strong>"Invia questo giorno"</strong>: quel giorno mi arriva subito, indipendentemente dagli altri. Non devi aspettare la fine della settimana e non devi rifare da capo i giorni già inviati se torni qui più tardi o cambi telefono/computer — restano segnati come "✓ Inviato" e puoi comunque modificarli e reinviarli quando vuoi.</p>
     </div>
   </section>
 
   <main>
-    <form id="diario-form" action="https://formsubmit.co/pollini-m@hotmail.com" method="POST">
-      <input type="hidden" name="_subject" id="subject-field" value="Nuovo diario alimentare" />
-      <input type="hidden" name="_template" value="table" />
-      <input type="hidden" name="_captcha" value="false" />
-      <input type="hidden" name="_next" value="https://mariastellapollini.github.io/moduli-stella/diario-alimentare/?inviato=1" />
-      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
-
       <div class="section">
         <h2 class="section-title">I tuoi dati</h2>
         <div class="field">
           <label for="nome_cognome">Nome e cognome</label>
-          <input type="text" id="nome_cognome" name="nome_cognome" required placeholder="es. Maria Rossi" />
+          <input type="text" id="nome_cognome" name="nome_cognome_display" required placeholder="es. Maria Rossi" />
+          <span class="hint">Scrivilo una volta sola: verrà aggiunto automaticamente a ogni giorno che invii.</span>
         </div>
       </div>
 
-      <div class="section">
-        <h2 class="section-title">La tua settimana</h2>
+    <div class="section">
+      <h2 class="section-title">La tua settimana</h2>
 
-        <details class="day" open>
-          <summary>Giorno 1</summary>
+        <details class="day" data-day="1">
+          <summary>
+            <span>Giorno 1</span>
+            <span class="day-badge" id="badge-g1"></span>
+          </summary>
           <div class="day-body">
-            <div class="field">
-              <label for="g1_data">Che giorno è?</label>
-              <input type="text" id="g1_data" name="g1_data" placeholder="es. Lunedì 1 settembre" />
-            </div>
-            <div class="field">
-              <label for="g1_colazione">Colazione</label>
-              <textarea id="g1_colazione" name="g1_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
-            </div>
-            <div class="field">
-              <label for="g1_spuntino1">Spuntino (mattina)</label>
-              <textarea id="g1_spuntino1" name="g1_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
-            </div>
-            <div class="field">
-              <label for="g1_pranzo">Pranzo</label>
-              <textarea id="g1_pranzo" name="g1_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
-            </div>
-            <div class="field">
-              <label for="g1_spuntino2">Spuntino (pomeriggio)</label>
-              <textarea id="g1_spuntino2" name="g1_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
-            </div>
-            <div class="field">
-              <label for="g1_cena">Cena</label>
-              <textarea id="g1_cena" name="g1_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
-            </div>
-            <div class="field">
-              <label for="g1_dopocena">Dopo cena</label>
-              <textarea id="g1_dopocena" name="g1_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
-            </div>
-            <div class="field">
-              <label>Da 1 a 10, come ti sei sentita oggi?</label>
-              <span class="hint">1 = per niente — 10 = tantissimo</span>
-              <div class="scale-row">
-                <span class="scale-label">Fame</span>
-                <input type="range" min="1" max="10" value="5" name="g1_fame" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+            <form class="day-form" data-day="1" action="https://formsubmit.co/pollini-m@hotmail.com" method="POST">
+              <input type="hidden" name="_subject" class="subject-field" value="Nuovo diario alimentare — Giorno 1" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value="https://mariastellapollini.github.io/moduli-stella/diario-alimentare/?inviato=g1" />
+              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+              <div class="field">
+                <label for="g1_data">Che giorno è?</label>
+                <input type="text" id="g1_data" name="g1_data" placeholder="es. Lunedì 1 settembre" />
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Voglie</span>
-                <input type="range" min="1" max="10" value="5" name="g1_voglie" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g1_colazione">Colazione</label>
+                <textarea id="g1_colazione" name="g1_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Energia</span>
-                <input type="range" min="1" max="10" value="5" name="g1_energia" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g1_spuntino1">Spuntino (mattina)</label>
+                <textarea id="g1_spuntino1" name="g1_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
               </div>
-            </div>
-            <div class="field">
-              <label for="g1_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
-              <span class="hint">Facoltativo</span>
-              <textarea id="g1_note" name="g1_note"></textarea>
-            </div>
+              <div class="field">
+                <label for="g1_pranzo">Pranzo</label>
+                <textarea id="g1_pranzo" name="g1_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
+              </div>
+              <div class="field">
+                <label for="g1_spuntino2">Spuntino (pomeriggio)</label>
+                <textarea id="g1_spuntino2" name="g1_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
+              </div>
+              <div class="field">
+                <label for="g1_cena">Cena</label>
+                <textarea id="g1_cena" name="g1_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
+              </div>
+              <div class="field">
+                <label for="g1_dopocena">Dopo cena</label>
+                <textarea id="g1_dopocena" name="g1_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
+              </div>
+              <div class="field">
+                <label>Da 1 a 10, come ti sei sentita oggi?</label>
+                <span class="hint">1 = per niente — 10 = tantissimo</span>
+                <div class="scale-row">
+                  <span class="scale-label">Fame</span>
+                  <input type="range" min="1" max="10" value="5" name="g1_fame" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Voglie</span>
+                  <input type="range" min="1" max="10" value="5" name="g1_voglie" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Energia</span>
+                  <input type="range" min="1" max="10" value="5" name="g1_energia" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="g1_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
+                <span class="hint">Facoltativo</span>
+                <textarea id="g1_note" name="g1_note"></textarea>
+              </div>
+
+              <div class="day-actions">
+                <button type="submit" class="submit day-submit">Invia questo giorno</button>
+                <span class="day-sent-hint" id="hint-g1"></span>
+              </div>
+            </form>
           </div>
         </details>
 
-        <details class="day">
-          <summary>Giorno 2</summary>
+        <details class="day" data-day="2">
+          <summary>
+            <span>Giorno 2</span>
+            <span class="day-badge" id="badge-g2"></span>
+          </summary>
           <div class="day-body">
-            <div class="field">
-              <label for="g2_data">Che giorno è?</label>
-              <input type="text" id="g2_data" name="g2_data" placeholder="es. Martedì 2 settembre" />
-            </div>
-            <div class="field">
-              <label for="g2_colazione">Colazione</label>
-              <textarea id="g2_colazione" name="g2_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
-            </div>
-            <div class="field">
-              <label for="g2_spuntino1">Spuntino (mattina)</label>
-              <textarea id="g2_spuntino1" name="g2_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
-            </div>
-            <div class="field">
-              <label for="g2_pranzo">Pranzo</label>
-              <textarea id="g2_pranzo" name="g2_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
-            </div>
-            <div class="field">
-              <label for="g2_spuntino2">Spuntino (pomeriggio)</label>
-              <textarea id="g2_spuntino2" name="g2_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
-            </div>
-            <div class="field">
-              <label for="g2_cena">Cena</label>
-              <textarea id="g2_cena" name="g2_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
-            </div>
-            <div class="field">
-              <label for="g2_dopocena">Dopo cena</label>
-              <textarea id="g2_dopocena" name="g2_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
-            </div>
-            <div class="field">
-              <label>Da 1 a 10, come ti sei sentita oggi?</label>
-              <span class="hint">1 = per niente — 10 = tantissimo</span>
-              <div class="scale-row">
-                <span class="scale-label">Fame</span>
-                <input type="range" min="1" max="10" value="5" name="g2_fame" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+            <form class="day-form" data-day="2" action="https://formsubmit.co/pollini-m@hotmail.com" method="POST">
+              <input type="hidden" name="_subject" class="subject-field" value="Nuovo diario alimentare — Giorno 2" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value="https://mariastellapollini.github.io/moduli-stella/diario-alimentare/?inviato=g2" />
+              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+              <div class="field">
+                <label for="g2_data">Che giorno è?</label>
+                <input type="text" id="g2_data" name="g2_data" placeholder="es. Martedì 2 settembre" />
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Voglie</span>
-                <input type="range" min="1" max="10" value="5" name="g2_voglie" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g2_colazione">Colazione</label>
+                <textarea id="g2_colazione" name="g2_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Energia</span>
-                <input type="range" min="1" max="10" value="5" name="g2_energia" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g2_spuntino1">Spuntino (mattina)</label>
+                <textarea id="g2_spuntino1" name="g2_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
               </div>
-            </div>
-            <div class="field">
-              <label for="g2_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
-              <span class="hint">Facoltativo</span>
-              <textarea id="g2_note" name="g2_note"></textarea>
-            </div>
+              <div class="field">
+                <label for="g2_pranzo">Pranzo</label>
+                <textarea id="g2_pranzo" name="g2_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
+              </div>
+              <div class="field">
+                <label for="g2_spuntino2">Spuntino (pomeriggio)</label>
+                <textarea id="g2_spuntino2" name="g2_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
+              </div>
+              <div class="field">
+                <label for="g2_cena">Cena</label>
+                <textarea id="g2_cena" name="g2_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
+              </div>
+              <div class="field">
+                <label for="g2_dopocena">Dopo cena</label>
+                <textarea id="g2_dopocena" name="g2_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
+              </div>
+              <div class="field">
+                <label>Da 1 a 10, come ti sei sentita oggi?</label>
+                <span class="hint">1 = per niente — 10 = tantissimo</span>
+                <div class="scale-row">
+                  <span class="scale-label">Fame</span>
+                  <input type="range" min="1" max="10" value="5" name="g2_fame" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Voglie</span>
+                  <input type="range" min="1" max="10" value="5" name="g2_voglie" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Energia</span>
+                  <input type="range" min="1" max="10" value="5" name="g2_energia" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="g2_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
+                <span class="hint">Facoltativo</span>
+                <textarea id="g2_note" name="g2_note"></textarea>
+              </div>
+
+              <div class="day-actions">
+                <button type="submit" class="submit day-submit">Invia questo giorno</button>
+                <span class="day-sent-hint" id="hint-g2"></span>
+              </div>
+            </form>
           </div>
         </details>
 
-        <details class="day">
-          <summary>Giorno 3</summary>
+        <details class="day" data-day="3">
+          <summary>
+            <span>Giorno 3</span>
+            <span class="day-badge" id="badge-g3"></span>
+          </summary>
           <div class="day-body">
-            <div class="field">
-              <label for="g3_data">Che giorno è?</label>
-              <input type="text" id="g3_data" name="g3_data" placeholder="es. Mercoledì 3 settembre" />
-            </div>
-            <div class="field">
-              <label for="g3_colazione">Colazione</label>
-              <textarea id="g3_colazione" name="g3_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
-            </div>
-            <div class="field">
-              <label for="g3_spuntino1">Spuntino (mattina)</label>
-              <textarea id="g3_spuntino1" name="g3_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
-            </div>
-            <div class="field">
-              <label for="g3_pranzo">Pranzo</label>
-              <textarea id="g3_pranzo" name="g3_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
-            </div>
-            <div class="field">
-              <label for="g3_spuntino2">Spuntino (pomeriggio)</label>
-              <textarea id="g3_spuntino2" name="g3_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
-            </div>
-            <div class="field">
-              <label for="g3_cena">Cena</label>
-              <textarea id="g3_cena" name="g3_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
-            </div>
-            <div class="field">
-              <label for="g3_dopocena">Dopo cena</label>
-              <textarea id="g3_dopocena" name="g3_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
-            </div>
-            <div class="field">
-              <label>Da 1 a 10, come ti sei sentita oggi?</label>
-              <span class="hint">1 = per niente — 10 = tantissimo</span>
-              <div class="scale-row">
-                <span class="scale-label">Fame</span>
-                <input type="range" min="1" max="10" value="5" name="g3_fame" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+            <form class="day-form" data-day="3" action="https://formsubmit.co/pollini-m@hotmail.com" method="POST">
+              <input type="hidden" name="_subject" class="subject-field" value="Nuovo diario alimentare — Giorno 3" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value="https://mariastellapollini.github.io/moduli-stella/diario-alimentare/?inviato=g3" />
+              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+              <div class="field">
+                <label for="g3_data">Che giorno è?</label>
+                <input type="text" id="g3_data" name="g3_data" placeholder="es. Mercoledì 3 settembre" />
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Voglie</span>
-                <input type="range" min="1" max="10" value="5" name="g3_voglie" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g3_colazione">Colazione</label>
+                <textarea id="g3_colazione" name="g3_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Energia</span>
-                <input type="range" min="1" max="10" value="5" name="g3_energia" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g3_spuntino1">Spuntino (mattina)</label>
+                <textarea id="g3_spuntino1" name="g3_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
               </div>
-            </div>
-            <div class="field">
-              <label for="g3_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
-              <span class="hint">Facoltativo</span>
-              <textarea id="g3_note" name="g3_note"></textarea>
-            </div>
+              <div class="field">
+                <label for="g3_pranzo">Pranzo</label>
+                <textarea id="g3_pranzo" name="g3_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
+              </div>
+              <div class="field">
+                <label for="g3_spuntino2">Spuntino (pomeriggio)</label>
+                <textarea id="g3_spuntino2" name="g3_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
+              </div>
+              <div class="field">
+                <label for="g3_cena">Cena</label>
+                <textarea id="g3_cena" name="g3_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
+              </div>
+              <div class="field">
+                <label for="g3_dopocena">Dopo cena</label>
+                <textarea id="g3_dopocena" name="g3_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
+              </div>
+              <div class="field">
+                <label>Da 1 a 10, come ti sei sentita oggi?</label>
+                <span class="hint">1 = per niente — 10 = tantissimo</span>
+                <div class="scale-row">
+                  <span class="scale-label">Fame</span>
+                  <input type="range" min="1" max="10" value="5" name="g3_fame" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Voglie</span>
+                  <input type="range" min="1" max="10" value="5" name="g3_voglie" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Energia</span>
+                  <input type="range" min="1" max="10" value="5" name="g3_energia" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="g3_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
+                <span class="hint">Facoltativo</span>
+                <textarea id="g3_note" name="g3_note"></textarea>
+              </div>
+
+              <div class="day-actions">
+                <button type="submit" class="submit day-submit">Invia questo giorno</button>
+                <span class="day-sent-hint" id="hint-g3"></span>
+              </div>
+            </form>
           </div>
         </details>
 
-        <details class="day">
-          <summary>Giorno 4</summary>
+        <details class="day" data-day="4">
+          <summary>
+            <span>Giorno 4</span>
+            <span class="day-badge" id="badge-g4"></span>
+          </summary>
           <div class="day-body">
-            <div class="field">
-              <label for="g4_data">Che giorno è?</label>
-              <input type="text" id="g4_data" name="g4_data" placeholder="es. Giovedì 4 settembre" />
-            </div>
-            <div class="field">
-              <label for="g4_colazione">Colazione</label>
-              <textarea id="g4_colazione" name="g4_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
-            </div>
-            <div class="field">
-              <label for="g4_spuntino1">Spuntino (mattina)</label>
-              <textarea id="g4_spuntino1" name="g4_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
-            </div>
-            <div class="field">
-              <label for="g4_pranzo">Pranzo</label>
-              <textarea id="g4_pranzo" name="g4_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
-            </div>
-            <div class="field">
-              <label for="g4_spuntino2">Spuntino (pomeriggio)</label>
-              <textarea id="g4_spuntino2" name="g4_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
-            </div>
-            <div class="field">
-              <label for="g4_cena">Cena</label>
-              <textarea id="g4_cena" name="g4_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
-            </div>
-            <div class="field">
-              <label for="g4_dopocena">Dopo cena</label>
-              <textarea id="g4_dopocena" name="g4_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
-            </div>
-            <div class="field">
-              <label>Da 1 a 10, come ti sei sentita oggi?</label>
-              <span class="hint">1 = per niente — 10 = tantissimo</span>
-              <div class="scale-row">
-                <span class="scale-label">Fame</span>
-                <input type="range" min="1" max="10" value="5" name="g4_fame" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+            <form class="day-form" data-day="4" action="https://formsubmit.co/pollini-m@hotmail.com" method="POST">
+              <input type="hidden" name="_subject" class="subject-field" value="Nuovo diario alimentare — Giorno 4" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value="https://mariastellapollini.github.io/moduli-stella/diario-alimentare/?inviato=g4" />
+              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+              <div class="field">
+                <label for="g4_data">Che giorno è?</label>
+                <input type="text" id="g4_data" name="g4_data" placeholder="es. Giovedì 4 settembre" />
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Voglie</span>
-                <input type="range" min="1" max="10" value="5" name="g4_voglie" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g4_colazione">Colazione</label>
+                <textarea id="g4_colazione" name="g4_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Energia</span>
-                <input type="range" min="1" max="10" value="5" name="g4_energia" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g4_spuntino1">Spuntino (mattina)</label>
+                <textarea id="g4_spuntino1" name="g4_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
               </div>
-            </div>
-            <div class="field">
-              <label for="g4_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
-              <span class="hint">Facoltativo</span>
-              <textarea id="g4_note" name="g4_note"></textarea>
-            </div>
+              <div class="field">
+                <label for="g4_pranzo">Pranzo</label>
+                <textarea id="g4_pranzo" name="g4_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
+              </div>
+              <div class="field">
+                <label for="g4_spuntino2">Spuntino (pomeriggio)</label>
+                <textarea id="g4_spuntino2" name="g4_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
+              </div>
+              <div class="field">
+                <label for="g4_cena">Cena</label>
+                <textarea id="g4_cena" name="g4_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
+              </div>
+              <div class="field">
+                <label for="g4_dopocena">Dopo cena</label>
+                <textarea id="g4_dopocena" name="g4_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
+              </div>
+              <div class="field">
+                <label>Da 1 a 10, come ti sei sentita oggi?</label>
+                <span class="hint">1 = per niente — 10 = tantissimo</span>
+                <div class="scale-row">
+                  <span class="scale-label">Fame</span>
+                  <input type="range" min="1" max="10" value="5" name="g4_fame" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Voglie</span>
+                  <input type="range" min="1" max="10" value="5" name="g4_voglie" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Energia</span>
+                  <input type="range" min="1" max="10" value="5" name="g4_energia" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="g4_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
+                <span class="hint">Facoltativo</span>
+                <textarea id="g4_note" name="g4_note"></textarea>
+              </div>
+
+              <div class="day-actions">
+                <button type="submit" class="submit day-submit">Invia questo giorno</button>
+                <span class="day-sent-hint" id="hint-g4"></span>
+              </div>
+            </form>
           </div>
         </details>
 
-        <details class="day">
-          <summary>Giorno 5</summary>
+        <details class="day" data-day="5">
+          <summary>
+            <span>Giorno 5</span>
+            <span class="day-badge" id="badge-g5"></span>
+          </summary>
           <div class="day-body">
-            <div class="field">
-              <label for="g5_data">Che giorno è?</label>
-              <input type="text" id="g5_data" name="g5_data" placeholder="es. Venerdì 5 settembre" />
-            </div>
-            <div class="field">
-              <label for="g5_colazione">Colazione</label>
-              <textarea id="g5_colazione" name="g5_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
-            </div>
-            <div class="field">
-              <label for="g5_spuntino1">Spuntino (mattina)</label>
-              <textarea id="g5_spuntino1" name="g5_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
-            </div>
-            <div class="field">
-              <label for="g5_pranzo">Pranzo</label>
-              <textarea id="g5_pranzo" name="g5_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
-            </div>
-            <div class="field">
-              <label for="g5_spuntino2">Spuntino (pomeriggio)</label>
-              <textarea id="g5_spuntino2" name="g5_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
-            </div>
-            <div class="field">
-              <label for="g5_cena">Cena</label>
-              <textarea id="g5_cena" name="g5_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
-            </div>
-            <div class="field">
-              <label for="g5_dopocena">Dopo cena</label>
-              <textarea id="g5_dopocena" name="g5_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
-            </div>
-            <div class="field">
-              <label>Da 1 a 10, come ti sei sentita oggi?</label>
-              <span class="hint">1 = per niente — 10 = tantissimo</span>
-              <div class="scale-row">
-                <span class="scale-label">Fame</span>
-                <input type="range" min="1" max="10" value="5" name="g5_fame" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+            <form class="day-form" data-day="5" action="https://formsubmit.co/pollini-m@hotmail.com" method="POST">
+              <input type="hidden" name="_subject" class="subject-field" value="Nuovo diario alimentare — Giorno 5" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value="https://mariastellapollini.github.io/moduli-stella/diario-alimentare/?inviato=g5" />
+              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+              <div class="field">
+                <label for="g5_data">Che giorno è?</label>
+                <input type="text" id="g5_data" name="g5_data" placeholder="es. Venerdì 5 settembre" />
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Voglie</span>
-                <input type="range" min="1" max="10" value="5" name="g5_voglie" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g5_colazione">Colazione</label>
+                <textarea id="g5_colazione" name="g5_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Energia</span>
-                <input type="range" min="1" max="10" value="5" name="g5_energia" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g5_spuntino1">Spuntino (mattina)</label>
+                <textarea id="g5_spuntino1" name="g5_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
               </div>
-            </div>
-            <div class="field">
-              <label for="g5_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
-              <span class="hint">Facoltativo</span>
-              <textarea id="g5_note" name="g5_note"></textarea>
-            </div>
+              <div class="field">
+                <label for="g5_pranzo">Pranzo</label>
+                <textarea id="g5_pranzo" name="g5_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
+              </div>
+              <div class="field">
+                <label for="g5_spuntino2">Spuntino (pomeriggio)</label>
+                <textarea id="g5_spuntino2" name="g5_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
+              </div>
+              <div class="field">
+                <label for="g5_cena">Cena</label>
+                <textarea id="g5_cena" name="g5_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
+              </div>
+              <div class="field">
+                <label for="g5_dopocena">Dopo cena</label>
+                <textarea id="g5_dopocena" name="g5_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
+              </div>
+              <div class="field">
+                <label>Da 1 a 10, come ti sei sentita oggi?</label>
+                <span class="hint">1 = per niente — 10 = tantissimo</span>
+                <div class="scale-row">
+                  <span class="scale-label">Fame</span>
+                  <input type="range" min="1" max="10" value="5" name="g5_fame" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Voglie</span>
+                  <input type="range" min="1" max="10" value="5" name="g5_voglie" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Energia</span>
+                  <input type="range" min="1" max="10" value="5" name="g5_energia" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="g5_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
+                <span class="hint">Facoltativo</span>
+                <textarea id="g5_note" name="g5_note"></textarea>
+              </div>
+
+              <div class="day-actions">
+                <button type="submit" class="submit day-submit">Invia questo giorno</button>
+                <span class="day-sent-hint" id="hint-g5"></span>
+              </div>
+            </form>
           </div>
         </details>
 
-        <details class="day">
-          <summary>Giorno 6</summary>
+        <details class="day" data-day="6">
+          <summary>
+            <span>Giorno 6</span>
+            <span class="day-badge" id="badge-g6"></span>
+          </summary>
           <div class="day-body">
-            <div class="field">
-              <label for="g6_data">Che giorno è?</label>
-              <input type="text" id="g6_data" name="g6_data" placeholder="es. Sabato 6 settembre" />
-            </div>
-            <div class="field">
-              <label for="g6_colazione">Colazione</label>
-              <textarea id="g6_colazione" name="g6_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
-            </div>
-            <div class="field">
-              <label for="g6_spuntino1">Spuntino (mattina)</label>
-              <textarea id="g6_spuntino1" name="g6_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
-            </div>
-            <div class="field">
-              <label for="g6_pranzo">Pranzo</label>
-              <textarea id="g6_pranzo" name="g6_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
-            </div>
-            <div class="field">
-              <label for="g6_spuntino2">Spuntino (pomeriggio)</label>
-              <textarea id="g6_spuntino2" name="g6_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
-            </div>
-            <div class="field">
-              <label for="g6_cena">Cena</label>
-              <textarea id="g6_cena" name="g6_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
-            </div>
-            <div class="field">
-              <label for="g6_dopocena">Dopo cena</label>
-              <textarea id="g6_dopocena" name="g6_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
-            </div>
-            <div class="field">
-              <label>Da 1 a 10, come ti sei sentita oggi?</label>
-              <span class="hint">1 = per niente — 10 = tantissimo</span>
-              <div class="scale-row">
-                <span class="scale-label">Fame</span>
-                <input type="range" min="1" max="10" value="5" name="g6_fame" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+            <form class="day-form" data-day="6" action="https://formsubmit.co/pollini-m@hotmail.com" method="POST">
+              <input type="hidden" name="_subject" class="subject-field" value="Nuovo diario alimentare — Giorno 6" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value="https://mariastellapollini.github.io/moduli-stella/diario-alimentare/?inviato=g6" />
+              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+              <div class="field">
+                <label for="g6_data">Che giorno è?</label>
+                <input type="text" id="g6_data" name="g6_data" placeholder="es. Sabato 6 settembre" />
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Voglie</span>
-                <input type="range" min="1" max="10" value="5" name="g6_voglie" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g6_colazione">Colazione</label>
+                <textarea id="g6_colazione" name="g6_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Energia</span>
-                <input type="range" min="1" max="10" value="5" name="g6_energia" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g6_spuntino1">Spuntino (mattina)</label>
+                <textarea id="g6_spuntino1" name="g6_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
               </div>
-            </div>
-            <div class="field">
-              <label for="g6_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
-              <span class="hint">Facoltativo</span>
-              <textarea id="g6_note" name="g6_note"></textarea>
-            </div>
+              <div class="field">
+                <label for="g6_pranzo">Pranzo</label>
+                <textarea id="g6_pranzo" name="g6_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
+              </div>
+              <div class="field">
+                <label for="g6_spuntino2">Spuntino (pomeriggio)</label>
+                <textarea id="g6_spuntino2" name="g6_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
+              </div>
+              <div class="field">
+                <label for="g6_cena">Cena</label>
+                <textarea id="g6_cena" name="g6_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
+              </div>
+              <div class="field">
+                <label for="g6_dopocena">Dopo cena</label>
+                <textarea id="g6_dopocena" name="g6_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
+              </div>
+              <div class="field">
+                <label>Da 1 a 10, come ti sei sentita oggi?</label>
+                <span class="hint">1 = per niente — 10 = tantissimo</span>
+                <div class="scale-row">
+                  <span class="scale-label">Fame</span>
+                  <input type="range" min="1" max="10" value="5" name="g6_fame" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Voglie</span>
+                  <input type="range" min="1" max="10" value="5" name="g6_voglie" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Energia</span>
+                  <input type="range" min="1" max="10" value="5" name="g6_energia" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="g6_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
+                <span class="hint">Facoltativo</span>
+                <textarea id="g6_note" name="g6_note"></textarea>
+              </div>
+
+              <div class="day-actions">
+                <button type="submit" class="submit day-submit">Invia questo giorno</button>
+                <span class="day-sent-hint" id="hint-g6"></span>
+              </div>
+            </form>
           </div>
         </details>
 
-        <details class="day">
-          <summary>Giorno 7</summary>
+        <details class="day" data-day="7">
+          <summary>
+            <span>Giorno 7</span>
+            <span class="day-badge" id="badge-g7"></span>
+          </summary>
           <div class="day-body">
-            <div class="field">
-              <label for="g7_data">Che giorno è?</label>
-              <input type="text" id="g7_data" name="g7_data" placeholder="es. Domenica 7 settembre" />
-            </div>
-            <div class="field">
-              <label for="g7_colazione">Colazione</label>
-              <textarea id="g7_colazione" name="g7_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
-            </div>
-            <div class="field">
-              <label for="g7_spuntino1">Spuntino (mattina)</label>
-              <textarea id="g7_spuntino1" name="g7_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
-            </div>
-            <div class="field">
-              <label for="g7_pranzo">Pranzo</label>
-              <textarea id="g7_pranzo" name="g7_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
-            </div>
-            <div class="field">
-              <label for="g7_spuntino2">Spuntino (pomeriggio)</label>
-              <textarea id="g7_spuntino2" name="g7_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
-            </div>
-            <div class="field">
-              <label for="g7_cena">Cena</label>
-              <textarea id="g7_cena" name="g7_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
-            </div>
-            <div class="field">
-              <label for="g7_dopocena">Dopo cena</label>
-              <textarea id="g7_dopocena" name="g7_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
-            </div>
-            <div class="field">
-              <label>Da 1 a 10, come ti sei sentita oggi?</label>
-              <span class="hint">1 = per niente — 10 = tantissimo</span>
-              <div class="scale-row">
-                <span class="scale-label">Fame</span>
-                <input type="range" min="1" max="10" value="5" name="g7_fame" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+            <form class="day-form" data-day="7" action="https://formsubmit.co/pollini-m@hotmail.com" method="POST">
+              <input type="hidden" name="_subject" class="subject-field" value="Nuovo diario alimentare — Giorno 7" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value="https://mariastellapollini.github.io/moduli-stella/diario-alimentare/?inviato=g7" />
+              <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+              <div class="field">
+                <label for="g7_data">Che giorno è?</label>
+                <input type="text" id="g7_data" name="g7_data" placeholder="es. Domenica 7 settembre" />
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Voglie</span>
-                <input type="range" min="1" max="10" value="5" name="g7_voglie" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g7_colazione">Colazione</label>
+                <textarea id="g7_colazione" name="g7_colazione" placeholder="es. 2 fette biscottate con marmellata, un caffè"></textarea>
               </div>
-              <div class="scale-row">
-                <span class="scale-label">Energia</span>
-                <input type="range" min="1" max="10" value="5" name="g7_energia" oninput="this.nextElementSibling.textContent=this.value">
-                <span class="scale-val">5</span>
+              <div class="field">
+                <label for="g7_spuntino1">Spuntino (mattina)</label>
+                <textarea id="g7_spuntino1" name="g7_spuntino_mattina" placeholder="es. No, oppure: una mela, 5-6 mandorle, 1-2 biscottini"></textarea>
               </div>
-            </div>
-            <div class="field">
-              <label for="g7_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
-              <span class="hint">Facoltativo</span>
-              <textarea id="g7_note" name="g7_note"></textarea>
-            </div>
+              <div class="field">
+                <label for="g7_pranzo">Pranzo</label>
+                <textarea id="g7_pranzo" name="g7_pranzo" placeholder="es. 70g di pasta con 100g di ricotta e verdure di contorno"></textarea>
+              </div>
+              <div class="field">
+                <label for="g7_spuntino2">Spuntino (pomeriggio)</label>
+                <textarea id="g7_spuntino2" name="g7_spuntino_pomeriggio" placeholder="es. No, oppure: uno yogurt con una banana, 2-3 cucchiai di humus con carote"></textarea>
+              </div>
+              <div class="field">
+                <label for="g7_cena">Cena</label>
+                <textarea id="g7_cena" name="g7_cena" placeholder="es. un trancio di pizza con 2 uova e insalata"></textarea>
+              </div>
+              <div class="field">
+                <label for="g7_dopocena">Dopo cena</label>
+                <textarea id="g7_dopocena" name="g7_dopo_cena" placeholder="es. un quadratino di cioccolato fondente, oppure niente"></textarea>
+              </div>
+              <div class="field">
+                <label>Da 1 a 10, come ti sei sentita oggi?</label>
+                <span class="hint">1 = per niente — 10 = tantissimo</span>
+                <div class="scale-row">
+                  <span class="scale-label">Fame</span>
+                  <input type="range" min="1" max="10" value="5" name="g7_fame" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Voglie</span>
+                  <input type="range" min="1" max="10" value="5" name="g7_voglie" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+                <div class="scale-row">
+                  <span class="scale-label">Energia</span>
+                  <input type="range" min="1" max="10" value="5" name="g7_energia" oninput="this.nextElementSibling.textContent=this.value">
+                  <span class="scale-val">5</span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="g7_note">C'è qualcos'altro che vorresti dirmi su questa giornata?</label>
+                <span class="hint">Facoltativo</span>
+                <textarea id="g7_note" name="g7_note"></textarea>
+              </div>
+
+              <div class="day-actions">
+                <button type="submit" class="submit day-submit">Invia questo giorno</button>
+                <span class="day-sent-hint" id="hint-g7"></span>
+              </div>
+            </form>
           </div>
         </details>
-      </div>
 
-      <div class="signoff">
-        <p>Grazie per il tuo tempo 🍃</p>
-        <p class="firma">Mariastella</p>
-      </div>
+    </div>
 
-      <div class="submit-row">
-        <button type="submit" class="submit">Invia il diario</button>
-      </div>
-    </form>
-
-    <div class="thankyou" id="thankyou" hidden>
-      <h2 id="thankyou-title">Grazie! 🌿</h2>
-      <p>Il tuo diario è arrivato, lo guardo con calma.</p>
+    <div class="signoff">
+      <p>Grazie per il tuo tempo 🍃</p>
+      <p class="firma">Mariastella</p>
     </div>
   </main>
 
@@ -565,51 +670,105 @@
 
 <script>
   const STORAGE_PREFIX = 'diario-alimentare::';
-  const form = document.getElementById('diario-form');
+  const dayForms = Array.from(document.querySelectorAll('.day-form'));
+
+  function fieldKey(name){ return STORAGE_PREFIX + name; }
 
   function restoreSaved(){
-    try{
+    dayForms.forEach(function(form){
       Array.from(form.elements).forEach(function(el){
         if(!el.name) return;
-        const saved = localStorage.getItem(STORAGE_PREFIX + el.name);
+        const saved = localStorage.getItem(fieldKey(el.name));
         if(saved === null) return;
         el.value = saved;
         if(el.type === 'range' && el.nextElementSibling){
           el.nextElementSibling.textContent = saved;
         }
       });
-    }catch(e){}
+    });
   }
 
   function saveField(el){
-    try{
-      if(el.name) localStorage.setItem(STORAGE_PREFIX + el.name, el.value);
-    }catch(e){}
+    try{ if(el.name) localStorage.setItem(fieldKey(el.name), el.value); }catch(e){}
   }
 
-  function clearSaved(){
-    try{
-      Array.from(form.elements).forEach(function(el){
-        if(el.name) localStorage.removeItem(STORAGE_PREFIX + el.name);
-      });
-    }catch(e){}
+  function isSent(day){
+    try{ return localStorage.getItem(STORAGE_PREFIX + 'sent_g' + day) === '1'; }catch(e){ return false; }
+  }
+  function markSent(day){
+    try{ localStorage.setItem(STORAGE_PREFIX + 'sent_g' + day, '1'); }catch(e){}
+    updateDayUI(day);
+  }
+
+  function updateDayUI(day){
+    const badge = document.getElementById('badge-g' + day);
+    const form = document.querySelector('.day-form[data-day="' + day + '"]');
+    const btn = form ? form.querySelector('.day-submit') : null;
+    const hint = document.getElementById('hint-g' + day);
+    if(isSent(day)){
+      if(badge) badge.textContent = '✓ Inviato';
+      if(btn) btn.textContent = 'Aggiorna questo giorno';
+    } else {
+      if(badge) badge.textContent = '';
+      if(btn) btn.textContent = 'Invia questo giorno';
+      if(hint) hint.textContent = '';
+    }
   }
 
   restoreSaved();
-  form.addEventListener('input', function(e){ saveField(e.target); });
-
-  form.addEventListener('submit', function(){
-    const nomeField = form.elements['nome_cognome'];
-    const subjectField = document.getElementById('subject-field');
-    if(nomeField && subjectField && nomeField.value.trim()){
-      subjectField.value = 'Nuovo diario alimentare — ' + nomeField.value.trim();
-    }
+  dayForms.forEach(function(form){
+    form.addEventListener('input', function(e){ saveField(e.target); });
   });
+  [1,2,3,4,5,6,7].forEach(updateDayUI);
 
-  if (location.search.indexOf('inviato=1') !== -1) {
-    form.hidden = true;
-    document.getElementById('thankyou').hidden = false;
-    clearSaved();
+  const nameField = document.getElementById('nome_cognome');
+  const NAME_KEY = STORAGE_PREFIX + 'nome_cognome_display';
+
+  function restoreName(){
+    try{
+      const saved = localStorage.getItem(NAME_KEY);
+      if(saved !== null && nameField) nameField.value = saved;
+    }catch(e){}
+  }
+  function saveName(){
+    try{ if(nameField) localStorage.setItem(NAME_KEY, nameField.value); }catch(e){}
+  }
+  function applyNameToForms(){
+    const name = nameField ? nameField.value.trim() : '';
+    document.querySelectorAll('.day-form').forEach(function(form){
+      const subjectField = form.querySelector('.subject-field');
+      if(subjectField){
+        const base = subjectField.getAttribute('data-base') || subjectField.value;
+        subjectField.setAttribute('data-base', base);
+        subjectField.value = name ? (base + ' — ' + name) : base;
+      }
+      let hiddenName = form.querySelector('input[name="nome_cognome"]');
+      if(!hiddenName){
+        hiddenName = document.createElement('input');
+        hiddenName.type = 'hidden';
+        hiddenName.name = 'nome_cognome';
+        form.appendChild(hiddenName);
+      }
+      hiddenName.value = name;
+    });
+  }
+  if(nameField){
+    restoreName();
+    applyNameToForms();
+    nameField.addEventListener('input', function(){ saveName(); applyNameToForms(); });
+  }
+
+  const params = new URLSearchParams(location.search);
+  const inviato = params.get('inviato');
+  if(inviato && /^g[1-7]$/.test(inviato)){
+    const day = inviato.slice(1);
+    markSent(day);
+    history.replaceState(null, '', location.pathname);
+    const details = document.querySelector('.day-form[data-day="' + day + '"]');
+    const detailsEl = details ? details.closest('details') : null;
+    if(detailsEl) detailsEl.open = true;
+    const hint = document.getElementById('hint-g' + day);
+    if(hint) hint.textContent = 'Ricevuto, grazie! Puoi continuare con gli altri giorni quando vuoi.';
     window.scrollTo(0,0);
   }
 </script>
