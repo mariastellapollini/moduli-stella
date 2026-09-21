@@ -41,7 +41,9 @@
   .hero-inner{max-width:var(--max);margin:0 auto;}
   .hero h1{font-size:clamp(24px,4vw,32px);font-weight:600;margin:0 0 14px;line-height:1.3;}
   .hero p{font-size:16px;margin:0 0 10px;max-width:60ch;}
-  .hero .note{font-size:14px;color:#6b5744;}
+  .note-box{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:16px 18px;margin:18px 0 10px;}
+  .note-title{font-weight:700;font-size:14.5px;margin:0 0 8px;}
+  .note-box .note{font-size:14px;color:#6b5744;margin:0;max-width:none;}
 
   main{max-width:var(--max);margin:0 auto;padding:36px 24px 8px;}
 
@@ -123,7 +125,10 @@
       <h1>Il tuo diario della settimana 🌿</h1>
       <p>Qui puoi raccontarmi cosa mangi durante i prossimi <strong>7 giorni</strong>: non serve pesare nulla o essere precisissima, basta scrivere con parole tue quello che ti viene naturale, come lo racconteresti a me a voce.</p>
       <p>Puoi tornare qui quante volte vuoi durante la giornata: fai colazione, apri il Giorno di oggi e scrivi cosa hai mangiato; più tardi, se fai uno spuntino, torni e aggiungi solo quello, senza dover riscrivere la colazione. Resta tutto salvato in automatico, pasto dopo pasto.</p>
-      <p class="note">Un'unica accortezza: usa sempre lo stesso telefono o computer per tutta la settimana, perché quello che scrivi resta salvato lì e non passa automaticamente da un dispositivo all'altro.</p>
+      <div class="note-box">
+        <p class="note-title">⚠️ Prima di iniziare, questo passaggio è importante</p>
+        <p class="note">Se hai aperto questo link da dentro WhatsApp, tocca i tre puntini (o l'icona di condivisione) in alto e scegli <strong>"Apri in Safari"</strong> (iPhone) o <strong>"Apri nel browser"</strong> (Android). Poi aggiungi questa pagina alla schermata Home o ai Preferiti, e riaprila sempre da lì per ogni pasto — mai più toccando di nuovo il link nella chat. Solo così quello che scrivi resta salvato in modo affidabile da un pasto all'altro, sullo stesso telefono o computer.</p>
+      </div>
       <p>Quando hai finito la settimana (va benissimo anche se manca qualche giorno) premi il pulsante in fondo alla pagina: mi arriva tutto insieme in un'unica email. Non c'è nessun giudizio: mi serve solo per capire insieme le tue abitudini.</p>
     </div>
   </section>
