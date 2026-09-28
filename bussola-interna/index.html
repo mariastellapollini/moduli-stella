@@ -177,12 +177,27 @@
   .studio-nav{display:flex;justify-content:space-between;align-items:center;margin:24px 0 18px;gap:10px;}
   .studio-select{font-family:inherit;font-size:14px;padding:8px 10px;border-radius:8px;border:1px solid var(--rule);background:#fff;color:var(--brown);}
 
+  .note-box{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:16px 18px;margin:18px 0 10px;}
+  .note-title{font-weight:700;font-size:14.5px;margin:0 0 8px;}
+  .note-box .note{font-size:14px;color:#6b5744;margin:0 0 8px;max-width:none;}
+  .note-box .note:last-child{margin-bottom:0;}
+  .draft-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--sage);margin-left:8px;}
+  .savebar{
+    position:fixed;top:12px;left:50%;z-index:30;
+    background:#eef3ec;color:var(--sage);border:1px solid #cfdcca;border-radius:10px;
+    padding:10px 16px;font-size:13.5px;font-weight:500;white-space:nowrap;
+    opacity:0;transform:translateX(-50%) translateY(-6px);transition:opacity .25s ease,transform .25s ease;
+    pointer-events:none;
+  }
+  .savebar.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
   [hidden]{display:none !important;}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <div class="toast" id="toast"></div>
+<div class="savebar" id="savebar">✓ Salvato su questo telefono/computer</div>
 
 <script>
 var PHASES = [
@@ -367,6 +382,53 @@ function saveStudioNotes(obj){
   try{ localStorage.setItem('bussolaInterna.studioNotes', JSON.stringify(obj)); }catch(e){}
 }
 
+// Bozze delle schede in corso: si salvano mentre si scrive, cosi una scheda lasciata a meta resta li
+function loadDrafts(){
+  try{ return JSON.parse(localStorage.getItem('bussolaInterna.drafts')||'{}'); }
+  catch(e){ return {}; }
+}
+function hasDraft(schedaId){
+  var d = loadDrafts()[schedaId];
+  if(!d) return false;
+  return Object.keys(d).some(function(k){
+    var v = d[k];
+    return Array.isArray(v) ? v.length>0 : (v!=null && String(v).trim()!=='');
+  });
+}
+function persistDraft(){
+  if(state.view!=='scheda' || !state.schedaId) return;
+  try{
+    var all = loadDrafts();
+    all[state.schedaId] = draft;
+    localStorage.setItem('bussolaInterna.drafts', JSON.stringify(all));
+  }catch(e){}
+  showSaved();
+}
+function clearDraft(schedaId){
+  try{
+    var all = loadDrafts();
+    delete all[schedaId];
+    localStorage.setItem('bussolaInterna.drafts', JSON.stringify(all));
+  }catch(e){}
+}
+function showSaved(){
+  var b = document.getElementById('savebar');
+  if(!b) return;
+  b.classList.add('show');
+  clearTimeout(window._saveTimer);
+  window._saveTimer = setTimeout(function(){ b.classList.remove('show'); }, 1600);
+}
+function setDraft(key, value){
+  draft[key] = value;
+  persistDraft();
+}
+function loadPref(key){
+  try{ return localStorage.getItem('bussolaInterna.'+key)||''; }catch(e){ return ''; }
+}
+function savePref(key, value){
+  try{ localStorage.setItem('bussolaInterna.'+key, value); }catch(e){}
+}
+
 function showToast(msg){
   var t=document.getElementById('toast');
   t.textContent=msg;
@@ -385,32 +447,37 @@ function navigate(view, extra){
 function renderField(f){
   if(f.t==='chips' || f.t==='chips1'){
     var multi = f.t==='chips';
+    var cur = draft[f.id];
     var chips = f.opts.map(function(o){
       var val = esc(o);
-      return `<button type="button" class="chip" onclick="toggleChip(this,'${f.id}','${val.replace(/'/g,"\\'")}',${multi})">${val}</button>`;
+      var sel = multi ? (Array.isArray(cur) && cur.indexOf(o)>-1) : cur===o;
+      return `<button type="button" class="chip${sel?' selected':''}" onclick="toggleChip(this,'${f.id}','${val.replace(/'/g,"\\'")}',${multi})">${val}</button>`;
     }).join('');
     var other='';
     if(f.other){
-      chips += `<button type="button" class="chip" onclick="toggleOther(this,'${f.id}')">Altro</button>`;
-      other = `<input type="text" class="chip-other-input" id="${f.id}_altro_input" oninput="draft['${f.id}_altro']=this.value" placeholder="Specifica...">`;
+      var altro = draft[f.id+'_altro'];
+      var hasAltro = altro!=null;
+      chips += `<button type="button" class="chip${hasAltro?' selected':''}" onclick="toggleOther(this,'${f.id}')">Altro</button>`;
+      other = `<input type="text" class="chip-other-input" id="${f.id}_altro_input" ${hasAltro?'style="display:block"':''} value="${esc(altro)}" oninput="setDraft('${f.id}_altro',this.value)" placeholder="Specifica...">`;
     }
     return `<div class="field"><label>${esc(f.label)}</label><div class="chip-group">${chips}</div>${other}</div>`;
   }
   if(f.t==='scale'){
+    var sv = draft[f.id]!=null ? esc(draft[f.id]) : '0';
     return `<div class="field"><label>${esc(f.label)}</label>
       <div class="scale-row">
-        <input type="range" min="0" max="10" value="0" oninput="draft['${f.id}']=this.value; document.getElementById('${f.id}_val').textContent=this.value">
-        <span class="scale-val" id="${f.id}_val">0</span>
+        <input type="range" min="0" max="10" value="${sv}" oninput="document.getElementById('${f.id}_val').textContent=this.value; setDraft('${f.id}',this.value)">
+        <span class="scale-val" id="${f.id}_val">${sv}</span>
       </div>
       <div class="scale-ends"><span>0</span><span>10</span></div>
     </div>`;
   }
   if(f.t==='ta'){
-    return `<div class="field"><label>${esc(f.label)}</label><textarea oninput="draft['${f.id}']=this.value" placeholder="Scrivi qui..."></textarea></div>`;
+    return `<div class="field"><label>${esc(f.label)}</label><textarea oninput="setDraft('${f.id}',this.value)" placeholder="Scrivi qui...">${esc(draft[f.id])}</textarea></div>`;
   }
   if(f.t==='fillin'){
-    var mid = f.mid ? ` <input type="text" oninput="draft['${f.id}_mid']=this.value" placeholder="..."> ${esc(f.mid)}` : '';
-    return `<div class="field fillin"><p>${esc(f.before)}${mid} <input type="text" oninput="draft['${f.id}']=this.value" placeholder="...">${esc(f.after)}</p></div>`;
+    var mid = f.mid ? ` <input type="text" value="${esc(draft[f.id+'_mid'])}" oninput="setDraft('${f.id}_mid',this.value)" placeholder="..."> ${esc(f.mid)}` : '';
+    return `<div class="field fillin"><p>${esc(f.before)}${mid} <input type="text" value="${esc(draft[f.id])}" oninput="setDraft('${f.id}',this.value)" placeholder="...">${esc(f.after)}</p></div>`;
   }
   if(f.t==='note'){
     return `<div class="callout"><strong>Un promemoria</strong>${esc(f.text)}</div>`;
@@ -430,6 +497,7 @@ function toggleChip(el, fieldId, value, multi){
     Array.prototype.forEach.call(group.querySelectorAll('.chip'), function(c){ c.classList.remove('selected'); });
     el.classList.add('selected');
   }
+  persistDraft();
 }
 function toggleOther(el, fieldId){
   var input=document.getElementById(fieldId+'_altro_input');
@@ -437,6 +505,8 @@ function toggleOther(el, fieldId){
   input.style.display = showing?'none':'block';
   el.classList.toggle('selected', !showing);
   if(showing){ delete draft[fieldId+'_altro']; input.value=''; }
+  else if(draft[fieldId+'_altro']==null){ draft[fieldId+'_altro']=''; }
+  persistDraft();
 }
 
 function renderHome(){
@@ -453,7 +523,7 @@ function renderHome(){
     var rows = p.schede.map(function(sid){
       var s = SCHEDE[sid];
       return `<div class="scheda-row" onclick="navigate('scheda',{schedaId:'${sid}'})">
-        <span class="scheda-row-title">${esc(s.title)}</span>
+        <span class="scheda-row-title">${esc(s.title)}${hasDraft(sid)?'<span class="draft-tag">Da finire</span>':''}</span>
         <span class="scheda-row-arrow">&rsaquo;</span>
       </div>`;
     }).join('');
@@ -476,6 +546,15 @@ function renderHome(){
       <div class="hero-inner">
         <h1>Bussola Interna</h1>
         <p>Qui puoi fermarti un momento prima, durante e dopo i pasti e osservare cosa succede nel tuo corpo. Puoi farlo con calma, senza cercare la perfezione: basta iniziare a notare, con curiosità invece che con giudizio.</p>
+        <p>Puoi tornare qui quante volte vuoi tra una call e l'altra: apri la scheda che ti serve in quel momento e scrivi solo quello che è successo adesso, senza rifare le altre. Resta tutto salvato in automatico, anche una scheda lasciata a metà, e le osservazioni che salvi le ritrovi nel tuo diario qui sotto.</p>
+        <div class="note-box">
+          <p class="note-title">⚠️ Prima di iniziare, questo passaggio è importante</p>
+          <p class="note">Se hai aperto questa pagina da WhatsApp o da Instagram, non continuare a usarla direttamente dalla chat.</p>
+          <p class="note">Tocca i tre puntini (o l'icona di condivisione) in alto e scegli «Apri in Safari» su iPhone oppure «Apri nel browser» su Android.</p>
+          <p class="note">Una volta aperta nel browser, aggiungi questa pagina alla schermata Home o ai Preferiti. Da quel momento riapri sempre la Bussola da lì.</p>
+          <p class="note">Non tornare al link della chat per accedervi.</p>
+          <p class="note">Quello che scrivi resta salvato su questo telefono e in questo browser. Se usi sempre lo stesso, ritrovi tutto ogni volta che torni.</p>
+        </div>
       </div>
     </div>
     <main>
@@ -503,15 +582,16 @@ function renderHome(){
 function renderScheda(schedaId, opts){
   opts = opts||{};
   var s = SCHEDE[schedaId];
+  if(!opts.studio){ draft = loadDrafts()[schedaId] || {}; }
   var fieldsHtml = s.fields.map(renderField).join('');
   var noteHtml = s.note ? `<div class="callout"><strong>Un promemoria</strong>${esc(s.note)}</div>` : '';
   var specialHtml = '';
   if(s.special==='settimana'){
     specialHtml = GIORNI.map(function(g,i){
       return `<details class="day"><summary>${g}</summary><div class="day-body">
-        <div class="field"><label>Cosa ho notato prima di mangiare</label><textarea oninput="draft['giorno${i}_prima']=this.value" placeholder="Scrivi qui..."></textarea></div>
-        <div class="field"><label>Durante</label><textarea oninput="draft['giorno${i}_durante']=this.value" placeholder="Scrivi qui..."></textarea></div>
-        <div class="field"><label>Dopo</label><textarea oninput="draft['giorno${i}_dopo']=this.value" placeholder="Scrivi qui..."></textarea></div>
+        <div class="field"><label>Cosa ho notato prima di mangiare</label><textarea oninput="setDraft('giorno${i}_prima',this.value)" placeholder="Scrivi qui...">${esc(draft['giorno'+i+'_prima'])}</textarea></div>
+        <div class="field"><label>Durante</label><textarea oninput="setDraft('giorno${i}_durante',this.value)" placeholder="Scrivi qui...">${esc(draft['giorno'+i+'_durante'])}</textarea></div>
+        <div class="field"><label>Dopo</label><textarea oninput="setDraft('giorno${i}_dopo',this.value)" placeholder="Scrivi qui...">${esc(draft['giorno'+i+'_dopo'])}</textarea></div>
       </div></details>`;
     }).join('');
   }
@@ -526,6 +606,7 @@ function renderScheda(schedaId, opts){
     ${noteHtml}
     ${specialHtml}
     ${fieldsHtml}
+    ${opts.studio ? '' : `<p class="invia-note" style="margin:0 0 14px">Quello che scrivi si salva da solo. Se devi interrompere, puoi chiudere la pagina e riprendere più tardi da lì. Quando hai finito, premi Salva osservazione e la ritrovi nel tuo diario.</p>`}
     <div class="btn-row"><button class="btn" onclick="${saveFn}">Salva osservazione</button></div>
   `;
 
@@ -539,7 +620,8 @@ function savePatientEntry(schedaId){
   var entries = loadEntries();
   entries.push({ id: Date.now()+'-'+Math.random().toString(36).slice(2), schedaId:schedaId, ts:Date.now(), source:'auto', answers: Object.assign({}, draft) });
   saveEntries(entries);
-  showToast('Osservazione salvata.');
+  clearDraft(schedaId);
+  showToast('Osservazione salvata nel tuo diario.');
   navigate('home');
 }
 
@@ -721,7 +803,7 @@ function renderInvia(){
       <p class="scheda-intro">Scegli tu se tenerlo privato o condividerlo con Mariastella prima della vostra prossima call. Se lo condividi, potrete parlarne insieme e capire insieme cosa provare a migliorare. Puoi farlo tutte le volte che vuoi.</p>
       <div class="field">
         <label>Nome e cognome</label>
-        <input type="text" id="invia_nome" placeholder="Come ti chiami">
+        <input type="text" id="invia_nome" value="${esc(loadPref('nome'))}" oninput="savePref('nome',this.value)" placeholder="Come ti chiami">
       </div>
       <div class="field">
         <label>Quale periodo vuoi includere?</label>
@@ -737,6 +819,7 @@ function renderInvia(){
         <textarea id="invia_nota" placeholder="Facoltativo"></textarea>
       </div>
       <p class="invia-note" id="invia_preview"></p>
+      <p class="invia-note">Puoi premerlo anche più di una volta (per esempio se nel frattempo hai aggiunto nuove osservazioni): l'ultimo invio contiene sempre tutto il periodo scelto, e i tuoi dati restano comunque salvati qui.</p>
       <div class="btn-row"><button class="btn" id="invia_btn" onclick="sendRiepilogo()">Invia il riepilogo</button></div>
     </main>
   `;
@@ -810,7 +893,7 @@ function sendRiepilogo(){
     document.getElementById('app').innerHTML = `
       <main>
         <h2>Riepilogo inviato</h2>
-        <p class="scheda-intro">Mariastella lo riceverà prima della vostra prossima call. A presto.</p>
+        <p class="scheda-intro">Mariastella lo riceverà prima della vostra prossima call. Puoi continuare a scrivere nella Bussola e reinviarlo quando vuoi: niente viene cancellato.</p>
         <div class="btn-row"><button class="btn" onclick="navigate('home')">Torna alla bussola</button></div>
       </main>
     `;
