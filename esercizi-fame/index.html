@@ -145,11 +145,21 @@
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
   [hidden]{display:none !important;}
+  .draft-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#7d8f6e;margin-left:8px;}
+  .savebar{
+    position:fixed;top:12px;left:50%;z-index:30;
+    background:#eef3ec;color:#5f7254;border:1px solid #cfdcca;border-radius:10px;
+    padding:10px 16px;font-size:13.5px;font-weight:500;white-space:nowrap;
+    opacity:0;transform:translateX(-50%) translateY(-6px);transition:opacity .25s ease,transform .25s ease;
+    pointer-events:none;
+  }
+  .savebar.show{opacity:1;transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
 <div id="app"></div>
 <div class="toast" id="toast"></div>
+<div class="savebar" id="savebar">✓ Salvato su questo telefono/computer</div>
 
 <script>
 var SCHEDE = {
@@ -229,6 +239,47 @@ function saveEntries(list){
   try{ localStorage.setItem('eserciziFame.entries', JSON.stringify(list)); }catch(e){}
 }
 
+// Bozze degli esercizi in corso: si salvano mentre si scrive, cosi un esercizio lasciato a meta resta li
+function loadDrafts(){
+  try{ return JSON.parse(localStorage.getItem('eserciziFame.drafts')||'{}'); }
+  catch(e){ return {}; }
+}
+function hasDraft(schedaId){
+  var d = loadDrafts()[schedaId];
+  if(!d) return false;
+  return Object.keys(d).some(function(k){
+    var v = d[k];
+    return Array.isArray(v) ? v.length>0 : (v!=null && String(v).trim()!=='');
+  });
+}
+function persistDraft(){
+  if(state.view!=='scheda' || !state.schedaId) return;
+  try{
+    var all = loadDrafts();
+    all[state.schedaId] = draft;
+    localStorage.setItem('eserciziFame.drafts', JSON.stringify(all));
+  }catch(e){}
+  showSaved();
+}
+function clearDraft(schedaId){
+  try{
+    var all = loadDrafts();
+    delete all[schedaId];
+    localStorage.setItem('eserciziFame.drafts', JSON.stringify(all));
+  }catch(e){}
+}
+function showSaved(){
+  var b = document.getElementById('savebar');
+  if(!b) return;
+  b.classList.add('show');
+  clearTimeout(window._saveTimer);
+  window._saveTimer = setTimeout(function(){ b.classList.remove('show'); }, 1600);
+}
+function setDraft(key, value){
+  draft[key] = value;
+  persistDraft();
+}
+
 function showToast(msg){
   var t=document.getElementById('toast');
   t.textContent=msg;
@@ -247,24 +298,29 @@ function navigate(view, extra){
 function renderField(f){
   if(f.t==='chips' || f.t==='chips1'){
     var multi = f.t==='chips';
+    var cur = draft[f.id];
     var chips = f.opts.map(function(o){
       var val = esc(o);
-      return `<button type="button" class="chip" onclick="toggleChip(this,'${f.id}','${val.replace(/'/g,"\\'")}',${multi})">${val}</button>`;
+      var sel = multi ? (Array.isArray(cur) && cur.indexOf(o)>-1) : cur===o;
+      return `<button type="button" class="chip${sel?' selected':''}" onclick="toggleChip(this,'${f.id}','${val.replace(/'/g,"\\'")}',${multi})">${val}</button>`;
     }).join('');
     var other='';
     if(f.other){
-      chips += `<button type="button" class="chip" onclick="toggleOther(this,'${f.id}',${multi})">Altro</button>`;
-      other = `<input type="text" class="chip-other-input" id="${f.id}_altro_input" oninput="draft['${f.id}_altro']=this.value" placeholder="Specifica...">`;
+      var altro = draft[f.id+'_altro'];
+      var hasAltro = altro!=null;
+      chips += `<button type="button" class="chip${hasAltro?' selected':''}" onclick="toggleOther(this,'${f.id}',${multi})">Altro</button>`;
+      other = `<input type="text" class="chip-other-input" id="${f.id}_altro_input" ${hasAltro?'style="display:block"':''} value="${esc(altro)}" oninput="setDraft('${f.id}_altro',this.value)" placeholder="Specifica...">`;
     }
     var hint = f.hint ? `<span class="hint">${esc(f.hint)}</span>` : '';
     return `<div class="field"><label>${esc(f.label)}</label>${hint}<div class="chip-group">${chips}</div>${other}</div>`;
   }
   if(f.t==='scale'){
+    var sv = draft[f.id]!=null ? esc(draft[f.id]) : '0';
     var hint2 = f.hint ? `<span class="hint">${esc(f.hint)}</span>` : '';
     return `<div class="field"><label>${esc(f.label)}</label>${hint2}
       <div class="scale-row">
-        <input type="range" min="0" max="10" value="0" oninput="draft['${f.id}']=this.value; document.getElementById('${f.id}_val').textContent=this.value">
-        <span class="scale-val" id="${f.id}_val">0</span>
+        <input type="range" min="0" max="10" value="${sv}" oninput="document.getElementById('${f.id}_val').textContent=this.value; setDraft('${f.id}',this.value)">
+        <span class="scale-val" id="${f.id}_val">${sv}</span>
       </div>
       <div class="scale-ends"><span>0</span><span>10</span></div>
     </div>`;
@@ -274,11 +330,11 @@ function renderField(f){
     return `<div class="field"><label>${esc(f.label)}</label><ol class="steps-list">${steps}</ol></div>`;
   }
   if(f.t==='txt'){
-    return `<div class="field"><label>${esc(f.label)}</label><input type="text" oninput="draft['${f.id}']=this.value" placeholder="Scrivi qui..."></div>`;
+    return `<div class="field"><label>${esc(f.label)}</label><input type="text" value="${esc(draft[f.id])}" oninput="setDraft('${f.id}',this.value)" placeholder="Scrivi qui..."></div>`;
   }
   if(f.t==='ta'){
     var hint3 = f.hint ? `<span class="hint">${esc(f.hint)}</span>` : '';
-    return `<div class="field"><label>${esc(f.label)}</label>${hint3}<textarea oninput="draft['${f.id}']=this.value" placeholder="Scrivi qui..."></textarea></div>`;
+    return `<div class="field"><label>${esc(f.label)}</label>${hint3}<textarea oninput="setDraft('${f.id}',this.value)" placeholder="Scrivi qui...">${esc(draft[f.id])}</textarea></div>`;
   }
   return '';
 }
@@ -295,6 +351,7 @@ function toggleChip(el, fieldId, value, multi){
     Array.prototype.forEach.call(group.querySelectorAll('.chip'), function(c){ c.classList.remove('selected'); });
     el.classList.add('selected');
   }
+  persistDraft();
 }
 function toggleOther(el, fieldId, multi){
   var input=document.getElementById(fieldId+'_altro_input');
@@ -308,7 +365,9 @@ function toggleOther(el, fieldId, multi){
     var group=el.closest('.chip-group');
     Array.prototype.forEach.call(group.querySelectorAll('.chip'), function(c){ if(c!==el) c.classList.remove('selected'); });
     delete draft[fieldId];
-  }
+    if(draft[fieldId+'_altro']==null) draft[fieldId+'_altro']='';
+  } else if(draft[fieldId+'_altro']==null){ draft[fieldId+'_altro']=''; }
+  persistDraft();
 }
 
 function renderHome(){
@@ -326,7 +385,7 @@ function renderHome(){
     return `<div class="scheda-card" onclick="navigate('scheda',{schedaId:'${sid}'})">
       <div class="scheda-card-inner">
         <div>
-          <div class="scheda-card-title">Esercizio ${s.num}: ${esc(s.title)}</div>
+          <div class="scheda-card-title">Esercizio ${s.num}: ${esc(s.title)}${hasDraft(sid)?'<span class="draft-tag">Da finire</span>':''}</div>
           <div class="scheda-card-sub">${esc(s.intro)}</div>
         </div>
         <span class="scheda-card-arrow">&rsaquo;</span>
@@ -368,6 +427,7 @@ function renderHome(){
 
 function renderScheda(schedaId){
   var s = SCHEDE[schedaId];
+  draft = loadDrafts()[schedaId] || {};
   var fieldsHtml = s.fields.map(renderField).join('');
   var noteHtml = s.note ? `<div class="callout"><strong>Un promemoria</strong>${esc(s.note)}</div>` : '';
 
@@ -385,6 +445,7 @@ function saveEntry(schedaId){
   var entries = loadEntries();
   entries.push({ id: Date.now()+'-'+Math.random().toString(36).slice(2), schedaId:schedaId, ts:Date.now(), answers: Object.assign({}, draft) });
   saveEntries(entries);
+  clearDraft(schedaId);
   showToast('Osservazione salvata.');
   navigate('home');
 }
