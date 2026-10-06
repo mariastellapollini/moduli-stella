@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Occhiometro">
+<title>Occhiometro · Luca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#faf6ee;
+  --beige:#ead9c5;
+  --beige-soft:#f1e6d6;
+  --brown:#4a3527;
+  --brown-deep:#55402e;
+  --rule:#d9c6ac;
+  --muted:#7a6754;
+  --giallo:#F3DF4A;
+  --blu:#2FA3D9;
+  --arancio:#F6B12D;
+  --verde:#8FC85A;
+  --rosso:#E9A0AE;
+  --max:720px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--cream);}
+body{font-family:'Poppins',-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--brown);line-height:1.55;-webkit-font-smoothing:antialiased;}
+h1,h2,h3{font-weight:600;}
+.topbar{display:flex;align-items:center;justify-content:space-between;max-width:var(--max);margin:0 auto;padding:22px 20px 14px;}
+.eyebrow{font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;}
+.dots{display:flex;gap:5px;}
+.dots span{width:11px;height:11px;border-radius:50%;}
+.hero{background:var(--beige);padding:28px 20px 24px;}
+.hero-inner{max-width:var(--max);margin:0 auto;}
+.hero h1{font-size:clamp(28px,7vw,36px);font-weight:800;margin:0 0 8px;line-height:1.15;text-transform:uppercase;letter-spacing:-.01em;}
+.hero p{font-size:15px;margin:0;max-width:60ch;}
+.tabs{position:sticky;top:0;z-index:5;background:var(--cream);border-bottom:1px solid var(--rule);}
+.tabs-inner{max-width:var(--max);margin:0 auto;display:flex;gap:6px;padding:10px 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.tab{flex:none;font-family:inherit;font-size:14px;font-weight:600;padding:9px 15px;border-radius:20px;border:1.5px solid var(--rule);background:#fff;color:var(--brown);cursor:pointer;}
+.tab.on{background:var(--brown-deep);border-color:var(--brown-deep);color:#fbf5ea;}
+main{max-width:var(--max);margin:0 auto;padding:22px 16px 40px;}
+.section-title{font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;margin:0 0 14px;padding-bottom:8px;border-bottom:2px solid var(--rule);}
+.intro{font-size:14.5px;color:var(--muted);margin:0 0 18px;}
+.field{background:var(--beige-soft);border-radius:10px;padding:16px 16px;margin-bottom:12px;}
+.field label,.field .lbl{display:block;font-weight:500;font-size:15px;margin-bottom:8px;}
+.field .hint{display:block;font-weight:400;font-size:12.5px;color:var(--muted);margin:-4px 0 8px;}
+.field input[type="text"],.field input[type="date"],.field textarea,.field input[type="number"]{width:100%;border:1px solid var(--rule);border-radius:8px;padding:11px 12px;font-family:inherit;font-size:16px;color:var(--brown);background:#fff;}
+.field textarea{min-height:60px;resize:vertical;}
+.field input:focus,.field textarea:focus{outline:2px solid var(--brown-deep);outline-offset:1px;}
+.row2{display:flex;gap:10px;}
+.row2 > div{flex:1;}
+.chip-group{display:flex;flex-wrap:wrap;gap:7px;}
+.chip{font-family:inherit;font-size:14px;padding:8px 14px;border-radius:20px;border:1.5px solid var(--rule);background:#fff;color:var(--brown);cursor:pointer;}
+.chip.on{background:var(--brown-deep);border-color:var(--brown-deep);color:#fbf5ea;}
+.chip.col{font-weight:700;font-size:13px;letter-spacing:.03em;}
+.chip.col.on{outline:3px solid var(--brown-deep);outline-offset:1px;}
+.c-GIALLO{background:var(--giallo);border-color:var(--giallo);color:#4a3527;}
+.c-BLU{background:var(--blu);border-color:var(--blu);color:#fff;}
+.c-ARANCIONE{background:var(--arancio);border-color:var(--arancio);color:#4a3527;}
+.c-VERDE{background:var(--verde);border-color:var(--verde);color:#2f3b1f;}
+.c-ROSSO{background:var(--rosso);border-color:var(--rosso);color:#4a3527;}
+.scale-row{display:flex;align-items:center;gap:12px;}
+.scale-row input[type="range"]{flex:1;accent-color:var(--brown-deep);}
+.scale-val{flex:none;width:30px;text-align:center;font-weight:700;font-size:17px;}
+.scale-desc{font-size:12.5px;color:var(--muted);margin-top:6px;min-height:18px;}
+.btn{display:inline-block;background:var(--brown-deep);color:#fbf5ea;border:none;border-radius:30px;font-family:inherit;font-weight:600;font-size:15px;padding:13px 28px;cursor:pointer;text-decoration:none;text-align:center;}
+.btn:disabled{opacity:.5;}
+.btn-ghost{background:none;color:var(--brown-deep);border:1.5px solid var(--brown-deep);padding:11px 24px;}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;}
+.callout{background:var(--beige);border-radius:10px;padding:14px 16px;margin-bottom:16px;font-size:14px;}
+.callout b{font-weight:700;}
+.day{border:1px solid var(--rule);border-radius:10px;margin-bottom:12px;overflow:hidden;background:#fff;}
+.day summary{cursor:pointer;font-weight:700;font-size:14px;letter-spacing:.03em;text-transform:uppercase;padding:14px 16px;background:var(--beige);display:flex;justify-content:space-between;list-style:none;}
+.day summary::-webkit-details-marker{display:none;}
+.day summary::after{content:'+';font-size:20px;font-weight:400;}
+.day[open] summary::after{content:'\2013';}
+.day-body{padding:6px 16px;}
+.entry{border-top:1px solid var(--rule);padding:12px 0;}
+.entry:first-child{border-top:none;}
+.entry-head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;}
+.entry-head b{font-size:15px;}
+.tag{font-size:11px;font-weight:700;padding:2px 9px;border-radius:10px;letter-spacing:.03em;}
+.tag.week{background:var(--beige-soft);color:var(--muted);}
+.entry-row{font-size:14px;margin:3px 0;}
+.gap{display:inline-block;font-size:12.5px;font-weight:600;padding:2px 9px;border-radius:10px;background:#eef3e6;color:#3d5a24;}
+.gap.far{background:#f6e7dc;color:#7a4a28;}
+.del{background:none;border:none;color:var(--muted);font-size:12px;cursor:pointer;text-decoration:underline;padding:0;margin-top:4px;font-family:inherit;}
+.empty{font-size:14.5px;color:var(--muted);}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:6px;background:#fff;border-radius:10px;overflow:hidden;}
+td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top;}
+td.f{font-weight:600;width:38%;}
+td.f small{display:block;font-weight:500;color:var(--muted);font-size:12px;}
+.band{height:6px;border-radius:3px;width:70px;margin:18px 0 10px;}
+.porz-note{font-size:12.5px;color:var(--muted);margin:2px 0 14px;}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--brown-deep);color:#fbf5ea;padding:11px 18px;border-radius:24px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .25s;max-width:90vw;text-align:center;z-index:20;}
+.toast.show{opacity:1;}
+.savebar{font-size:12px;color:var(--muted);text-align:center;margin-top:10px;}
+.footer{text-align:center;font-size:13px;color:var(--muted);padding:10px 16px 30px;}
+</style>
+</head>
+<body>
+
+<div class="topbar"><span class="eyebrow">Percorso nutrizionale personalizzato</span><span class="dots"><span style="background:var(--giallo)"></span><span style="background:var(--blu)"></span><span style="background:var(--arancio)"></span><span style="background:var(--verde)"></span></span></div>
+<div class="hero"><div class="hero-inner">
+  <h1>Occhiometro</h1>
+  <p>La scheda "Pesa e osserva" di Luca. Si salva da sola su questo telefono: puoi compilarla un pezzo alla volta e ritrovi sempre tutto.</p>
+</div></div>
+
+<div class="tabs"><div class="tabs-inner" id="tabs"></div></div>
+<div id="app"></div>
+<div class="footer">Ci vediamo in call, Mariastella &#127807;</div>
+<div class="toast" id="toast"></div>
+
+<script>
+var SLUG = 'luca-magnanelli';
+var NOME_PAZIENTE = 'Luca Magnanelli';
+var K_ENTRIES = 'occhiometro.' + SLUG + '.entries';
+var K_DRAFT = 'occhiometro.' + SLUG + '.draft';
+var K_NOME = 'occhiometro.' + SLUG + '.nome';
+
+var COLORI = ['GIALLO','BLU','ARANCIONE','VERDE','ROSSO'];
+var SETTIMANE = ['Settimana 1','Settimana 2','Settimana 3','Ripasso'];
+var PASTI = ['Colazione','Spuntino','Pranzo','Merenda','Cena','Dopo cena','Fuori casa'];
+var SCALA = {
+  0:`Fame dolorosa, molto intensa, senso di urgenza`,
+  1:`Irritante, sei ansioso di mangiare`,
+  2:`Molta fame, vorresti un pasto o uno snack`,
+  3:`Affamato e pronto a mangiare, ma senza urgenza`,
+  4:`Un po' affamato, si potrebbe quasi fare a meno di mangiare`,
+  5:`Neutro, né fame né sazietà`,
+  6:`Inizi a sentire il senso di sazietà`,
+  7:`Pienezza piacevole, sei soddisfatto e appagato`,
+  8:`Un po' troppo pieno, non piacevole ma nemmeno fastidioso`,
+  9:`Pieno, pienissimo, come se dovessi allentare la cintura`,
+  10:`Quasi doloroso, ti senti nauseato`
+};
+var CAMPI_VUOTI = { settimana:'', data:'', pasto:'', alimento:'', colore:'', aspetto:'', stima:'', bilancia:'', fame:'', sazieta:'', note:'' };
+
+var state = { view:'nuova' };
+
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function load(k,def){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):def; }catch(e){ return def; } }
+function store(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); return true; }catch(e){ return false; } }
+function oggi(){ var d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOffset()); return d.toISOString().slice(0,10); }
+function toast(msg){ var t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._h); t._h=setTimeout(function(){t.classList.remove('show');},2600); }
+
+function getDraft(){
+  var d = load(K_DRAFT,null);
+  if(!d){ d = Object.assign({}, CAMPI_VUOTI); d.data = oggi(); var last = load(K_ENTRIES,[]); if(last.length){ d.settimana = last[last.length-1].settimana || ''; } }
+  return d;
+}
+function setDraft(k,v){ var d=getDraft(); d[k]=v; store(K_DRAFT,d); }
+
+function numero(s){ var m=String(s||'').replace(',','.').match(/-?\d+(\.\d+)?/); return m?parseFloat(m[0]):null; }
+
+/* ---------- TABS ---------- */
+function renderTabs(){
+  var t = [['nuova','Nuova stima'],['diario','Il mio diario'],['porzioni','Le mie porzioni'],['invia','Invia a Mariastella']];
+  document.getElementById('tabs').innerHTML = t.map(function(x){
+    return `<button class="tab ${state.view===x[0]?'on':''}" onclick="go('${x[0]}')">${x[1]}</button>`;
+  }).join('');
+}
+function go(v){ state.view=v; render(); window.scrollTo(0,0); }
+
+/* ---------- NUOVA STIMA ---------- */
+function chipRow(id, opts, val, extraClass){
+  return `<div class="chip-group">` + opts.map(function(o){
+    var cls = 'chip' + (extraClass?(' col c-'+o):'') + (val===o?' on':'');
+    return `<button type="button" class="${cls}" onclick="pick('${id}','${o}')">${esc(o)}</button>`;
+  }).join('') + `</div>`;
+}
+function pick(id,val){ var d=getDraft(); d[id] = (d[id]===val?'':val); store(K_DRAFT,d); render(); }
+
+function scaleField(id,label,hint,val){
+  var has = val!=='' && val!=null;
+  var v = has?val:5;
+  return `<div class="field"><span class="lbl">${label}</span><span class="hint">${hint}</span>
+    <div class="scale-row"><input type="range" min="0" max="10" step="1" value="${v}" oninput="scale('${id}',this.value)"><span class="scale-val" id="v_${id}">${has?v:'-'}</span></div>
+    <div class="scale-desc" id="d_${id}">${has?esc(SCALA[v]):'Sposta il cursore'}</div></div>`;
+}
+function scale(id,v){ setDraft(id,v); document.getElementById('v_'+id).textContent=v; document.getElementById('d_'+id).textContent=SCALA[v]; flash(); }
+
+function flash(){ var s=document.getElementById('savebar'); if(s){ s.textContent='✓ Salvato su questo telefono'; } }
+
+function renderNuova(){
+  var d = getDraft();
+  return `<main>
+    <div class="callout"><b>Come funziona.</b> Una riga per ogni alimento che stimi. Nella settimana 1 pesi e guardi, nella 2 prima indovini e poi pesi, nella 3 pesi un solo alimento a sorpresa al giorno. Se ti interrompi, quello che hai scritto resta qui.</div>
+    <div class="field"><span class="lbl">In che fase sei?</span>${chipRow('settimana',SETTIMANE,d.settimana)}</div>
+    <div class="field row2">
+      <div><label for="f_data">Giorno</label><input type="date" id="f_data" value="${esc(d.data)}" oninput="setDraft('data',this.value);flash()"></div>
+    </div>
+    <div class="field"><span class="lbl">Pasto</span>${chipRow('pasto',PASTI,d.pasto)}</div>
+    <div class="field"><label for="f_alimento">Alimento</label><span class="hint">Esempio: pasta corta, riso basmati, petto di pollo, olio</span>
+      <input type="text" id="f_alimento" value="${esc(d.alimento)}" oninput="setDraft('alimento',this.value);flash()"></div>
+    <div class="field"><span class="lbl">Colore</span>${chipRow('colore',COLORI,d.colore,true)}</div>
+    <div class="field"><label for="f_aspetto">Come appare</label><span class="hint">Manciate, cucchiai, mano a coppa, quanto spazio prende nel tuo piatto</span>
+      <textarea id="f_aspetto" oninput="setDraft('aspetto',this.value);flash()">${esc(d.aspetto)}</textarea></div>
+    <div class="field row2">
+      <div><label for="f_stima">La mia stima</label><input type="text" inputmode="decimal" id="f_stima" value="${esc(d.stima)}" oninput="setDraft('stima',this.value);flash()" placeholder="es. 70"></div>
+      <div><label for="f_bil">Bilancia</label><input type="text" inputmode="decimal" id="f_bil" value="${esc(d.bilancia)}" oninput="setDraft('bilancia',this.value);flash()" placeholder="es. 82"></div>
+    </div>
+    ${scaleField('fame','Fame prima del pasto','Da 0 a 10, come nella scala dello Step 05',d.fame)}
+    ${scaleField('sazieta','Sazietà alla fine','Ti sei fermato intorno al 7?',d.sazieta)}
+    <div class="field"><label for="f_note">Note</label><span class="hint">Facoltativo: cosa ti ha sorpreso, dove eri, com'era il piatto</span>
+      <textarea id="f_note" oninput="setDraft('note',this.value);flash()">${esc(d.note)}</textarea></div>
+    <div class="btn-row"><button class="btn" onclick="salva()">Salva questa stima</button><button class="btn btn-ghost" onclick="svuota()">Svuota</button></div>
+    <div class="savebar" id="savebar">Quello che scrivi si salva mentre lo scrivi</div>
+  </main>`;
+}
+
+function salva(){
+  var d = getDraft();
+  if(!d.alimento.trim()){ toast('Scrivi almeno l’alimento, poi salva.'); return; }
+  var list = load(K_ENTRIES,[]);
+  var e = Object.assign({}, d); e.id = Date.now().toString(36)+Math.random().toString(36).slice(2,6); e.ts = Date.now();
+  list.push(e);
+  if(!store(K_ENTRIES,list)){ toast('Non riesco a salvare su questo telefono. Controlla di non essere in navigazione privata.'); return; }
+  var nuovo = Object.assign({}, CAMPI_VUOTI); nuovo.data = d.data; nuovo.settimana = d.settimana; nuovo.pasto = d.pasto; nuovo.fame = d.fame;
+  store(K_DRAFT,nuovo);
+  toast('Stima salvata nel tuo diario');
+  render();
+}
+function svuota(){ if(!confirm('Vuoi svuotare i campi di questa stima?')) return; var n=Object.assign({},CAMPI_VUOTI); n.data=oggi(); store(K_DRAFT,n); render(); }
+
+/* ---------- DIARIO ---------- */
+function scarto(e){
+  var a=numero(e.stima), b=numero(e.bilancia);
+  if(a===null||b===null||b===0) return '';
+  var p = Math.round((a-b)/b*100);
+  var far = Math.abs(p)>25;
+  var testo = p===0 ? 'Centrato in pieno' : (p>0 ? `Stima più alta del ${p}%` : `Stima più bassa del ${Math.abs(p)}%`);
+  return `<span class="gap ${far?'far':''}">${testo}</span>`;
+}
+function dataLabel(s){ try{ return new Date(s+'T12:00:00').toLocaleDateString('it-IT',{weekday:'long',day:'numeric',month:'long'}); }catch(e){ return s; } }
+
+function renderDiario(){
+  var list = load(K_ENTRIES,[]);
+  if(!list.length) return `<main><p class="empty">Non hai ancora salvato nessuna stima. Quando ne salvi una dalla scheda "Nuova stima", la trovi qui.</p></main>`;
+  var gruppi = {};
+  list.forEach(function(e){ (gruppi[e.data||'senza data'] = gruppi[e.data||'senza data'] || []).push(e); });
+  var giorni = Object.keys(gruppi).sort().reverse();
+  var vicine = list.filter(function(e){ var a=numero(e.stima),b=numero(e.bilancia); return a!==null&&b!==null&&b!==0&&Math.abs((a-b)/b)<=0.25; }).length;
+  var confronti = list.filter(function(e){ return numero(e.stima)!==null&&numero(e.bilancia)!==null&&numero(e.bilancia)!==0; }).length;
+  var sintesi = confronti ? `<div class="callout">Hai confrontato <b>${confronti}</b> stime con la bilancia: <b>${vicine}</b> erano entro il 25%. Quando succede quasi sempre, sei pronto per l'esercizio finale fuori casa.</div>` : '';
+  return `<main>${sintesi}` + giorni.map(function(g,i){
+    return `<details class="day" ${i===0?'open':''}><summary>${esc(dataLabel(g))}</summary><div class="day-body">` +
+      gruppi[g].map(function(e){
+        return `<div class="entry">
+          <div class="entry-head"><b>${esc(e.alimento)}</b>${e.colore?`<span class="tag c-${e.colore}">${e.colore}</span>`:''}${e.settimana?`<span class="tag week">${esc(e.settimana)}</span>`:''}${e.pasto?`<span class="tag week">${esc(e.pasto)}</span>`:''}</div>
+          ${e.aspetto?`<div class="entry-row">Come appare: ${esc(e.aspetto)}</div>`:''}
+          ${(e.stima||e.bilancia)?`<div class="entry-row">Stima: <b>${esc(e.stima||'-')}</b> · Bilancia: <b>${esc(e.bilancia||'-')}</b> ${scarto(e)}</div>`:''}
+          ${(e.fame!==''||e.sazieta!=='')?`<div class="entry-row">Fame prima: <b>${e.fame===''?'-':esc(e.fame)}</b> · Sazietà alla fine: <b>${e.sazieta===''?'-':esc(e.sazieta)}</b></div>`:''}
+          ${e.note?`<div class="entry-row">Note: ${esc(e.note)}</div>`:''}
+          <button class="del" onclick="elimina('${e.id}')">Elimina questa stima</button>
+        </div>`;
+      }).join('') + `</div></details>`;
+  }).join('') + `</main>`;
+}
+function elimina(id){ if(!confirm('Eliminare questa stima?')) return; store(K_ENTRIES, load(K_ENTRIES,[]).filter(function(e){return e.id!==id;})); render(); }
+
+/* ---------- LE MIE PORZIONI ---------- */
+var PORZIONI = [
+  { col:'GIALLO', nome:'Giallo', righe:[
+    [`Pasta normale o integrale`,`70`,`Da cruda circa 45 penne o fusilli, due manciate. Da cotta 6-7 cucchiai colmi, una mano a coppa e mezza`],
+    [`Riso, farro, orzo, cous cous, quinoa`,`70`,`Da crudi 3-4 cucchiai colmi, due manciate. Da cotti 6-8 cucchiai colmi, quanto sta in due mani unite a coppa`],
+    [`Pasta fresca`,`90`,`Poco più di un terzo di una confezione da 250`],
+    [`Pane integrale`,`80`,`Una fetta media e mezza di pagnotta, o un pezzo che ti riempie bene il palmo`],
+    [`Pane a colazione`,`60 / 100`,`Poco più di una fetta media / due fette medie`],
+    [`Muesli o granola`,`70`,`Circa 7 cucchiai`],
+    [`Patate`,`250`,`2-3 patate piccole, o una patata grande come il tuo pugno o poco più`],
+    [`Gnocchi di patate`,`150`,`Poco meno di un terzo di una confezione da 500`]
+  ]},
+  { col:'BLU', nome:'Blu', righe:[
+    [`Carne bianca o rossa`,`200`,`Due fette di petto di pollo o tacchino, due fettine o due hamburger. Da cotta circa tre quarti della tua mano aperta`],
+    [`Pesce (orata, salmone, merluzzo, spada)`,`200`,`Un filetto grande o un filetto e mezzo medio. Da cotto, poco più di metà della tua mano aperta`],
+    [`Polpo, seppie, cozze, vongole, gamberi`,`150`,`3 gamberoni, circa 20 gamberetti, circa 25 cozze`],
+    [`Legumi cotti, in scatola o surgelati`,`200`,`Circa 10 cucchiai, poco più di mezzo piatto`],
+    [`Pasta 100% di legumi`,`70`,`Due manciate da cruda, come la pasta`],
+    [`Tofu, seitan, tempeh`,`150 / 200`,`Guarda il peso del panetto sulla confezione: se è da 100, un panetto e mezzo o due`],
+    [`Uova`,`3`,`Le conti, facile`],
+    [`Tonno, salmone o sgombro in scatola`,`1`,`Una scatoletta`],
+    [`Formaggio magro / grasso`,`100 / 50`,`Una mozzarella piccola o 4 ciliegine / 2-3 cubetti di parmigiano`],
+    [`Yogurt greco`,`150 / 200`,`Un vasetto da 150 / un vasetto da 200`],
+    [`Salmone affumicato`,`200`,`Circa 16-20 fette sottili`]
+  ]},
+  { col:'ARANCIONE', nome:'Arancione', righe:[
+    [`Olio extravergine`,`10`,`Un cucchiaio da minestra colmo. A filo dalla bottiglia è difficilissimo da stimare`],
+    [`Pesto`,`30`,`2 cucchiai`],
+    [`Frutta secca`,`10`,`2-3 noci o 5-6 mandorle`]
+  ]},
+  { col:'VERDE', nome:'Verde', righe:[
+    [`Verdure`,`200`,`Metà piatto: 2-3 zucchine, 2-3 pomodori, un finocchio, un peperone, mezzo piatto di verdure cotte. Se è insalata a foglia, due scodelle grandi e mezzo`]
+  ]},
+  { col:'ROSSO', nome:'Rosso', righe:[
+    [`Frutta`,`150`,`Un frutto medio (mela, pera, arancia) o 2-3 frutti piccoli (albicocche, mandarini)`],
+    [`Marmellata`,`15`,`2 cucchiaini`]
+  ]}
+];
+function renderPorzioni(){
+  return `<main><p class="intro">Le tue porzioni tradotte in mani, cucchiai e oggetti. Il numero è quello che trovi nel tuo schema. Sono misure indicative: la tua mano e il tuo cucchiaio diventano il riferimento vero con l'esercizio della settimana 1. Comodo da aprire anche al ristorante.</p>` +
+    PORZIONI.map(function(g){
+      return `<div class="band" style="background:var(--${g.col==='ARANCIONE'?'arancio':g.col.toLowerCase()})"></div><div class="section-title">${g.nome}</div><table>` +
+        g.righe.map(function(r){ return `<tr><td class="f">${esc(r[0])}<small>nel tuo schema: ${esc(r[1])}</small></td><td>${esc(r[2])}</td></tr>`; }).join('') + `</table>`;
+    }).join('') +
+    `<div class="callout" style="margin-top:18px"><b>Fuori casa:</b> guarda il piatto e trova i colori, mangia con calma, a metà fai una pausa e chiediti dove sei sulla scala, al 7 ti fermi. Il piatto non va finito per forza.</div></main>`;
+}
+
+/* ---------- INVIA ---------- */
+function renderInvia(){
+  var nome = load(K_NOME, NOME_PAZIENTE);
+  return `<main>
+    <p class="intro">Se vuoi, puoi mandare a Mariastella un riepilogo delle tue stime prima della vostra prossima call, così ne parlate insieme. Quello che hai scritto resta comunque salvato qui.</p>
+    <div class="field"><label for="i_nome">Il tuo nome</label><input type="text" id="i_nome" value="${esc(nome)}"></div>
+    <div class="field"><span class="lbl">Quale periodo vuoi includere?</span>
+      <div class="chip-group" id="periodo">
+        <button type="button" class="chip" data-g="7" onclick="periodo(this)">Ultimi 7 giorni</button>
+        <button type="button" class="chip" data-g="14" onclick="periodo(this)">Ultimi 14 giorni</button>
+        <button type="button" class="chip on" data-g="9999" onclick="periodo(this)">Tutto quello che ho scritto</button>
+      </div></div>
+    <div class="field"><label for="i_nota">Vuoi aggiungere una nota per lei?</label><textarea id="i_nota"></textarea></div>
+    <div class="btn-row"><button class="btn" id="i_btn" onclick="invia()">Invia il riepilogo</button></div>
+  </main>`;
+}
+function periodo(b){ document.querySelectorAll('#periodo .chip').forEach(function(c){c.classList.remove('on');}); b.classList.add('on'); }
+function invia(){
+  var nome = document.getElementById('i_nome').value.trim();
+  if(!nome){ toast('Scrivi il tuo nome prima di inviare.'); return; }
+  store(K_NOME,nome);
+  var g = parseInt(document.querySelector('#periodo .chip.on').getAttribute('data-g'),10);
+  var limite = Date.now() - g*86400000;
+  var list = load(K_ENTRIES,[]).filter(function(e){ return g>=9999 || (e.ts||0) >= limite; });
+  if(!list.length){ toast('Non hai stime da inviare in questo periodo.'); return; }
+  var testo = list.map(function(e){
+    var a=numero(e.stima), b=numero(e.bilancia), s='';
+    if(a!==null&&b!==null&&b!==0){ var p=Math.round((a-b)/b*100); s = ` (scarto ${p>0?'+':''}${p}%)`; }
+    return `${dataLabel(e.data)} · ${e.pasto||''} · ${e.settimana||''}\n${e.alimento}${e.colore?' ['+e.colore+']':''}\nCome appare: ${e.aspetto||'-'}\nStima: ${e.stima||'-'} · Bilancia: ${e.bilancia||'-'}${s}\nFame prima: ${e.fame===''?'-':e.fame} · Sazietà alla fine: ${e.sazieta===''?'-':e.sazieta}${e.note?'\nNote: '+e.note:''}`;
+  }).join('\n\n');
+  var btn = document.getElementById('i_btn'); btn.disabled = true; btn.textContent = 'Invio in corso...';
+  fetch('https://formsubmit.co/ajax/pollini-m@hotmail.com', {
+    method:'POST',
+    headers:{ 'Content-Type':'application/json', 'Accept':'application/json' },
+    body: JSON.stringify({
+      _subject: `Riepilogo Occhiometro - ${nome}`,
+      _captcha: 'false',
+      Nome: nome,
+      Periodo: g>=9999 ? 'Tutto quello che ha scritto' : `Ultimi ${g} giorni`,
+      Nota: document.getElementById('i_nota').value.trim() || '(nessuna)',
+      Riepilogo: testo
+    })
+  }).then(function(r){ if(!r.ok) throw new Error('x'); return r.json(); })
+  .then(function(){
+    document.getElementById('app').innerHTML = `<main><h2>Riepilogo inviato</h2><p class="intro">Mariastella lo riceverà prima della vostra prossima call. A presto.</p><div class="btn-row"><button class="btn" onclick="go('nuova')">Torna alla scheda</button></div></main>`;
+  }).catch(function(){
+    btn.disabled = false; btn.textContent = 'Invia il riepilogo';
+    toast('Non sono riuscita a inviarlo. Controlla la connessione e riprova.');
+  });
+}
+
+function render(){
+  renderTabs();
+  var html = state.view==='diario' ? renderDiario() : state.view==='porzioni' ? renderPorzioni() : state.view==='invia' ? renderInvia() : renderNuova();
+  document.getElementById('app').innerHTML = html;
+}
+render();
+</script>
+</body>
+</html>
