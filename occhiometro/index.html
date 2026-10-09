@@ -206,7 +206,7 @@ function mestolo(chiave, gcotti, nome){
 var FOODS = [
   { id:'pasta', nome:'Pasta secca', col:'GIALLO', fasce:[40,50,60,70,80,90,100,120], calc:function(g){
       var cotti = g*2, r = [];
-      r.push(`Da cruda: ${circa(g/1.6)} penne o fusilli, ${mis(g/37.5,'manciata','manciate',true)}`);
+      r.push(`Da cruda: circa ${Math.round(g/1.6/5)*5} penne o fusilli, ${mis(g/37.5,'manciata','manciate',true)}`);
       r.push(`Spaghetti: un mazzetto largo come una moneta da 1 euro fa circa 80 g`);
       r.push(`Da cotta (circa ${Math.round(cotti)} g): ${mis(cotti/20,'cucchiaio colmo','cucchiai colmi',false)}, ${mis(cotti/90,'mano a coppa','mani a coppa',true)}`);
       var me = mestolo('pasta',cotti); if(me) r.push(`Col mestolo: ${me}`);
@@ -220,7 +220,7 @@ var FOODS = [
       r.push(`Basmati e quinoa crescono di più in cottura, farro e riso venere un po’ meno`);
       return { righe:r, piatto:{tipo:'fondo', f:g/55, testo:testoFondo(g/55)}, fonte:'LARN 2014 (80 g circa 4 cucchiai), BNF 2019, quiz (50 g crudi = 4-5 cucchiai colmi da cotti e coprono il fondo del piatto fondo)' };
   }},
-  { id:'pastafresca', nome:'Pasta fresca, gnocchi', col:'GIALLO', fasce:[60,80,100,120,150], calc:function(g){
+  { id:'pastafresca', nome:'Pasta fresca, gnocchi', col:'GIALLO', fasce:[60,70,80,90,100,120,150,200], calc:function(g){
       var cotti = g*2, r = [];
       r.push(`Pasta fresca all’uovo da cotta: circa ${Math.round(cotti)} g, ${mis(cotti/20,'cucchiaio colmo','cucchiai colmi',false)}`);
       r.push(`Una confezione da 250 g contiene circa ${mis(250/g,"porzione","porzioni",true)} da ${g} g`);
