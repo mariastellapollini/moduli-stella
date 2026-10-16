@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guida alle uscite</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lora:wght@400;700&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; }
   body {
@@ -26,13 +29,56 @@
     margin-bottom: 6px;
     box-shadow: 0 1px 6px rgba(0,0,0,0.08);
   }
-  .cta-link {
-    position: absolute;
-    left: 13.53%;
-    top: 52.0%;
-    width: 73.75%;
-    height: 6.1%;
-    cursor: pointer;
+  .cta-page {
+    background: #fff;
+  }
+  .cta-inner {
+    padding: 7% 8.3% 0;
+  }
+  .cta-title {
+    font-family: 'Abril Fatface', Georgia, serif;
+    font-weight: 400;
+    color: #4a2a1c;
+    text-align: center;
+    font-size: clamp(24px, 5vw, 34px);
+    line-height: 1.35;
+    letter-spacing: 0.01em;
+    margin: 0 4% 9%;
+  }
+  .cta-box {
+    background: #ece0d6;
+    padding: 4.5% 3.5%;
+    color: #4a2a1c;
+    font-family: 'Lora', Georgia, serif;
+    font-size: clamp(15.5px, 3vw, 20px);
+    line-height: 1.8;
+  }
+  .cta-box p { margin: 0 0 0.9em; }
+  .cta-box p:last-child { margin-bottom: 0; }
+  .cta-box strong { font-weight: 700; }
+  .cta-btn {
+    display: block;
+    margin: 11% 5.2% 0;
+    padding: 14px 12px;
+    background: #765341;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Lora', Georgia, serif;
+    font-size: clamp(15px, 2.9vw, 19px);
+    line-height: 1.4;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .cta-btn:hover { background: #654535; }
+  .cta-foto {
+    overflow: hidden;
+    aspect-ratio: 1191 / 645;
+  }
+  .cta-foto img {
+    display: block;
+    width: 100%;
+    margin-top: -87.32%;
   }
   .section-bar {
     margin: 28px 16px 14px;
@@ -83,9 +129,17 @@
     <img class="page" src="page14.jpg" alt="">
     <img class="page" src="page15.jpg" alt="">
 
-    <div class="page-block">
-      <img class="page" src="page16.jpg" alt="">
-      <a class="cta-link" href="https://calendly.com/pollini-m/30min" target="_blank" rel="noopener" aria-label="Prenota la tua call conoscitiva"></a>
+    <div class="page-block cta-page">
+      <div class="cta-inner">
+        <h2 class="cta-title">Vuoi capire se questo approccio fa per te?</h2>
+        <div class="cta-box">
+          <p>In questo momento <strong>non ho posti disponibili</strong>, né per il percorso né per le videochiamate conoscitive gratuite e senza impegno.</p>
+          <p>Se vuoi scoprire se fa per te, <strong>compila questo questionario</strong> (ci metti 2 minuti): <strong>ti contatto io appena mi si liberano le disponibilità</strong>.</p>
+          <p>Così ci facciamo una chiacchierata in videochiamata e <strong>capiamo insieme se il mio percorso può essere risolutivo per la tua situazione</strong> e farti raggiungere i tuoi obiettivi.</p>
+        </div>
+        <a class="cta-btn" href="https://docs.google.com/forms/d/e/1FAIpQLSfU0Z4oMF9eG3c37alFK8mM1qDpLsQPqto3PoWmvSBC6vA1IQ/viewform" target="_blank" rel="noopener">Clicca qui per compilare<br>il questionario</a>
+      </div>
+      <div class="cta-foto"><img src="page16.jpg" alt="Mariastella Pollini, biologa nutrizionista"></div>
     </div>
 
     <img class="page" src="page17.jpg" alt="">
