@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Le mie 4 basi">
+<meta name="theme-color" content="#ead9c5">
+<title>Le mie 4 basi · Mariastella Pollini</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Una colonna da telefono: in alto il giorno da compilare, sotto la griglia della settimana */
+  :root{
+    --cream:#faf6ee; --beige:#ead9c5; --soft:#f3eadc; --brown:#4a3527; --deep:#55402e;
+    --rule:#d9c6ac; --muted:#7a6754; --rose:#a9647a; --rose-soft:#f6e7ea;
+    --blu:#2d9bd8; --verde:#6aa63a; --max:560px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:var(--cream);}
+  body{font-family:'Poppins',-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--brown);line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:var(--max);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right));}
+  .hero{background:var(--beige);padding-top:calc(24px + env(safe-area-inset-top));padding-bottom:20px;}
+  .eyebrow{display:flex;justify-content:space-between;align-items:center;font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);}
+  .dots{display:flex;gap:6px}.dots i{width:11px;height:11px;border-radius:50%;display:block}
+  h1{font-weight:800;font-size:clamp(30px,8.5vw,40px);line-height:1.08;margin:12px 0 8px;letter-spacing:-.01em;}
+  .hero p{margin:0;font-size:14px;max-width:46ch;}
+
+  main .wrap{padding-top:18px;padding-bottom:28px;display:flex;flex-direction:column;gap:16px;}
+
+  .weeknav{display:flex;align-items:center;gap:10px;}
+  .arrow{appearance:none;border:1.5px solid var(--rule);background:#fff;border-radius:50%;width:40px;height:40px;flex:none;font-size:20px;line-height:1;color:var(--brown);cursor:pointer;font-family:inherit;}
+  .arrow:disabled{opacity:.3;cursor:default;}
+  .arrow:focus-visible{outline:2px solid var(--deep);outline-offset:2px;}
+  .wk{flex:1;min-width:0;text-align:center;}
+  .wk-date{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.04em;}
+  .wk-title{font-weight:700;font-size:15px;line-height:1.25;}
+
+  .card{background:#fff;border:1px solid var(--rule);border-radius:16px;padding:16px;}
+  .day-head{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rose);margin:0 0 2px;}
+  .day-name{font-weight:700;font-size:17px;margin:0 0 12px;}
+  .row{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--soft);}
+  .row:first-of-type{border-top:none;}
+  .ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex:none;background:var(--c-soft);}
+  .ic svg{width:22px;height:22px;}
+  .ic svg *{fill:var(--c);}
+  .ic svg .hole{fill:var(--c-soft);}
+  .row label,.row .lab{flex:1;font-weight:600;font-size:14.5px;line-height:1.25;}
+  .row small{display:block;font-weight:400;font-size:12px;color:var(--muted);}
+  input.steps{width:112px;flex:none;font-family:inherit;font-size:18px;font-weight:600;text-align:right;color:var(--brown);border:1.5px solid var(--rule);border-radius:12px;padding:9px 12px;background:var(--cream);}
+  input.steps:focus{outline:2px solid var(--deep);outline-offset:1px;background:#fff;}
+  .tick{appearance:none;width:46px;height:46px;flex:none;border-radius:50%;border:2px solid var(--rule);background:#fff;cursor:pointer;display:grid;place-items:center;padding:0;transition:transform .12s ease, background .15s ease;}
+  .tick svg{width:22px;height:22px;opacity:0;}
+  .tick[aria-pressed="true"]{background:var(--c);border-color:var(--c);}
+  .tick[aria-pressed="true"] svg{opacity:1;}
+  .tick:active{transform:scale(.93);}
+  .tick:focus-visible{outline:2px solid var(--deep);outline-offset:2px;}
+  .card.off .row{opacity:.4;pointer-events:none;}
+  .wait{margin:0;font-size:14px;color:var(--muted);}
+
+  .acqua{--c:var(--blu);--c-soft:#e3f1fa;}
+  .passi{--c:var(--deep);--c-soft:#efe6db;}
+  .pasti{--c:var(--verde);--c-soft:#ebf4e2;}
+  .frutta{--c:var(--rose);--c-soft:#f6e7ea;}
+
+  .grid-title{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;}
+  .grid{display:grid;grid-template-columns:34px repeat(7,1fr);gap:4px;align-items:center;text-align:center;}
+  .grid.d6{grid-template-columns:34px repeat(6,1fr);}
+  .gh{font-size:11px;font-weight:700;color:var(--muted);line-height:1.15;padding:2px 0;}
+  .gh span{display:block;font-weight:500;}
+  .gl{font-size:15px;text-align:left;}
+  .gc{appearance:none;border:none;background:transparent;height:30px;border-radius:8px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:600;color:var(--brown);display:grid;place-items:center;padding:0;}
+  .gc:disabled{cursor:default;opacity:.35;}
+  .gc.sel{background:var(--rose-soft);}
+  .gc:focus-visible{outline:2px solid var(--deep);outline-offset:1px;}
+  .gc i{width:12px;height:12px;border-radius:50%;background:#e6dccd;display:block;}
+  .gc i.on{background:var(--c);width:15px;height:15px;}
+  .gc .dash{color:#cbbba4;font-weight:500;}
+  .tap{font-size:11.5px;color:var(--muted);margin:10px 0 0;text-align:center;}
+
+  .sum{display:flex;flex-direction:column;gap:6px;margin-top:14px;padding-top:12px;border-top:1px dashed var(--rule);font-size:13.5px;}
+  .sum b{font-weight:700;}
+  .sum .leaf{color:var(--verde);font-weight:600;}
+  .sum .well{margin-top:4px;background:#ebf4e2;color:#3f6a1f;border-radius:10px;padding:8px 12px;font-weight:600;text-align:center;}
+
+  .note{background:var(--soft);border-radius:14px;padding:13px 16px;font-size:13.5px;}
+  .note p{margin:0 0 4px}.note p:last-child{margin:0}
+  .home{background:#fff;border:1px solid var(--rule);border-radius:14px;padding:13px 16px;font-size:13px;}
+  .home b{display:block;font-size:14px;margin-bottom:4px;}
+  .home p{margin:0 0 3px}
+
+  .foot{background:var(--deep);color:var(--cream);font-size:12px;padding-top:18px;padding-bottom:calc(18px + env(safe-area-inset-bottom));}
+  .foot .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  @media (prefers-reduced-motion:reduce){.tick{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow"><span>Percorso Equilibrium · 21 ott - 21 dic</span><span class="dots"><i style="background:#f2cf3a"></i><i style="background:#2d9bd8"></i><i style="background:#f3a52b"></i><i style="background:#8cc152"></i></span></div>
+  <h1>Le mie 4 basi</h1>
+  <p>Ogni sera, o a fine settimana, segni le tue 4 basi. È solo per te: non si invia a nessuno e non conta per la classifica.</p>
+</div></header>
+
+<main><div class="wrap">
+  <div class="weeknav">
+    <button type="button" class="arrow" id="prev" aria-label="Settimana prima">‹</button>
+    <div class="wk"><div class="wk-date" id="wkDate"></div><div class="wk-title" id="wkTitle"></div></div>
+    <button type="button" class="arrow" id="next" aria-label="Settimana dopo">›</button>
+  </div>
+
+  <section class="card" id="dayCard" aria-live="polite">
+    <p class="day-head" id="dayHead"></p>
+    <p class="day-name" id="dayName"></p>
+    <div class="row passi"><span class="ic"></span><label for="steps">Passi<small>obiettivo 5-8 mila</small></label><input class="steps" id="steps" type="text" inputmode="numeric" autocomplete="off" placeholder="0"></div>
+    <div class="row acqua"><span class="ic"></span><span class="lab">2 litri d'acqua</span><button type="button" class="tick" data-h="acqua" aria-pressed="false" aria-label="2 litri d'acqua"></button></div>
+    <div class="row pasti"><span class="ic"></span><span class="lab">Pasti completi<small>porzioni della Cassetta e verdura</small></span><button type="button" class="tick" data-h="pasti" aria-pressed="false" aria-label="Pasti completi"></button></div>
+    <div class="row frutta"><span class="ic"></span><span class="lab">Frutta in uno spuntino</span><button type="button" class="tick" data-h="frutta" aria-pressed="false" aria-label="Frutta in uno spuntino"></button></div>
+  </section>
+
+  <section class="card">
+    <p class="grid-title">La tua settimana</p>
+    <div class="grid" id="grid"></div>
+    <p class="tap">Tocca un giorno per compilarlo o correggerlo</p>
+    <div class="sum" id="sum"></div>
+  </section>
+
+  <div class="note" id="note"></div>
+
+  <div class="home">
+    <b>📲 Mettila sulla Home</b>
+    <p><b style="display:inline;font-size:13px">iPhone:</b> aprila con Safari, tocca il tasto Condividi e poi «Aggiungi alla schermata Home».</p>
+    <p><b style="display:inline;font-size:13px">Android:</b> aprila con Chrome, tocca i tre puntini in alto e poi «Aggiungi a schermata Home».</p>
+  </div>
+</div></main>
+
+<footer class="foot"><div class="wrap">
+  <span>Mariastella Pollini · Biologa nutrizionista</span>
+  <span>Si salva da sola su questo telefono</span>
+</div></footer>
+
+<script>
+(function(){
+  var KEY = "quattroBasi.v1";
+  var PROVA = /[?&]prova/.test(location.search);
+  if (PROVA) KEY += ".prova";
+
+  var ICON = {
+    acqua: '<svg viewBox="0 0 24 24"><path d="M12 2.5c3.4 4.6 6.3 8.1 6.3 11.6A6.3 6.3 0 0 1 5.7 14.1C5.7 10.6 8.6 7.1 12 2.5z"/></svg>',
+    passi: '<svg viewBox="0 0 24 24"><ellipse cx="8" cy="10.5" rx="3" ry="4.6"/><ellipse cx="8" cy="18.2" rx="2.2" ry="2"/><ellipse cx="16" cy="6.5" rx="3" ry="4.6"/><ellipse cx="16" cy="14.2" rx="2.2" ry="2"/></svg>',
+    pasti: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle class="hole" cx="12" cy="12" r="5.6"/><circle cx="12" cy="12" r="2.8"/></svg>',
+    frutta:'<svg viewBox="0 0 24 24"><path d="M12 8.2c-1.6-1.2-6.8-1.9-7.6 3.6-.6 4.6 2.6 9.6 5.2 9.6 1.1 0 1.6-.6 2.4-.6s1.3.6 2.4.6c2.6 0 5.8-5 5.2-9.6-.8-5.5-6-4.8-7.6-3.6z"/><path d="M12.6 7.2c.2-2.4 1.6-4 4-4.4-.1 2.4-1.6 4-4 4.4z"/><rect x="11.3" y="3.6" width="1.4" height="4.6" rx=".7"/></svg>'
+  };
+  var CHECK = '<svg viewBox="0 0 24 24"><path fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var MESI = ["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  var MESI_C = ["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"];
+  var GIORNI = ["domenica","lunedì","martedì","mercoledì","giovedì","venerdì","sabato"];
+  var INIZ = ["D","L","M","M","G","V","S"];
+  var WEEKS = [
+    {n:1, start:"2026-10-21", days:7, title:"Le tue regole"},
+    {n:2, start:"2026-10-28", days:7, title:"Un cibo vietato in settimana"},
+    {n:3, start:"2026-11-04", days:7, title:"Il tuo cibo del cuore, con calma"},
+    {n:4, start:"2026-11-11", days:7, title:"Un altro cibo vietato, a colazione o merenda"},
+    {n:5, start:"2026-11-18", days:7, title:"Fame o bisogno?"},
+    {n:6, start:"2026-11-25", days:7, title:"Il panettone in 10 fette"},
+    {n:7, start:"2026-12-02", days:7, title:"Prova generale"},
+    {n:8, start:"2026-12-09", days:7, title:"I regali di cibo"},
+    {n:9, start:"2026-12-16", days:6, title:"Il piatto delle feste"}
+  ];
+  var TICKS = ["acqua","pasti","frutta"];
+
+  var S = {d:{}};
+  try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); if (o && o.d) S.d = o.d; } } catch(e) {}
+  function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
+
+  function pad(n){ return (n<10?"0":"")+n; }
+  function iso(dt){ return dt.getFullYear()+"-"+pad(dt.getMonth()+1)+"-"+pad(dt.getDate()); }
+  function parse(s){ var p=s.split("-"); return new Date(+p[0], +p[1]-1, +p[2]); }
+  function addDays(dt,n){ var x=new Date(dt); x.setDate(x.getDate()+n); return x; }
+  function weekDates(w){ var out=[], d0=parse(w.start); for (var i=0;i<w.days;i++) out.push(addDays(d0,i)); return out; }
+  function fmt(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
+  function mila(n){ var v = Math.round(n/100)/10; return String(v).replace(".", ","); }
+
+  var TODAY = PROVA ? "2026-11-06" : iso(new Date());
+  var FIRST = WEEKS[0].start, LAST = iso(weekDates(WEEKS[8])[5]);
+
+  var wi = 0;
+  WEEKS.forEach(function(w,i){ if (w.start <= TODAY) wi = i; });
+  var sel = TODAY < FIRST ? null : (TODAY > LAST ? LAST : TODAY);
+
+  // icone fisse nelle righe del giorno
+  document.querySelectorAll("#dayCard .row").forEach(function(r){
+    var k = r.className.split(" ")[1]; r.querySelector(".ic").innerHTML = ICON[k];
+  });
+  document.querySelectorAll(".tick").forEach(function(b){ b.innerHTML = CHECK; });
+
+  var steps = document.getElementById("steps");
+
+  function rec(day){ return S.d[day] || {}; }
+
+  function paintDay(){
+    var card = document.getElementById("dayCard");
+    if (!sel) {
+      card.classList.add("off");
+      document.getElementById("dayHead").textContent = "Si parte mercoledì 21 ottobre";
+      document.getElementById("dayName").textContent = "Da quel giorno puoi segnare le tue basi 🌿";
+      steps.value = ""; steps.disabled = true;
+      return;
+    }
+    card.classList.remove("off"); steps.disabled = false;
+    var dt = parse(sel), r = rec(sel);
+    document.getElementById("dayHead").textContent = sel === TODAY ? "Oggi" : "Stai compilando";
+    document.getElementById("dayName").textContent = GIORNI[dt.getDay()].charAt(0).toUpperCase() + GIORNI[dt.getDay()].slice(1) + " " + dt.getDate() + " " + MESI[dt.getMonth()];
+    if (document.activeElement !== steps) steps.value = r.passi ? fmt(r.passi) : "";
+    document.querySelectorAll(".tick").forEach(function(b){ b.setAttribute("aria-pressed", r[b.dataset.h] ? "true" : "false"); });
+  }
+
+  function paintWeek(){
+    var w = WEEKS[wi], ds = weekDates(w);
+    document.getElementById("wkDate").textContent = (w.n === 9 ? "TAPPA FINALE · " : "SETTIMANA " + w.n + " · ") + ds[0].getDate() + " " + MESI_C[ds[0].getMonth()] + " - " + ds[ds.length-1].getDate() + " " + MESI_C[ds[ds.length-1].getMonth()];
+    document.getElementById("wkTitle").textContent = "✨ " + w.title;
+    document.getElementById("prev").disabled = wi === 0;
+    document.getElementById("next").disabled = wi === WEEKS.length - 1;
+
+    var g = document.getElementById("grid");
+    g.className = "grid" + (w.days === 6 ? " d6" : "");
+    var h = '<span></span>';
+    ds.forEach(function(dt){ h += '<span class="gh">' + INIZ[dt.getDay()] + '<span>' + dt.getDate() + '</span></span>'; });
+    var rows = [["passi","👟"],["acqua","💧"],["pasti","🍽️"],["frutta","🍎"]];
+    rows.forEach(function(rw){
+      h += '<span class="gl ' + rw[0] + '" aria-hidden="true">' + rw[1] + '</span>';
+      ds.forEach(function(dt){
+        var k = iso(dt), r = rec(k), fut = k > TODAY, cls = "gc " + rw[0] + (k === sel ? " sel" : "");
+        var inner = rw[0] === "passi" ? (r.passi ? mila(r.passi) : '<span class="dash">·</span>') : '<i class="' + (r[rw[0]] ? "on" : "") + '"></i>';
+        h += '<button type="button" class="' + cls + '" data-day="' + k + '"' + (fut ? " disabled" : "") + ' aria-label="' + GIORNI[dt.getDay()] + " " + dt.getDate() + '">' + inner + '</button>';
+      });
+    });
+    g.innerHTML = h;
+
+    // riepilogo: solo cose fatte, mai quello che manca
+    var c = {acqua:0,pasti:0,frutta:0}, tot = 0, nP = 0, sopra = 0;
+    ds.forEach(function(dt){ var r = rec(iso(dt));
+      TICKS.forEach(function(t){ if (r[t]) c[t]++; });
+      if (r.passi) { tot += r.passi; nP++; if (r.passi >= 5000) sopra++; } });
+    var leaf = function(n){ return n >= 4 ? ' <span class="leaf">🌿</span>' : ''; };
+    var s = '';
+    if (nP) s += '<div>👟 Media passi: <b>' + fmt(Math.round(tot/nP)) + '</b> <span style="color:var(--muted)">(' + nP + (nP === 1 ? ' giorno segnato' : ' giorni segnati') + ')</span>' + leaf(sopra) + '</div>';
+    var lab = {acqua:"💧 Acqua", pasti:"🍽️ Pasti completi", frutta:"🍎 Frutta"};
+    TICKS.forEach(function(t){ if (c[t]) s += '<div>' + lab[t] + ': <b>' + c[t] + (c[t] === 1 ? ' giorno' : ' giorni') + '</b>' + leaf(c[t]) + '</div>'; });
+    if (sopra >= 4 && c.acqua >= 4 && c.pasti >= 4 && c.frutta >= 4) s += '<div class="well">Settimana in equilibrio 🌿</div>';
+    if (!s) s = '<div style="color:var(--muted)">Qui compare il riepilogo della settimana man mano che segni i giorni.</div>';
+    document.getElementById("sum").innerHTML = s;
+
+    var t = ds[ds.length-1];
+    document.getElementById("note").innerHTML = '<p>📸 <b>' + (t.getDay() === 2 ? "Martedì " : "Lunedì ") + t.getDate() + " " + MESI[t.getMonth()] + ', dalle 18 alle 21</b>: nel gruppo lo screen della media passi + la foto della micro-sfida.</p><p style="color:var(--muted);font-size:12.5px">La foglia 🌿 compare quando una base arriva a 4 giorni: per la maggior parte delle volte, come diciamo sempre.</p>';
+  }
+
+  function paint(){ paintDay(); paintWeek(); }
+  paint();
+
+  document.getElementById("prev").addEventListener("click", function(){ if (wi > 0) { wi--; paintWeek(); } });
+  document.getElementById("next").addEventListener("click", function(){ if (wi < WEEKS.length-1) { wi++; paintWeek(); } });
+
+  document.getElementById("grid").addEventListener("click", function(e){
+    var b = e.target.closest("button"); if (!b || b.disabled) return;
+    sel = b.dataset.day; paint();
+    document.getElementById("dayCard").scrollIntoView({behavior:"smooth", block:"start"});
+  });
+
+  document.querySelectorAll(".tick").forEach(function(b){
+    b.addEventListener("click", function(){
+      if (!sel) return;
+      var r = S.d[sel] = S.d[sel] || {};
+      r[b.dataset.h] = !r[b.dataset.h]; save(); paint();
+    });
+  });
+
+  steps.addEventListener("input", function(){
+    if (!sel) return;
+    var n = parseInt(steps.value.replace(/\D/g, ""), 10);
+    var r = S.d[sel] = S.d[sel] || {};
+    if (n > 0 && n < 100000) r.passi = n; else delete r.passi;
+    save(); paintWeek();
+  });
+  steps.addEventListener("blur", function(){ paintDay(); });
+})();
+</script>
+</body>
+</html>
