@@ -36,6 +36,13 @@
   .rule-box{background:var(--deep);color:var(--cream);border-radius:14px;padding:14px 16px;font-size:13.5px;}
   .rule-box b{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--beige);margin-bottom:6px;}
   .rule-box p{margin:0}
+  .ticket-box{background:#fff;border:1.5px solid var(--rose);border-radius:14px;padding:14px 16px;font-size:13.5px;}
+  .ticket-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px;}
+  .ticket-top b{font-size:15px;}
+  .ticket-n{min-width:44px;height:44px;border-radius:50%;background:var(--rose);color:#fff;display:grid;place-items:center;font-weight:800;font-size:19px;flex:none;}
+  .ticket-box p{margin:0 0 6px}
+  .ticket-box .ticket-note{color:var(--muted);font-size:12px;margin:0;}
+  .sfida-row small{display:block;font-weight:400;font-size:12px;color:var(--muted);}
 
   details.week{background:#fff;border:1px solid var(--rule);border-radius:16px;overflow:hidden;}
   details.week[open]{box-shadow:0 2px 0 var(--rule);}
@@ -116,6 +123,11 @@
     <b>Il timbro te lo guadagni quando</b>
     <p>hai fatto la micro-sfida e hai almeno 5 giorni su 7 di ogni icona (nella tappa finale 4 su 6). Qualche giorno senza spunta ci sta.</p>
   </div>
+  <div class="ticket-box">
+    <div class="ticket-top"><b>🎟️ Più martedì, più biglietti</b><span class="ticket-n" id="ticketN">0</span></div>
+    <p>Ogni martedì <b>dalle 18 alle 21</b> manda nel gruppo, in un solo messaggio, lo screen della media passi della settimana (almeno 6.000) e la foto della micro-sfida. Ogni martedì valido è 1 biglietto per l'estrazione di Natale, e chi li fa tutti e 9 ne riceve 1 in più.</p>
+    <p class="ticket-note">Il numero qui è il tuo promemoria: i biglietti validi li verifica Mariastella.</p>
+  </div>
   <div id="weeks"></div>
 </div></main>
 
@@ -129,7 +141,6 @@
 (function(){
   // ---- configurazione ----
   var EMAIL_ENDPOINT = "https://formsubmit.co/ajax/pollini-m@hotmail.com";
-  var SHEET_ENDPOINT = ""; // URL della web app Google Apps Script (Foglio "Passaporto di Natale 2026 - invii")
   var KEY = "passaportoNatale.v1";
   var PROVA = /[?&]prova/.test(location.search);
   if (PROVA) KEY += ".prova";
@@ -161,8 +172,8 @@
   ];
 
   // ---- stato ----
-  var S = {nome:"", d:{}, sfida:{}, sent:{}};
-  try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); S.nome=o.nome||""; S.d=o.d||{}; S.sfida=o.sfida||{}; S.sent=o.sent||{}; } } catch(e) {}
+  var S = {nome:"", d:{}, sfida:{}, sent:{}, foto:{}};
+  try { var raw = localStorage.getItem(KEY); if (raw) { var o = JSON.parse(raw); S.nome=o.nome||""; S.d=o.d||{}; S.sfida=o.sfida||{}; S.sent=o.sent||{}; S.foto=o.foto||{}; } } catch(e) {}
   function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} }
 
   function pad(n){ return (n<10?"0":"")+n; }
@@ -171,6 +182,7 @@
   function addDays(dt,n){ var x=new Date(dt); x.setDate(x.getDate()+n); return x; }
   var TODAY = PROVA ? "2026-12-21" : iso(new Date());
   function weekDates(w){ var out=[], d0=parse(w.start); for (var i=0;i<w.days;i++) out.push(addDays(d0,i)); return out; }
+  function tueLabel(w){ var ds=weekDates(w), t=ds[ds.length-1]; return (t.getDay()===2 ? "Martedì " : "Lunedì ")+t.getDate()+" "+MESI[t.getMonth()]; }
   function shortRange(w){ var ds=weekDates(w), a=ds[0], b=ds[ds.length-1]; return a.getDate()+" "+MESI[a.getMonth()]+" - "+b.getDate()+" "+MESI[b.getMonth()]; }
 
   function stats(w){
@@ -220,6 +232,7 @@
     });
     html += '</div><div class="counts"></div>'
       + '<div class="sfida-row"><span>Micro-sfida fatta?</span><button type="button" class="switch" data-sfida="'+w.n+'" aria-pressed="false">Non ancora</button></div>'
+      + '<div class="sfida-row"><span>📸 Foto nel gruppo<small>'+tueLabel(w)+', 18-21: screen passi + foto sfida</small></span><button type="button" class="switch" data-foto="'+w.n+'" aria-pressed="false">Non ancora</button></div>'
       + '<div class="big-stamp">'+stampSVG(w,true)+'</div>'
       + '<p class="status"></p>'
       + '<button type="button" class="send" data-send="'+w.n+'">Invia la settimana alla tua nutrizionista</button>'
@@ -245,10 +258,13 @@
       status.textContent = "Per il timbro mancano: " + parts.join(", ");
       status.className = "status";
     }
+    var sf = det.querySelector("[data-foto]"); sf.setAttribute("aria-pressed", S.foto[w.n] ? "true" : "false"); sf.textContent = S.foto[w.n] ? "Mandata ✓" : "Non ancora";
     det.querySelector(".sum-tag").textContent = S.sent[w.n] ? "Inviata il " + S.sent[w.n] : "";
     det.querySelector(".sent-note").textContent = S.sent[w.n] ? "Inviata il " + S.sent[w.n] + ". Se aggiungi qualcosa puoi inviarla di nuovo." : "";
   }
   WEEKS.forEach(paintWeek);
+  function paintTickets(){ var n = 0; WEEKS.forEach(function(w){ if (S.foto[w.n]) n++; }); if (n === 9) n++; document.getElementById("ticketN").textContent = n; }
+  paintTickets();
   function weekOf(day){ for (var i=WEEKS.length-1;i>=0;i--) if (day >= WEEKS[i].start) return WEEKS[i]; return WEEKS[0]; }
 
   var toastEl = document.getElementById("toast"), tt;
@@ -265,6 +281,8 @@
       r[b.dataset.h] = !r[b.dataset.h]; save(); paintWeek(weekOf(b.dataset.day));
     } else if (b.dataset.sfida) {
       var n = +b.dataset.sfida; S.sfida[n] = !S.sfida[n]; save(); paintWeek(WEEKS[n-1]);
+    } else if (b.dataset.foto) {
+      var nf = +b.dataset.foto; S.foto[nf] = !S.foto[nf]; save(); paintWeek(WEEKS[nf-1]); paintTickets();
     } else if (b.dataset.send) {
       send(WEEKS[+b.dataset.send-1], b);
     }
@@ -285,12 +303,10 @@
       "Micro-sfida fatta": st.sfida ? "sì" : "no",
       "Timbro": st.timbro ? "sì, settimana completa" : "no",
       "Giornate piene (tutte e 4)": st.piene + "/" + w.days,
+      "Foto nel gruppo (secondo lei)": S.foto[w.n] ? "sì" : "no",
       "Dettaglio giorni": dettaglio
     };
-    var row = { nome:S.nome.trim(), settimana:w.n, acqua:st.c.acqua, passi:st.c.passi, pasti:st.c.pasti, frutta:st.c.frutta, giorni:w.days,
-      sfida: st.sfida?1:0, completa: st.timbro?1:0, piene: st.piene, dettaglio: JSON.stringify(ds.map(function(dt){ return S.d[iso(dt)]||{}; })), nota:"" };
     btn.disabled = true; btn.textContent = "Invio in corso...";
-    if (SHEET_ENDPOINT && !PROVA) { try { fetch(SHEET_ENDPOINT, {method:"POST", mode:"no-cors", body:new URLSearchParams(row)}); } catch(e) {} }
     fetch(EMAIL_ENDPOINT, {method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"}, body:JSON.stringify(email)})
       .then(function(r){ return r.json(); })
       .then(function(j){
