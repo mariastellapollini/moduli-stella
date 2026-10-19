@@ -89,6 +89,10 @@
   .home{background:#fff;border:1px solid var(--rule);border-radius:14px;padding:13px 16px;font-size:13px;}
   .home b{display:block;font-size:14px;margin-bottom:4px;}
   .home p{margin:0 0 3px}
+  .home .warn{background:var(--rose-soft);border-radius:10px;padding:8px 12px;margin:6px 0 10px;font-weight:500;}
+  .home .os{font-weight:700;margin-top:10px;}
+  .home ol{margin:2px 0 4px;padding-left:20px;}
+  .home li{margin:0 0 2px;}
 
   .foot{background:var(--deep);color:var(--cream);font-size:12px;padding-top:18px;padding-bottom:calc(18px + env(safe-area-inset-bottom));}
   .foot .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
@@ -130,8 +134,29 @@
 
   <div class="home">
     <b>📲 Mettila sulla Home</b>
-    <p><b style="display:inline;font-size:13px">iPhone:</b> aprila con Safari, tocca il tasto Condividi e poi «Aggiungi alla schermata Home».</p>
-    <p><b style="display:inline;font-size:13px">Android:</b> aprila con Chrome, tocca i tre puntini in alto e poi «Aggiungi a schermata Home».</p>
+    <p class="warn">Da qui in poi aprila sempre dall'icona sulla Home. Se la apri ogni volta dal link di WhatsApp potresti non ritrovare quello che hai segnato.</p>
+    <p class="os">🍎 iPhone</p>
+    <ol>
+      <li>Apri il link con Safari (o Chrome).</li>
+      <li>In Safari tocca i 3 puntini e poi il pulsante Condividi.</li>
+      <li>Seleziona «Aggiungi alla schermata Home». Se non lo trovi subito, potrebbe essere in «Mostra altro».</li>
+      <li>Tocca «Aggiungi» per confermare.</li>
+    </ol>
+    <p class="os">🤖 Android con Chrome</p>
+    <ol>
+      <li>Apri il link con Chrome.</li>
+      <li>Tocca i 3 puntini in alto a destra (su alcuni telefoni sono in basso).</li>
+      <li>Seleziona «Aggiungi a schermata Home». Su alcuni telefoni la voce si chiama «Installa app».</li>
+      <li>Tocca «Aggiungi» (o «Installa»). Se compare un secondo messaggio, tocca di nuovo «Aggiungi».</li>
+    </ol>
+    <p class="os">🤖 Android con Samsung Internet</p>
+    <ol>
+      <li>Apri il link con Samsung Internet.</li>
+      <li>Tocca le 3 lineette in basso a destra.</li>
+      <li>Seleziona «Aggiungi pagina a» e poi «Schermata Home».</li>
+      <li>Tocca «Aggiungi» per confermare.</li>
+    </ol>
+    <p>✨ Fatto! La trovi sulla Home del telefono, come un'app.</p>
   </div>
 </div></main>
 
