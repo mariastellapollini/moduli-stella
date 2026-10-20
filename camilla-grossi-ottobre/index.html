@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecco su cosa lavoriamo questo mese · Mariastella Pollini</title>
+<style>
+  :root{
+    --cream:#f2ead9;
+    --cream-card:#e9ded0;
+    --cream-card-2:#efe6d6;
+    --sage:#7f9574;
+    --sage-deep:#5c7052;
+    --mocha:#6b5039;
+    --mocha-deep:#4f3a29;
+    --terracotta:#b76a45;
+    --ink:#2b241a;
+    --ink-soft:#5a4d3d;
+    --rule:#d8c9ac;
+    --max:760px;
+  }
+  :root[data-theme="dark"]{
+    --cream:#1d1912;
+    --cream-card:#2a231a;
+    --cream-card-2:#251f17;
+    --sage:#93a687;
+    --sage-deep:#a9baa0;
+    --terracotta:#d99269;
+    --ink:#ecdfc9;
+    --ink-soft:#c9b89e;
+    --rule:#3c3324;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cream:#1d1912;
+      --cream-card:#2a231a;
+      --cream-card-2:#251f17;
+      --sage:#93a687;
+      --sage-deep:#a9baa0;
+      --terracotta:#d99269;
+      --ink:#ecdfc9;
+      --ink-soft:#c9b89e;
+      --rule:#3c3324;
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    margin:0;
+  }
+  .page{max-width:var(--max);margin:0 auto;padding:0 24px 96px;}
+  .cover{padding:64px 24px 40px;text-align:center;}
+  .eyebrow{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:13px;letter-spacing:0.32em;text-transform:uppercase;color:var(--sage-deep);margin:0 0 18px;}
+  h1.title{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:700;font-size:clamp(30px,6vw,46px);letter-spacing:0.02em;margin:0 0 8px;text-wrap:balance;color:var(--ink);}
+  .subtitle{font-size:18px;color:var(--ink-soft);max-width:520px;margin:0 auto;text-wrap:balance;}
+  .cover-rule{width:64px;height:2px;background:var(--terracotta);margin:28px auto;border:none;}
+  .by-line{font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--sage-deep);}
+  .section-bar{background:var(--sage);color:#fbf7ee;padding:14px 22px;border-radius:2px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:48px 0 24px;break-after:avoid;page-break-after:avoid;break-inside:avoid;page-break-inside:avoid;}
+  :root[data-theme="dark"] .section-bar{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .section-bar{color:#20291c;} }
+  .section-bar h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:15px;letter-spacing:0.28em;text-transform:uppercase;margin:0;color:inherit;}
+  .section-bar .tag{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.85;color:inherit;white-space:nowrap;}
+  p{margin:0 0 16px;max-width:65ch;}
+  .lede{font-size:17px;color:var(--ink-soft);text-align:center;}
+
+  .checklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .checklist li{display:flex;align-items:flex-start;gap:14px;background:var(--cream-card);border:1px solid var(--rule);border-radius:8px;padding:16px 18px;break-inside:avoid;page-break-inside:avoid;}
+  .checklist .mark{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--sage);color:#fbf7ee;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+  :root[data-theme="dark"] .checklist .mark{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .checklist .mark{color:#20291c;} }
+  .checklist .txt{margin:0;}
+  .checklist .txt b{display:block;color:var(--ink);font-size:15.5px;margin-bottom:2px;}
+  .checklist .txt span{display:block;color:var(--ink-soft);font-size:13.5px;}
+
+  .tip{background:var(--mocha);color:#f6ecdd;border-radius:4px;padding:16px 20px;margin:28px 0 0;font-size:14.5px;break-inside:avoid;page-break-inside:avoid;text-align:center;}
+  .tip p{margin:0;max-width:none;color:#f6ecdd;}
+  .tip p strong{color:#fff;}
+  .closing{text-align:center;padding:56px 24px 8px;}
+  .closing p{margin:0 auto 14px;max-width:52ch;}
+  .signature{font-family:Georgia,serif;font-style:italic;font-size:20px;color:var(--sage-deep);margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <p class="eyebrow">Mariastella Pollini · Biologa Nutrizionista</p>
+    <h1 class="title">Ecco su cosa<br>lavoriamo questo mese</h1>
+    <p class="subtitle">Camilla</p>
+    <hr class="cover-rule">
+    <p class="by-line">Recap della nostra chiacchierata</p>
+  </div>
+
+  <p class="lede">Primo mese chiuso con <strong>3,5 cm in meno di vita</strong> e <strong>3 di addome</strong>. Adesso lavoriamo su tre cose: smontare l'abitudine del dolcetto, allenare l'occhio e tornare a muoverti con costanza.</p>
+
+  <div class="section-bar">
+    <h2>I tuoi prossimi step</h2>
+    <span class="tag">Da fare questo mese</span>
+  </div>
+
+  <ul class="checklist">
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Dolcetto dopo il piatto unico: aspetta 20 minuti</b><span>Quando arriva la voglia, datti 20 minuti prima di mangiarlo. Poi chiediti: ho ancora voglia? Se sì, mangialo in piccola quantità (piccola voglia, piccola porzione, senza ripiegare sulla caramella). Se è passata, era abitudine.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Pesa pure, ma ragiona in porzioni medie</b><span>50 g di pasta possono essere 45 o 55, va bene così. Il grammo preciso diventa ipercontrollo, ed è quello che alla lunga fa mollare.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Inizia a guardare l'Occhiometro</b><span>Lo trovi nel Modulo 2 &ndash; Addio bilancia! del tuo spazio personale. Senza fretta: sono esercizi per allenare l'occhio pian piano, la bilancia la lasciamo quando sarai pronta.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Hamburger vegetali e cibi pronti: leggi l'etichetta</b><span>Guida "Cibi pronti" nel Modulo 4 &ndash; Fuori dalla routine. Guarda i primi 3 ingredienti, poi i valori per pezzo (quanto pesa un burger?) e confrontali col tuo pasto: circa 30 g di proteine, 30-40 g di carboidrati, 10 g di grassi (un cucchiaio d'olio).</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>L'esempio che abbiamo fatto insieme</b><span>2 burger alle melanzane = 24 g di proteine, 30 di carboidrati, 24 di grassi. Aggiungi una fetta di pane e niente olio extra. Sono confezionati e salati, quindi una volta a settimana, non tutti i giorni.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Pasta al forno della suocera: porzionala e congelala</b><span>Una porzione poco più grande del palmo della tua mano più le verdure è un pasto completo. Il resto va in freezer per le volte in cui ti va.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Palestra in calendario, come un appuntamento</b><span>Obiettivo di questa settimana: 1-2 volte. Segnale in agenda come fosse una riunione e rispettalo anche senza voglia.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Riparti a piccole dosi</b><span>Un esercizio fatto bene vale più di quattro fatti a metà: un giorno gli squat, un giorno la parte alta, il resto camminata, stretching o mobilità. Devi uscire dalla palestra pensando "come sto bene".</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Compleanni e uscite: fai come al sushi</b><span>Ti sei fermata alla sazietà piacevole e hai chiuso con la zuppa di miso. A tavola fuori si fa esattamente come a casa, quindi meno ansia.</span></p>
+    </li>
+  </ul>
+
+  <div class="tip">
+    <p><strong>Prossima call:</strong> martedì 1 dicembre, ore 10:00. Le tue misure aggiornate le trovi nel tuo spazio personale.</p>
+  </div>
+
+  <div class="closing">
+    <p class="signature">Ci vediamo in call,<br>Mariastella 🍃</p>
+  </div>
+
+</div>
+</body>
+</html>
