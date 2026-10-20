@@ -421,7 +421,7 @@ function renderNuova(){
       <div><label for="f_stima">La mia stima</label><input type="text" inputmode="decimal" id="f_stima" value="${esc(d.stima)}" oninput="setDraft('stima',this.value);flash()" placeholder="es. 70"></div>
       <div><label for="f_bil">Bilancia</label><input type="text" inputmode="decimal" id="f_bil" value="${esc(d.bilancia)}" oninput="setDraft('bilancia',this.value);flash()" placeholder="es. 82"></div>
     </div>
-    ${scaleField('fame','Fame prima del pasto','Da 0 a 10, come nella scala dello Step 05',d.fame)}
+    ${scaleField('fame','Fame prima del pasto','Da 0 a 10, come nella scala del Modulo 3 – Ascoltare i segnali',d.fame)}
     ${scaleField('sazieta','Sazietà alla fine','Il punto giusto per fermarsi è intorno al 7',d.sazieta)}
     <div class="field"><label for="f_note">Note</label><span class="hint">Facoltativo: cosa ti ha sorpreso, dove eri, com'era il piatto</span>
       <textarea id="f_note" oninput="setDraft('note',this.value);flash()">${esc(d.note)}</textarea></div>
