@@ -314,3 +314,13 @@ section { padding: clamp(56px, 9vw, 104px) 0; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 img { height: auto; }
 .cta-band .btns { justify-content: center; }
+.quote-box { font-family: var(--serif); font-weight: 600; font-size: clamp(23px, 2.8vw, 30px); line-height: 1.3; color: var(--ink); }
+.big-statement { font-family: var(--serif); font-weight: 600; font-size: clamp(24px, 3.2vw, 34px); line-height: 1.3; color: var(--green-dark); max-width: 24em; margin: 52px auto 0; }
+.compare { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 22px; }
+.compare .card h3 { margin-bottom: .2em; }
+.compare .card .sub { color: var(--terra); font-family: var(--hand); font-size: 24px; display: block; margin-bottom: 10px; }
+.compare .card ul { margin: 0 0 1em; padding-left: 1.1em; }
+.compare .card li { margin-bottom: .35em; }
+.compare .card.online { border-top: 5px solid var(--green); }
+.compare .card.studio { border-top: 5px solid var(--terra); }
+@media (max-width: 760px) { .compare { grid-template-columns: minmax(0,1fr); } }
