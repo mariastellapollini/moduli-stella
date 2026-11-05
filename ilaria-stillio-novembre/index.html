@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecco su cosa lavoriamo questo mese · Mariastella Pollini</title>
+<style>
+  :root{
+    --cream:#f2ead9;
+    --cream-card:#e9ded0;
+    --cream-card-2:#efe6d6;
+    --sage:#7f9574;
+    --sage-deep:#5c7052;
+    --mocha:#6b5039;
+    --mocha-deep:#4f3a29;
+    --terracotta:#b76a45;
+    --ink:#2b241a;
+    --ink-soft:#5a4d3d;
+    --rule:#d8c9ac;
+    --max:760px;
+  }
+  :root[data-theme="dark"]{
+    --cream:#1d1912;
+    --cream-card:#2a231a;
+    --cream-card-2:#251f17;
+    --sage:#93a687;
+    --sage-deep:#a9baa0;
+    --terracotta:#d99269;
+    --ink:#ecdfc9;
+    --ink-soft:#c9b89e;
+    --rule:#3c3324;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cream:#1d1912;
+      --cream-card:#2a231a;
+      --cream-card-2:#251f17;
+      --sage:#93a687;
+      --sage-deep:#a9baa0;
+      --terracotta:#d99269;
+      --ink:#ecdfc9;
+      --ink-soft:#c9b89e;
+      --rule:#3c3324;
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    margin:0;
+  }
+  .page{max-width:var(--max);margin:0 auto;padding:0 24px 96px;}
+  .cover{padding:64px 24px 40px;text-align:center;}
+  .eyebrow{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:13px;letter-spacing:0.32em;text-transform:uppercase;color:var(--sage-deep);margin:0 0 18px;}
+  h1.title{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:700;font-size:clamp(30px,6vw,46px);letter-spacing:0.02em;margin:0 0 8px;text-wrap:balance;color:var(--ink);}
+  .subtitle{font-size:18px;color:var(--ink-soft);max-width:520px;margin:0 auto;text-wrap:balance;}
+  .cover-rule{width:64px;height:2px;background:var(--terracotta);margin:28px auto;border:none;}
+  .by-line{font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--sage-deep);}
+  .section-bar{background:var(--sage);color:#fbf7ee;padding:14px 22px;border-radius:2px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:48px 0 24px;break-after:avoid;page-break-after:avoid;break-inside:avoid;page-break-inside:avoid;}
+  :root[data-theme="dark"] .section-bar{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .section-bar{color:#20291c;} }
+  .section-bar h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:15px;letter-spacing:0.28em;text-transform:uppercase;margin:0;color:inherit;}
+  .section-bar .tag{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.85;color:inherit;white-space:nowrap;}
+  p{margin:0 0 16px;max-width:65ch;}
+  .lede{font-size:17px;color:var(--ink-soft);text-align:center;}
+
+  .checklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .checklist li{display:flex;align-items:flex-start;gap:14px;background:var(--cream-card);border:1px solid var(--rule);border-radius:8px;padding:16px 18px;break-inside:avoid;page-break-inside:avoid;}
+  .checklist .mark{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--sage);color:#fbf7ee;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+  :root[data-theme="dark"] .checklist .mark{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .checklist .mark{color:#20291c;} }
+  .checklist .txt{margin:0;}
+  .checklist .txt b{display:block;color:var(--ink);font-size:15.5px;margin-bottom:2px;}
+  .checklist .txt span{display:block;color:var(--ink-soft);font-size:13.5px;}
+
+  .tip{background:var(--mocha);color:#f6ecdd;border-radius:4px;padding:16px 20px;margin:28px 0 0;font-size:14.5px;break-inside:avoid;page-break-inside:avoid;text-align:center;}
+  .tip p{margin:0;max-width:none;color:#f6ecdd;}
+  .tip p strong{color:#fff;}
+  .closing{text-align:center;padding:56px 24px 8px;}
+  .closing p{margin:0 auto 14px;max-width:52ch;}
+  .signature{font-family:Georgia,serif;font-style:italic;font-size:20px;color:var(--sage-deep);margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <p class="eyebrow">Mariastella Pollini · Biologa Nutrizionista</p>
+    <h1 class="title">Ecco su cosa<br>lavoriamo questo mese</h1>
+    <p class="subtitle">Ilaria</p>
+    <hr class="cover-rule">
+    <p class="by-line">Recap della nostra chiacchierata</p>
+  </div>
+
+  <p class="lede">In un mese hai perso <strong>3 cm di vita, 3 di maniglie e 3 di coscia</strong>, e il tuo modo di stare a tavola è già cambiato: focaccine col crudo, pizza fino a dove ti senti bene, aperitivi senza rimorsi. Adesso lavoriamo su <strong>come leggere i cibi pronti e come ragionare per porzione</strong>.</p>
+
+  <div class="section-bar">
+    <h2>I tuoi prossimi step</h2>
+    <span class="tag">Da fare questo mese</span>
+  </div>
+
+  <ul class="checklist">
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Leggi l'etichetta dei cibi pronti</b><span>Ti faccio trovare nel tuo spazio personale il documento che spiega il metodo. Un tuo pasto ideale vale circa <strong>30-40 g di carboidrati, 20-30 g di proteine e 10 g di grassi</strong>: sono grammi di macronutrienti, non il peso dell'alimento. Guarda prima gli ingredienti, scritti in ordine di presenza: se il primo è la patata, quell'hamburger difficilmente sostituisce la tua proteina. Poi guarda i valori per porzione e completa quello che manca, per esempio con una fettina di pane. Non serve la precisione: conta la frequenza, e non li mangi tutte le sere.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Ragiona per porzione</b><span>Nella torta di mele ogni porzione ha la sua parte di frutta e di zucchero. Se ne metti 8 grandi e ne mangi un ottavo, in quella fetta c'è già l'equivalente di una mela: aggiungere altro zucchero è troppo. Metti 4 mele invece di 8 e il resto lo fai con lo zucchero, circa 40 g in tutto: a ogni fetta capita mezza mela e 5 g di zucchero. A colazione hai o la frutta o i 15 g di crema spalmabile, quindi ragiona sempre su quanto ti capita per porzione. Zucchero bianco, di canna, miele o sciroppo d'acero cambiano poco: scegli quello che ti piace.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>I grassi a colazione sono un'opzione</b><span>Nella tua colazione i grassi non sono previsti, quindi il tortino di mele così com'era andava benissimo. Se ti fa piacere puoi aggiungere fino a <strong>10 g di grassi</strong>: burro d'arachidi sopra, frutta secca nell'impasto, oppure l'olio della ricetta diviso per le porzioni (30 ml in un impasto da 3 fanno 10 ml a porzione). La granola conta solo come carboidrato, anche se dentro c'è un po' di cioccolato.</span></p>
+    </li>
+    <li>
+      <span class="mark">✓</span>
+      <p class="txt"><b>Scegli l'aperitivo in base alla voglia</b><span>Il posto lo scegli al 100% tu: se quella sera hai voglia di pizzette e focacce, vai dove le fanno. Un cibo diventa più o meno sano in base alla quantità, e un pezzo di pizza può essere più sano di un chilo di edamame. Due anni di dieta e di restrizione non si sciolgono in un mese, e ne hai già sciolti parecchi.</span></p>
+    </li>
+
+  </ul>
+
+  <div class="tip">
+    <p><strong>Prossima call:</strong> giovedì 10 dicembre alle 15:30. Ci aggiorniamo ogni settimana nel gruppo e intanto continui così: stai andando alla grande, Ila.</p>
+  </div>
+
+  <div class="closing">
+    <p class="signature">Ci vediamo in call,<br>Mariastella 🍃</p>
+  </div>
+
+</div>
+</body>
+</html>
