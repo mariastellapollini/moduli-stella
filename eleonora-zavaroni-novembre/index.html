@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecco su cosa lavoriamo questo mese · Mariastella Pollini</title>
+<style>
+  :root{
+    --cream:#f2ead9;
+    --cream-card:#e9ded0;
+    --cream-card-2:#efe6d6;
+    --sage:#7f9574;
+    --sage-deep:#5c7052;
+    --mocha:#6b5039;
+    --mocha-deep:#4f3a29;
+    --terracotta:#b76a45;
+    --ink:#2b241a;
+    --ink-soft:#5a4d3d;
+    --rule:#d8c9ac;
+    --max:760px;
+  }
+  :root[data-theme="dark"]{
+    --cream:#1d1912;
+    --cream-card:#2a231a;
+    --cream-card-2:#251f17;
+    --sage:#93a687;
+    --sage-deep:#a9baa0;
+    --terracotta:#d99269;
+    --ink:#ecdfc9;
+    --ink-soft:#c9b89e;
+    --rule:#3c3324;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cream:#1d1912;
+      --cream-card:#2a231a;
+      --cream-card-2:#251f17;
+      --sage:#93a687;
+      --sage-deep:#a9baa0;
+      --terracotta:#d99269;
+      --ink:#ecdfc9;
+      --ink-soft:#c9b89e;
+      --rule:#3c3324;
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    margin:0;
+  }
+  .page{max-width:var(--max);margin:0 auto;padding:0 24px 96px;}
+  .cover{padding:64px 24px 40px;text-align:center;}
+  .eyebrow{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:13px;letter-spacing:0.32em;text-transform:uppercase;color:var(--sage-deep);margin:0 0 18px;}
+  h1.title{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:700;font-size:clamp(30px,6vw,46px);letter-spacing:0.02em;margin:0 0 8px;text-wrap:balance;color:var(--ink);}
+  .subtitle{font-size:18px;color:var(--ink-soft);max-width:520px;margin:0 auto;text-wrap:balance;}
+  .cover-rule{width:64px;height:2px;background:var(--terracotta);margin:28px auto;border:none;}
+  .by-line{font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--sage-deep);}
+  .section-bar{background:var(--sage);color:#fbf7ee;padding:14px 22px;border-radius:2px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:48px 0 24px;break-after:avoid;page-break-after:avoid;break-inside:avoid;page-break-inside:avoid;}
+  :root[data-theme="dark"] .section-bar{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .section-bar{color:#20291c;} }
+  .section-bar h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:15px;letter-spacing:0.28em;text-transform:uppercase;margin:0;color:inherit;}
+  .section-bar .tag{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.85;color:inherit;white-space:nowrap;}
+  p{margin:0 0 16px;max-width:65ch;}
+  .lede{font-size:17px;color:var(--ink-soft);text-align:center;}
+
+  .checklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .checklist li{display:flex;align-items:flex-start;gap:14px;background:var(--cream-card);border:1px solid var(--rule);border-radius:8px;padding:16px 18px;break-inside:avoid;page-break-inside:avoid;}
+  .checklist .mark{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--sage);color:#fbf7ee;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+  :root[data-theme="dark"] .checklist .mark{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .checklist .mark{color:#20291c;} }
+  .checklist .txt{margin:0;}
+  .checklist .txt b{display:block;color:var(--ink);font-size:15.5px;margin-bottom:2px;}
+  .checklist .txt span{display:block;color:var(--ink-soft);font-size:13.5px;}
+
+  .tip{background:var(--mocha);color:#f6ecdd;border-radius:4px;padding:16px 20px;margin:28px 0 0;font-size:14.5px;break-inside:avoid;page-break-inside:avoid;text-align:center;}
+  .tip p{margin:0;max-width:none;color:#f6ecdd;}
+  .tip p strong{color:#fff;}
+  .closing{text-align:center;padding:56px 24px 8px;}
+  .closing p{margin:0 auto 14px;max-width:52ch;}
+  .signature{font-family:Georgia,serif;font-style:italic;font-size:20px;color:var(--sage-deep);margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <p class="eyebrow">Mariastella Pollini · Biologa Nutrizionista</p>
+    <h1 class="title">Ecco su cosa<br>lavoriamo questo mese</h1>
+    <p class="subtitle">Eleonora</p>
+    <hr class="cover-rule">
+    <p class="by-line">Recap della nostra chiacchierata</p>
+  </div>
+
+  <p class="lede">Un mese di alti e bassi tra Nepal, Indonesia, Malesia e Filippine, con una sazietà che ascolti molto meglio. Adesso lavoriamo sulla <strong>quantità</strong>: arrivare ai pasti con fame moderata e riempirti con volume e verdura.</p>
+
+  <div class="section-bar">
+    <h2>I tuoi prossimi step</h2>
+    <span class="tag">Da fare questo mese</span>
+  </div>
+
+  <ul class="checklist">
+    <li><span class="mark">✓</span><p class="txt"><b>Pasti con il volume giusto</b><span>Verdura in ogni pranzo e cena, a vapore o in insalata. Se mangi con i colleghi, ordinala tu da condividere. Quando ci sono zuppe e brodi, prendine un po': riempiono lo stomaco con poca energia.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Mai a tavola con troppa fame</b><span>Punta a una fame di livello 3 all'inizio del pasto. Prima di cena porta con te yogurt con frutta, carote o un frutto. Se sei in giro, acqua frizzante prima di mangiare.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Prima della palestra, solo una banana</b><span>Banana con un bicchiere d'acqua, poi la colazione dopo l'allenamento (porridge o paninetto, uno dei due). Il paninetto prima più il porridge dopo sono due colazioni.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Spuntini a misura della fame</b><span>Metà mattina solo se a mezzogiorno senti già fame 3. Merenda: frutta più yogurt oppure frutta più 5 mandorle, la fonte di grassi è una sola. Lo yogurt al 10% di grassi dividilo in due volte.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Allena l'occhio sulle porzioni</b><span>Quando sei a casa cucina e pesa: pesce fresco 150 g, tonno o salmone in vetro 80 g. Fotografa il piatto, così la volta dopo riconosci la porzione a colpo d'occhio.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>La cassetta degli attrezzi a colpo d'occhio</b><span>Salvala sul telefono (icona in home) e guardala prima di scegliere. Colori e porzioni si adattano a te: più pane a colazione, meno alla sera. Le uova arrivano fino a 6 a settimana, 2 a porzione.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Mangia lenta</b><span>Mastica con calma e fermati a sazietà piacevole, anche lasciando una foglia d'insalata. Al ristorante condimenti a parte.</span></p></li>
+
+  </ul>
+
+  <div class="tip">
+    <p><strong>Prossima call:</strong> giovedì 10 dicembre alle 19:00 (ora italiana). Tieni la tabella sempre a portata di mano.</p>
+  </div>
+
+  <div class="closing">
+    <p class="signature">Ci vediamo in call,<br>Mariastella 🍃</p>
+  </div>
+
+</div>
+</body>
+</html>
