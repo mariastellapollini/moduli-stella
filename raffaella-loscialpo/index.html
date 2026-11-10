@@ -76,6 +76,13 @@
   .tip{background:var(--mocha);color:#f6ecdd;border-radius:4px;padding:16px 20px;margin:18px 0;font-size:14.5px;break-inside:avoid;page-break-inside:avoid;}
   .tip p{margin:0;max-width:none;color:#f6ecdd;}
   .tip p + p{margin-top:10px;}
+  .inc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:22px 0 8px;}
+  @media (max-width:560px){ .inc-grid{grid-template-columns:1fr;} }
+  .inc-card{display:flex;gap:16px;align-items:flex-start;background:var(--cream-card-2);border:1px solid var(--rule);border-radius:16px;padding:18px 18px;}
+  .inc-ico{flex:0 0 40px;height:40px;border-radius:10px;background:var(--cream-card);display:flex;align-items:center;justify-content:center;color:var(--sage-deep);}
+  .inc-ico svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+  .inc-card h4{font-family:Georgia,serif;font-size:16px;margin:0 0 6px;color:var(--ink);}
+  .inc-card p{font-size:13.5px;color:var(--ink-soft);margin:0;max-width:none;line-height:1.55;}
   .includes{margin:22px 0 8px;padding-left:0;list-style:none;}
   .includes li{background:var(--cream-card-2);border-radius:6px;padding:14px 18px;margin-bottom:10px;font-size:14.5px;position:relative;padding-left:38px;}
   .includes li::before{content:"✓";position:absolute;left:16px;color:var(--sage-deep);font-weight:700;}
@@ -108,18 +115,19 @@
     <span class="tag">Perché questo percorso</span>
   </div>
 
-  <ul class="plain">
-    <li>Lavori nelle <strong>vendite</strong> e vivi a <strong>Stoccolma</strong> da dieci anni, tra ufficio, viaggi e pranzi fuori con i colleghi.</li>
-    <li>Da <strong>4-5 anni</strong> convivi con <strong>IBS</strong> e intolleranza al lattosio.</li>
-    <li>Per capire cosa ti faceva male hai <strong>eliminato un alimento dopo l'altro</strong>, glutine compreso per 6 mesi.</li>
-    <li>Sei arrivata a mangiare <strong>solo riso e pollo</strong>, e fuori casa ti veniva <strong>paura anche di andare a cena</strong>.</li>
-    <li>Ogni volta che reintroducevi qualcosa partiva il <strong>circolo restrizione, voglia, eccesso</strong>.</li>
-    <li>Da giugno prendi un farmaco per l'ansia: l'intestino sta meglio ma ti è <strong>aumentata la fame</strong>.</li>
-    <li>Sei passata da <strong>64-65 kg a 70 kg e mezzo</strong>, il tuo peso massimo, e <strong>ti pesi ogni mattina</strong> con l'ansia di essere salita ancora.</li>
-    <li>Con il tuo compagno state cercando una <strong>gravidanza</strong>, quindi non vuoi tagliare da sola e rischiare carenze.</li>
-    <li>Il tuo obiettivo: <strong>un rapporto sereno con il cibo</strong>, sapere cosa mangiare e regolarti da sola in ogni situazione.</li>
+    <ul class="plain">
+    <li>Sei <strong>una persona molto dinamica</strong>: <strong>viaggi molto</strong>, sei <strong>spesso in ufficio</strong> e a pranzo ti porti il cibo o esci con i colleghi.</li>
+    <li>Da <strong>4-5 anni</strong> hai l'<strong>IBS</strong> e l'<strong>intolleranza al lattosio</strong>, dopo <strong>un sacco di analisi</strong> tra colonoscopia e gastroscopia.</li>
+    <li>Hai <strong>eliminato, eliminato, eliminato</strong>, e quando hai reintrodotto <strong>un po' tutto ti faceva male</strong>: <strong>non sapevi più cosa mangiare</strong>.</li>
+    <li>Sei arrivata a mangiare <strong>solo riso e pollo</strong>, perché era l'unica cosa che <strong>non ti faceva stare male</strong>.</li>
+    <li>Fuori casa <strong>ti faceva paura anche andare a cena</strong> e <strong>non riuscivi a goderti</strong> una cena fuori.</li>
+    <li>Quando stavi meglio riprovavi un gelato o un pacco di patatine, <strong>stavi di nuovo male e ricominciavi da capo</strong>.</li>
+    <li>Con le pillole per l'ansia l'intestino è migliorato ma hai <strong>una fame maggiore</strong>: da <strong>64-65 kg a 70 e mezzo</strong>, <strong>non ti vedi bene</strong> e <strong>non ti riconosci</strong>.</li>
+    <li><strong>Ti pesi ogni mattina</strong> con <strong>l'ansia di prendere ancora più peso</strong>, e se non ti strutturi la giornata <strong>non hai tanto autocontrollo</strong> su dolci e salato.</li>
+    <li>Con il tuo compagno state <strong>cercando una gravidanza</strong>: hai <strong>paura di togliere troppo</strong> e di avere <strong>carenza di micronutrienti</strong>.</li>
   </ul>
-  <p>Finora ogni restrizione ha aggiunto ansia e ti ha portata all'eccesso, e una dieta in più sarebbe l'ennesima imposizione dall'alto. Adesso ti serve un metodo tuo, costruito sulla tua tollerabilità, che ti faccia mangiare con serenità anche fuori casa.</p>
+  <p>Hai deciso che <strong>preferisci essere seguita</strong> e <strong>non fare più di testa tua</strong>. Il tuo obiettivo è <strong>un rapporto migliore con il cibo</strong>: <strong>capire cosa mangi, cosa ti fa bene</strong> e <strong>imparare a regolarti da sola</strong>, per lasciarti alle spalle <strong>l'ansia dell'ignoto</strong>.</p>
+
 
   <div class="section-bar">
     <h2>Il metodo Equilibrium</h2>
@@ -127,9 +135,9 @@
   </div>
 
   <div class="pillars">
-    <div class="pillar"><span class="ptag">Consapevolezza</span><h4>La tua cassetta degli attrezzi</h4><p>Costruiamo insieme la tua tabella per comporre ogni pasto, tarata sulla tua tollerabilità a fibre, frutta e verdura. A pranzo con i colleghi o a casa, sai già come bilanciare la cena.</p></div>
-    <div class="pillar"><h4>Bilanciamento</h4><p>Nessun cibo vietato: il dolce e le patatine trovano la loro dose in una giornata equilibrata. È l'eccesso che irrita l'intestino, non la monoporzione.</p></div>
-    <div class="pillar"><h4>Autonomia</h4><p>Impari a riconoscere fame e sazietà con esercizi pratici e a gestire viaggi, cene e feste senza ansia. Dopo i 6 mesi il metodo resta tuo.</p></div>
+    <div class="pillar"><span class="ptag">Consapevolezza</span><h4>La tua cassetta degli attrezzi</h4><p>Costruiamo insieme la tua tabella per comporre ogni pasto, tarata sulla tua tollerabilità a fibre, frutta e verdura. A pranzo con i colleghi sai già <strong>cosa puoi mangiare</strong> e come bilanciare la cena, e ti passa <strong>l'ansia dell'ignoto</strong>.</p></div>
+    <div class="pillar"><h4>Bilanciamento</h4><p>Nessun cibo vietato: <strong>un dolce, un gelato, un pacco di patatine</strong> trovano la loro dose in una giornata equilibrata. È l'eccesso che irrita l'intestino, non la monoporzione.</p></div>
+    <div class="pillar"><h4>Autonomia</h4><p>Impari a riconoscere fame e sazietà con esercizi pratici e a <strong>regolarti da sola</strong> tra viaggi, cene e feste. Dopo i 6 mesi il metodo resta tuo.</p></div>
   </div>
 
   <div class="section-bar">
@@ -182,11 +190,14 @@
     <span class="tag">Il tuo spazio durante il percorso</span>
   </div>
 
-  <ul class="includes">
-    <li>Spazio personale con piano alimentare, ricette, menù e consigli sempre disponibili.</li>
-    <li>1 videocall iniziale + 1 videocall al mese per monitorare i progressi e definire i prossimi passi e monitoraggio della composizione corporea, se desiderato.</li>
-    <li>Canale diretto con me + Community WhatsApp per supporto e confronto durante il percorso.</li>
-  </ul>
+    <div class="inc-grid">
+    <div class="inc-card"><div class="inc-ico"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg></div><div><h4>Videochiamata di avvio</h4><p>Analisi dettagliata del tuo stile di vita, orari, gusti e abitudini, per costruire la tua cassetta degli attrezzi.</p></div></div>
+    <div class="inc-card"><div class="inc-ico"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><div><h4>Una videochiamata al mese</h4><p>Vediamo i progressi, la composizione corporea se lo desideri, e decidiamo i prossimi passi.</p></div></div>
+    <div class="inc-card"><div class="inc-ico"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><div><h4>Chat WhatsApp con me</h4><p>Un confronto diretto per tutta la durata del percorso, per dubbi, foto dei pasti e momenti difficili.</p></div></div>
+    <div class="inc-card"><div class="inc-ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.5-6s6.5 2.5 6.5 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14.5c2 .7 3.5 2.6 3.5 5.5"/></svg></div><div><h4>Community WhatsApp</h4><p>Ogni settimana consigli, ricette smart e strategie, e la possibilità di condividere dubbi e piccoli traguardi.</p></div></div>
+    <div class="inc-card"><div class="inc-ico"><svg viewBox="0 0 24 24"><path d="M5 4h13a1 1 0 0 1 1 1v13H6a2 2 0 0 0-2 2V5a1 1 0 0 1 1-1z"/><path d="M4 20a2 2 0 0 1 2-2h13v3H6a2 2 0 0 1-2-1z"/></svg></div><div><h4>Il tuo spazio personale</h4><p>Cassetta degli attrezzi, ricette, menu, guide e consigli sempre a portata di mano.</p></div></div>
+    <div class="inc-card"><div class="inc-ico"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9 6.8 19.7l1-5.9L3.5 9.7l5.9-.8z"/></svg></div><div><h4>Challenge di gruppo</h4><p>Momenti speciali con le altre persone del percorso, per tenere alta la motivazione.</p></div></div>
+  </div>
 
 
   <div class="section-bar">
