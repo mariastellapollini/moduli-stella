@@ -1,0 +1,222 @@
+<title>Recap call conoscitiva · Mariastella Pollini</title>
+<style>
+  :root{
+    --cream:#f2ead9;
+    --cream-card:#e9ded0;
+    --cream-card-2:#efe6d6;
+    --sage:#7f9574;
+    --sage-deep:#5c7052;
+    --mocha:#6b5039;
+    --mocha-deep:#4f3a29;
+    --terracotta:#b76a45;
+    --ink:#2b241a;
+    --ink-soft:#5a4d3d;
+    --rule:#d8c9ac;
+    --max:760px;
+  }
+  :root[data-theme="dark"]{
+    --cream:#1d1912;
+    --cream-card:#2a231a;
+    --cream-card-2:#251f17;
+    --sage:#93a687;
+    --sage-deep:#a9baa0;
+    --terracotta:#d99269;
+    --ink:#ecdfc9;
+    --ink-soft:#c9b89e;
+    --rule:#3c3324;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cream:#1d1912;
+      --cream-card:#2a231a;
+      --cream-card-2:#251f17;
+      --sage:#93a687;
+      --sage-deep:#a9baa0;
+      --terracotta:#d99269;
+      --ink:#ecdfc9;
+      --ink-soft:#c9b89e;
+      --rule:#3c3324;
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:var(--max);margin:0 auto;padding:0 24px 96px;}
+  .cover{padding:64px 24px 40px;text-align:center;}
+  .eyebrow{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:13px;letter-spacing:0.32em;text-transform:uppercase;color:var(--sage-deep);margin:0 0 18px;}
+  h1.title{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:700;font-size:clamp(32px,6vw,50px);letter-spacing:0.02em;margin:0 0 8px;text-wrap:balance;color:var(--ink);}
+  .subtitle{font-size:18px;color:var(--ink-soft);max-width:520px;margin:0 auto;text-wrap:balance;}
+  .cover-rule{width:64px;height:2px;background:var(--terracotta);margin:28px auto;border:none;}
+  .by-line{font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--sage-deep);}
+  .section-bar{background:var(--sage);color:#fbf7ee;padding:14px 22px;border-radius:2px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:56px 0 24px;break-after:avoid;page-break-after:avoid;break-inside:avoid;page-break-inside:avoid;}
+  :root[data-theme="dark"] .section-bar{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .section-bar{color:#20291c;} }
+  .section-bar h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:15px;letter-spacing:0.28em;text-transform:uppercase;margin:0;color:inherit;}
+  .section-bar .tag{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.85;color:inherit;white-space:nowrap;}
+  p{margin:0 0 16px;max-width:65ch;}
+  .lede{font-size:17px;color:var(--ink-soft);}
+  ul.plain{margin:0 0 16px;padding-left:20px;max-width:65ch;}
+  ul.plain li{margin-bottom:6px;}
+  .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0 8px;}
+  @media (max-width:560px){ .pillars{grid-template-columns:1fr;} }
+  .pillar{background:var(--cream-card-2);border-radius:6px;padding:16px 18px;border-top:3px solid var(--sage-deep);}
+  .pillar h4{font-family:Georgia,serif;font-size:15px;margin:0 0 6px;color:var(--ink);}
+  .pillar .ptag{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--sage-deep);font-weight:600;margin:0 0 4px;}
+  .pillar p{font-size:13.5px;color:var(--ink-soft);margin:0;max-width:none;}
+  .step{background:var(--cream-card);border-radius:8px;padding:24px 26px;margin:0 0 20px;border:1px solid var(--rule);break-inside:avoid;page-break-inside:avoid;}
+  .step-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px;}
+  .step-head h3{font-family:Georgia,serif;font-size:19px;margin:0;color:var(--ink);}
+  .step p, .step ul{max-width:none;}
+  .tip{background:var(--mocha);color:#f6ecdd;border-radius:4px;padding:16px 20px;margin:18px 0;font-size:14.5px;break-inside:avoid;page-break-inside:avoid;}
+  .tip p{margin:0;max-width:none;color:#f6ecdd;}
+  .tip p + p{margin-top:10px;}
+  .includes{margin:22px 0 8px;padding-left:0;list-style:none;}
+  .includes li{background:var(--cream-card-2);border-radius:6px;padding:14px 18px;margin-bottom:10px;font-size:14.5px;position:relative;padding-left:38px;}
+  .includes li::before{content:"✓";position:absolute;left:16px;color:var(--sage-deep);font-weight:700;}
+  .review-grid{display:block;margin:0 0 8px;}
+  .review{background:var(--cream-card-2);border-radius:6px;padding:18px 20px;border-top:3px solid var(--terracotta);margin-bottom:14px;break-inside:avoid;page-break-inside:avoid;}
+  .review-head{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+  .review-avatar{width:34px;height:34px;border-radius:50%;background:var(--cream-card);border:1px solid var(--sage-deep);color:var(--sage-deep);display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;font-size:13px;flex:none;}
+  .review-name{font-weight:600;font-size:14.5px;color:var(--ink);}
+  .review-date{font-size:12px;color:var(--ink-soft);margin-left:auto;white-space:nowrap;}
+  .review-stars{color:var(--terracotta);letter-spacing:2px;font-size:14px;margin-bottom:8px;}
+  .review p{font-size:14px;color:var(--ink-soft);margin:0;max-width:none;}
+  .video-wrap{border-radius:8px;overflow:hidden;border:1px solid var(--rule);margin:8px 0 24px;background:#000;}
+  .video-wrap video{display:block;width:100%;height:auto;}
+  .closing{text-align:center;padding:56px 24px 8px;}
+  .closing p{margin:0 auto 14px;max-width:52ch;}
+  .signature{font-family:Georgia,serif;font-style:italic;font-size:20px;color:var(--sage-deep);margin-top:20px;}
+  ul.sum{margin:0 0 20px;padding-left:20px;max-width:65ch;}
+  ul.sum li{margin-bottom:10px;}
+  .map{background:var(--cream-card);border:1px solid var(--rule);border-radius:8px;padding:18px 22px;margin:0 0 14px;break-inside:avoid;page-break-inside:avoid;}
+  .map .mod{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--sage-deep);font-weight:600;margin:0 0 6px;}
+  .map p{margin:0;max-width:none;font-size:15px;}
+  .map strong,ul.sum strong,.qa strong{color:var(--ink);font-weight:700;}
+  .qa{background:var(--cream-card-2);border-radius:6px;padding:16px 20px;margin:0 0 12px;border-top:3px solid var(--sage-deep);break-inside:avoid;page-break-inside:avoid;}
+  .qa h4{font-family:Georgia,serif;font-size:16px;margin:0 0 6px;color:var(--ink);}
+  .qa p{margin:0;max-width:none;font-size:15px;color:var(--ink-soft);}
+  .inc{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0 0 14px;}
+  @media (max-width:560px){ .inc{grid-template-columns:1fr;} }
+  .inc .c{background:var(--cream-card-2);border:1px solid var(--rule);border-radius:14px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start;break-inside:avoid;page-break-inside:avoid;}
+  .inc .ic{flex:none;width:40px;height:40px;border-radius:10px;background:var(--cream-card);color:var(--sage-deep);display:flex;align-items:center;justify-content:center;}
+  .inc .ic svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+  .inc h4{font-family:Georgia,serif;font-size:16px;margin:0 0 4px;color:var(--ink);}
+  .inc p{margin:0;font-size:14px;color:var(--ink-soft);max-width:none;}
+</style>
+
+<div class="page">
+
+  <div class="cover">
+    <p class="eyebrow">Mariastella Pollini · Biologa Nutrizionista</p>
+    <h1 class="title">Ecco il recap<br>della nostra chiacchierata</h1>
+    <p class="subtitle">Patrizia</p>
+    <hr class="cover-rule">
+  </div>
+
+  <div class="section-bar">
+    <h2>Da dove partiamo</h2>
+    <span class="tag">Quello che mi hai raccontato</span>
+  </div>
+  <ul class="sum">
+    <li>Dal lunedì al giovedì tieni duro, poi il venerdì e il sabato in pasticceria arrivano <strong>una bignola, un bacio di dama, un dito di pizza</strong>: <strong>dici no e non fai in tempo a dirlo che qualcosa è già nella tua bocca</strong>.</li>
+    <li>Il gonfiore è <strong>perenne, tre quarti del mese</strong>: <strong>sembri incinta di sette mesi</strong>, il vestito non ti sta e <strong>a volte non sei uscita</strong>.</li>
+    <li>Alla soglia dei 50 anni ti sembra di fare <strong>scene da quindicenne</strong> e ti senti di <strong>non credere più a niente</strong>, perché qualsiasi cosa fai pensi che non servirà.</li>
+  </ul>
+  <p>Questo giro, restrizione, fame, <strong>tanto ormai</strong>, eccesso, senso di colpa, ha un nome: boundary model di Herman e Polivy. Nasce dalle regole rigide delle diete, e per questo l'ennesima dieta lo rafforza. La pancia che si sgonfia arriva come effetto collaterale di un'alimentazione che ascolta fame e sazietà.</p>
+  <p>Fino a gennaio il venerdì e il sabato resteranno come sono. Hai le tue ragioni per aspettare e te le riconosco tutte. Ti lascio qui il quadro completo, così quando avrai la tua certezza riparti da qui.</p>
+  <div class="section-bar">
+    <h2>Come è strutturato</h2>
+    <span class="tag">Cosa trovi nel percorso</span>
+  </div>
+  <div class="inc">
+    <div class="c"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3z"/></svg></div><div><h4>Videochiamata di avvio</h4><p>Analisi dettagliata del tuo stile di vita, orari, gusti e abitudini, per costruire il primo piano.</p></div></div>
+    <div class="c"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><div><h4>Una videochiamata al mese</h4><p>Vediamo i progressi, la composizione corporea se lo desideri, e decidiamo i prossimi passi.</p></div></div>
+    <div class="c"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div><div><h4>Chat WhatsApp con me</h4><p>Un confronto diretto per tutta la durata del percorso, per dubbi, foto dei pasti e momenti difficili.</p></div></div>
+    <div class="c"><div class="ic"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 5a3 3 0 0 1 0 6M18 14c2 .7 3.5 2.6 3.5 5"/></svg></div><div><h4>Community WhatsApp</h4><p>Ogni settimana consigli, ricette smart e strategie, e la possibilità di condividere dubbi e piccoli traguardi.</p></div></div>
+    <div class="c"><div class="ic"><svg viewBox="0 0 24 24"><path d="M5 4h12a2 2 0 0 1 2 2v13H7a2 2 0 0 1-2-2z"/><path d="M5 17a2 2 0 0 1 2-2h12"/></svg></div><div><h4>Il tuo spazio personale</h4><p>Piano alimentare, ricette, menu, guide e consigli sempre a portata di mano.</p></div></div>
+    <div class="c"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg></div><div><h4>Challenge di gruppo</h4><p>Momenti speciali con le altre persone del percorso, per tenere alta la motivazione.</p></div></div>
+  </div>
+  <div class="section-bar">
+    <h2>Cosa ti direi se fossimo ancora in call</h2>
+    <span class="tag">I tuoi dubbi</span>
+  </div>
+  <div class="qa">
+    <h4>Funzionerà, se non credo più a niente?</h4>
+    <p>Dopo tante diete che trascurano <strong>il lato emotivo</strong> la fiducia si consuma, lo capisco. Il giro che vivi si forma con le regole rigide: qui la regola rigida non c'è, e partiamo dal tuo punto nero, <strong>fermarti prima del guaio</strong>.</p>
+  </div>
+  <div class="qa">
+    <h4>Ho speso tantissimo in diete, perché dovrebbe andare diversamente?</h4>
+    <p>Le diete che hai fatto ti hanno dato un elenco di cose da evitare. Il <strong>lato emotivo</strong> è il centro di questo percorso, e gli strumenti restano tuoi anche se cambi lavoro, casa o fuso orario.</p>
+  </div>
+  <div class="qa">
+    <h4>Da gennaio cambio lavoro e orari, riuscirò a seguirlo?</h4>
+    <p>Le indicazioni si cuciono su di te: la cassetta degli attrezzi la costruiamo sui <strong>tuoi orari nuovi</strong>, nella prima videochiamata.</p>
+  </div>
+  <div class="qa">
+    <h4>E se il primo weekend sbarello ancora?</h4>
+    <p>Succederà, all'inizio. Ogni weekend difficile ci serve per capire <strong>il trigger</strong>: com'era la colazione, quanto eri tesa, cosa c'era sul vassoio. Il lunedì ti scrivo io, quindi <strong>non resti sola</strong> con il senso di colpa.</p>
+  </div>
+  <div class="qa">
+    <h4>Non voglio fare il passo più lungo della gamba.</h4>
+    <p>Prima di gennaio non devi pagare né decidere niente. Un investimento, se lo fai, lo fai <strong>per te, per la tua persona</strong>, e le rate le scegliamo insieme, fino a una al mese.</p>
+  </div>
+
+  <div class="section-bar">
+    <h2>Investimento</h2>
+    <span class="tag">Il tuo percorso su misura</span>
+  </div>
+  <div class="tip">
+    <p><strong>Percorso di 6 mesi: 200€ al mese, 1200€ totali.</strong> Se preferisci pagare in un'unica soluzione, <strong>1000€</strong> per i sei mesi. Per le rate decidiamo insieme, fino a una rata al mese.</p>
+  </div>
+
+  <div class="tip">
+    <p>Prossimo passo: a inizio dicembre ci sentiamo su WhatsApp, almeno quattro settimane prima, per vedere se hai la tua certezza e organizzare la partenza di gennaio. Se ti vengono dubbi nel frattempo, scrivimi pure.</p>
+  </div>
+
+  <div class="section-bar">
+    <h2>Recensioni</h2>
+    <span class="tag">Cosa dicono i pazienti</span>
+  </div>
+
+  <div class="review-grid">
+    <div class="review">
+      <div class="review-head"><div class="review-avatar">PL</div><div class="review-name">Pizzo Lore</div><div class="review-date">23/01/2026</div></div>
+      <div class="review-stars">★★★★★</div>
+      <p>La Dottoressa è una professionista estremamente competente e attenta, apprezzo il suo approccio motivante e la chiarezza con cui spiega ogni singolo passaggio del percorso. La consiglio a chi cerca una persona seria, preparata e appassionata al suo lavoro.</p>
+    </div>
+    <div class="review">
+      <div class="review-head"><div class="review-avatar">FL</div><div class="review-name">FLR</div><div class="review-date">24/02/2026</div></div>
+      <div class="review-stars">★★★★★</div>
+      <p>La Dott.ssa Pollini è estremamente professionale, attenta, efficace ed empatica. I risultati sono garantiti da schemi e tabelle facilmente comprensibili e attuabili, formulati sulla quotidianità del paziente.</p>
+    </div>
+    <div class="review">
+      <div class="review-head"><div class="review-avatar">D</div><div class="review-name">Donatella</div><div class="review-date">28/01/2026</div></div>
+      <div class="review-stars">★★★★★</div>
+      <p>Professionale, pratica, disponibile alle domande via chat, empatica: e questo a mio avviso non è poco, perché aiuta molto il paziente nel percorso che deve percorrere.</p>
+    </div>
+    <div class="review">
+      <div class="review-head"><div class="review-avatar">LP</div><div class="review-name">Laura Pozzoni</div><div class="review-date">12/12/2025</div></div>
+      <div class="review-stars">★★★★★</div>
+      <p>Conosco la Dottoressa da qualche anno e mi sono affidata a lei per risolvere i miei problemi legati all'alimentazione. Stella mi ha aiutata non solo a rimettermi in forma, ma mi ha insegnato a mangiare bene, che sembra facile... ma non sempre lo è. Con i suoi consigli ho imparato a gestire i diversi componenti dei pasti e a non sentirmi in colpa quando cadevo in piccoli "sgarri". È sempre un piacere farsi seguire da lei perché rende semplice quello che per chi è "a dieta" sembra impossibile. Consigliatissima anche solo per una chiacchierata che vi aprirà le porte di un mondo che magari non si pensava potesse esistere! (Come ad esempio, essere a dieta ma poter far colazione con il panettone!!) Grande professionista!</p>
+    </div>
+  </div>
+
+  <div class="section-bar">
+    <h2>Cosa dicono del percorso</h2>
+    <span class="tag">Le voci di chi lo ha vissuto</span>
+  </div>
+
+  <!-- VIDEO testimonianze: inserito solo in pubblicazione -->
+
+  <div class="closing">
+    <p>Hai detto che dal momento in cui avrai la certezza non avrai problemi a iniziare. Quando sarà il momento, il venerdì in cui dirai no avrai il tempo di capire se hai fame.</p>
+    <p>Ci vediamo in call,<br>Mariastella 🍃</p>
+  </div>
+
+</div>
