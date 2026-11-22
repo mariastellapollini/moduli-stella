@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecco su cosa lavoriamo questo mese · Mariastella Pollini</title>
+<style>
+  :root{
+    --cream:#f2ead9;
+    --cream-card:#e9ded0;
+    --cream-card-2:#efe6d6;
+    --sage:#7f9574;
+    --sage-deep:#5c7052;
+    --mocha:#6b5039;
+    --mocha-deep:#4f3a29;
+    --terracotta:#b76a45;
+    --ink:#2b241a;
+    --ink-soft:#5a4d3d;
+    --rule:#d8c9ac;
+    --max:760px;
+  }
+  :root[data-theme="dark"]{
+    --cream:#1d1912;
+    --cream-card:#2a231a;
+    --cream-card-2:#251f17;
+    --sage:#93a687;
+    --sage-deep:#a9baa0;
+    --terracotta:#d99269;
+    --ink:#ecdfc9;
+    --ink-soft:#c9b89e;
+    --rule:#3c3324;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cream:#1d1912;
+      --cream-card:#2a231a;
+      --cream-card-2:#251f17;
+      --sage:#93a687;
+      --sage-deep:#a9baa0;
+      --terracotta:#d99269;
+      --ink:#ecdfc9;
+      --ink-soft:#c9b89e;
+      --rule:#3c3324;
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    margin:0;
+  }
+  .page{max-width:var(--max);margin:0 auto;padding:0 24px 96px;}
+  .cover{padding:64px 24px 40px;text-align:center;}
+  .eyebrow{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:13px;letter-spacing:0.32em;text-transform:uppercase;color:var(--sage-deep);margin:0 0 18px;}
+  h1.title{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:700;font-size:clamp(30px,6vw,46px);letter-spacing:0.02em;margin:0 0 8px;text-wrap:balance;color:var(--ink);}
+  .subtitle{font-size:18px;color:var(--ink-soft);max-width:520px;margin:0 auto;text-wrap:balance;}
+  .cover-rule{width:64px;height:2px;background:var(--terracotta);margin:28px auto;border:none;}
+  .by-line{font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--sage-deep);}
+  .section-bar{background:var(--sage);color:#fbf7ee;padding:14px 22px;border-radius:2px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:48px 0 24px;break-after:avoid;page-break-after:avoid;break-inside:avoid;page-break-inside:avoid;}
+  :root[data-theme="dark"] .section-bar{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .section-bar{color:#20291c;} }
+  .section-bar h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:15px;letter-spacing:0.28em;text-transform:uppercase;margin:0;color:inherit;}
+  .section-bar .tag{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.85;color:inherit;white-space:nowrap;}
+  p{margin:0 0 16px;max-width:65ch;}
+  .lede{font-size:17px;color:var(--ink-soft);text-align:center;}
+
+  .checklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .checklist li{display:flex;align-items:flex-start;gap:14px;background:var(--cream-card);border:1px solid var(--rule);border-radius:8px;padding:16px 18px;break-inside:avoid;page-break-inside:avoid;}
+  .checklist .mark{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--sage);color:#fbf7ee;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+  :root[data-theme="dark"] .checklist .mark{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .checklist .mark{color:#20291c;} }
+  .checklist .txt{margin:0;}
+  .checklist .txt b{display:block;color:var(--ink);font-size:15.5px;margin-bottom:2px;}
+  .checklist .txt span{display:block;color:var(--ink-soft);font-size:13.5px;}
+
+  .tip{background:var(--mocha);color:#f6ecdd;border-radius:4px;padding:16px 20px;margin:28px 0 0;font-size:14.5px;break-inside:avoid;page-break-inside:avoid;text-align:center;}
+  .tip p{margin:0;max-width:none;color:#f6ecdd;}
+  .tip p strong{color:#fff;}
+  .closing{text-align:center;padding:56px 24px 8px;}
+  .closing p{margin:0 auto 14px;max-width:52ch;}
+  .signature{font-family:Georgia,serif;font-style:italic;font-size:20px;color:var(--sage-deep);margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <p class="eyebrow">Mariastella Pollini · Biologa Nutrizionista</p>
+    <h1 class="title">Ecco su cosa<br>lavoriamo questo mese</h1>
+    <p class="subtitle">Mikaela</p>
+    <hr class="cover-rule">
+    <p class="by-line">Recap della nostra chiacchierata</p>
+  </div>
+
+  <p class="lede">Dal 6 ottobre hai perso <strong>2 cm di vita, 1 di fianchi, 1,5 di braccio e 1 di coscia</strong>, dormi meglio e gli attacchi di fame notturni sono spariti. Adesso lavoriamo su <strong>una colazione che funzioni per te</strong>.</p>
+
+  <div class="section-bar">
+    <h2>I tuoi prossimi step</h2>
+    <span class="tag">Da fare questo mese</span>
+  </div>
+
+  <ul class="checklist">
+    <li><span class="mark">✓</span><p class="txt"><b>La bilancia in cantina</b><span>Era il cavo, non tu. Prendi un paio di pantaloni di riferimento e provali una volta al mese: quello è il dato vero. Se vuoi, ti pesi tra due o tre mesi.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>La colazione quando arriva la fame</b><span>Il primo pasto della giornata può essere anche alle 10:30 o alle 11, al posto dello spuntino. Portala in ufficio e mangiala quando lo stomaco si sveglia. Se nel pomeriggio ti serve, recuperi con lo spuntino di frutta.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Lo spuntino del pomeriggio resta</b><span>È quello che ti evita il pezzo di formaggio e il pane mentre prepari la cena. Tienilo anche quando non hai tanta fame.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Prima la fame, poi le porzioni</b><span>Ti siedi con una fame a livello 3 e ti alzi a livello 7. Se a cena hai meno fame riduci un po' tutto, senza togliere la proteina: meglio un piatto completo più piccolo.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Il piatto unico va benissimo</b><span>Ti fa sembrare il pasto più grande ed è comodo da portare. Nei pizzoccheri patate e pasta sono entrambe carboidrato: fai metà e metà, circa 100 g di patate e 25-30 g di pasta.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Il trucco dei tre giorni è tuo</b><span>Tre giorni di fila la cosa di cui hai voglia e al quarto la voglia passa. Funzionerà anche tra anni, non solo adesso che siamo insieme.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Avanza quel cucchiaio</b><span>Se sei a posto, il resto va in frigo e diventa parte del pasto dopo. Il tuo stomaco non è il bidone dell'umido.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Più avanti, le porzioni a occhio</b><span>Arriverà il modulo per allenare l'occhio, utile ai pranzi di lavoro e quando sei fuori. Per ora prendi confidenza con le porzioni della cassetta.</span></p></li>
+
+  </ul>
+
+  <div class="tip">
+    <p><strong>Prossima call:</strong> giovedì 10 dicembre alle 18:30. Ti abbraccio forte, Mikaela: per qualsiasi cosa scrivimi.</p>
+  </div>
+
+  <div class="closing">
+    <p class="signature">Ci vediamo in call,<br>Mariastella 🍃</p>
+  </div>
+
+</div>
+</body>
+</html>
