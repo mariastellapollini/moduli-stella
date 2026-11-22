@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ecco su cosa lavoriamo questo mese · Mariastella Pollini</title>
+<style>
+  :root{
+    --cream:#f2ead9;
+    --cream-card:#e9ded0;
+    --cream-card-2:#efe6d6;
+    --sage:#7f9574;
+    --sage-deep:#5c7052;
+    --mocha:#6b5039;
+    --mocha-deep:#4f3a29;
+    --terracotta:#b76a45;
+    --ink:#2b241a;
+    --ink-soft:#5a4d3d;
+    --rule:#d8c9ac;
+    --max:760px;
+  }
+  :root[data-theme="dark"]{
+    --cream:#1d1912;
+    --cream-card:#2a231a;
+    --cream-card-2:#251f17;
+    --sage:#93a687;
+    --sage-deep:#a9baa0;
+    --terracotta:#d99269;
+    --ink:#ecdfc9;
+    --ink-soft:#c9b89e;
+    --rule:#3c3324;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --cream:#1d1912;
+      --cream-card:#2a231a;
+      --cream-card-2:#251f17;
+      --sage:#93a687;
+      --sage-deep:#a9baa0;
+      --terracotta:#d99269;
+      --ink:#ecdfc9;
+      --ink-soft:#c9b89e;
+      --rule:#3c3324;
+    }
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    margin:0;
+  }
+  .page{max-width:var(--max);margin:0 auto;padding:0 24px 96px;}
+  .cover{padding:64px 24px 40px;text-align:center;}
+  .eyebrow{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:13px;letter-spacing:0.32em;text-transform:uppercase;color:var(--sage-deep);margin:0 0 18px;}
+  h1.title{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-weight:700;font-size:clamp(30px,6vw,46px);letter-spacing:0.02em;margin:0 0 8px;text-wrap:balance;color:var(--ink);}
+  .subtitle{font-size:18px;color:var(--ink-soft);max-width:520px;margin:0 auto;text-wrap:balance;}
+  .cover-rule{width:64px;height:2px;background:var(--terracotta);margin:28px auto;border:none;}
+  .by-line{font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--sage-deep);}
+  .section-bar{background:var(--sage);color:#fbf7ee;padding:14px 22px;border-radius:2px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:48px 0 24px;break-after:avoid;page-break-after:avoid;break-inside:avoid;page-break-inside:avoid;}
+  :root[data-theme="dark"] .section-bar{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .section-bar{color:#20291c;} }
+  .section-bar h2{font-family:Georgia,"Iowan Old Style","Times New Roman",serif;font-size:15px;letter-spacing:0.28em;text-transform:uppercase;margin:0;color:inherit;}
+  .section-bar .tag{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;opacity:0.85;color:inherit;white-space:nowrap;}
+  p{margin:0 0 16px;max-width:65ch;}
+  .lede{font-size:17px;color:var(--ink-soft);text-align:center;}
+
+  .checklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
+  .checklist li{display:flex;align-items:flex-start;gap:14px;background:var(--cream-card);border:1px solid var(--rule);border-radius:8px;padding:16px 18px;break-inside:avoid;page-break-inside:avoid;}
+  .checklist .mark{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--sage);color:#fbf7ee;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;}
+  :root[data-theme="dark"] .checklist .mark{color:#20291c;}
+  @media (prefers-color-scheme: dark){ .checklist .mark{color:#20291c;} }
+  .checklist .txt{margin:0;}
+  .checklist .txt b{display:block;color:var(--ink);font-size:15.5px;margin-bottom:2px;}
+  .checklist .txt span{display:block;color:var(--ink-soft);font-size:13.5px;}
+
+  .tip{background:var(--mocha);color:#f6ecdd;border-radius:4px;padding:16px 20px;margin:28px 0 0;font-size:14.5px;break-inside:avoid;page-break-inside:avoid;text-align:center;}
+  .tip p{margin:0;max-width:none;color:#f6ecdd;}
+  .tip p strong{color:#fff;}
+  .closing{text-align:center;padding:56px 24px 8px;}
+  .closing p{margin:0 auto 14px;max-width:52ch;}
+  .signature{font-family:Georgia,serif;font-style:italic;font-size:20px;color:var(--sage-deep);margin-top:20px;}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <p class="eyebrow">Mariastella Pollini · Biologa Nutrizionista</p>
+    <h1 class="title">Ecco su cosa<br>lavoriamo questo mese</h1>
+    <p class="subtitle">Beatrice</p>
+    <hr class="cover-rule">
+    <p class="by-line">Recap della nostra chiacchierata</p>
+  </div>
+
+  <p class="lede">Danza due sere a settimana, pesi al mattino e una gran fame: <strong>il metabolismo si è riattivato</strong>, ed è un ottimo segnale. Adesso lavoriamo su <strong>spuntini e colazioni</strong>, per sostenere tutto questo movimento.</p>
+
+  <div class="section-bar">
+    <h2>I tuoi prossimi step</h2>
+    <span class="tag">Da fare questo mese</span>
+  </div>
+
+  <ul class="checklist">
+    <li><span class="mark">✓</span><p class="txt"><b>La fame è un buon segno</b><span>Ti muovi di più e il corpo chiede più energia. Prima di aumentare tutte le porzioni rimettiamo gli spuntini, quando arriva la fame, anche alle 18.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Nei giorni dei pesi</b><span>Spuntino con una proteina e un carboidrato: skyr e frutta, un pezzo di grana e frutta, oppure yogurt di soia. Alterna quello bianco, con la frutta dentro, a quello ai gusti, così lo zucchero non è sempre alto.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Prima di danza, carboidrati</b><span>Il martedì e il mercoledì, un'oretta prima della lezione, frutta, e se vuoi un biscotto o una fetta biscottata. Niente proteine prima di allenarti: si digeriscono lentamente, meglio dopo.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Dopo danza, cena più ricca</b><span>Quando torni tardi e hai più fame, alza le porzioni della cena. Il pane va bene, puoi alternarlo con altri carboidrati.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Torniamo a variare la colazione</b><span>Da un po' sono quasi sempre Gocciole e tortine. Riprendi il porridge con la frutta, latte o yogurt con i cereali, i pancake, il pane integrale con marmellata o un cucchiaino di Nutella.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Fuori riduci, non togli</b><span>Hai già capito come funziona: dopo un pasto fuori non elimini l'olio il giorno dopo, riduci un po' tutte le porzioni senza togliere niente.</span></p></li>
+    <li><span class="mark">✓</span><p class="txt"><b>Pazienza con lo specchio</b><span>Due mesi di movimento sono ancora pochi per vedere il cambiamento. Non mollare proprio adesso che hai trovato uno sport che ti diverte. Se ti va, facciamo la valutazione della composizione corporea, così abbiamo un dato di partenza: ti mando io il file per le misure.</span></p></li>
+
+  </ul>
+
+  <div class="tip">
+    <p><strong>Prossima call:</strong> quando vuoi tu: scrivimi e la fissiamo. Sono fierissima della nuova Bea.</p>
+  </div>
+
+  <div class="closing">
+    <p class="signature">Ci vediamo in call,<br>Mariastella 🍃</p>
+  </div>
+
+</div>
+</body>
+</html>
